@@ -66,7 +66,7 @@ $repositorios = $pdo->query("SELECT * FROM repositorios")->fetchAll(PDO::FETCH_A
                     <td><?= htmlspecialchars($d['so']) ?></td>
                     <td><?= htmlspecialchars($d['usuario'] ?? '—') ?></td>
                     <td class="td-token"><?= substr($d['token'],0,20) ?>…</td>
-                    <td><a href="generar_agente.php?id=<?= $d['id'] ?>" class="action-link">generar agente</a></td>
+                    <td><a href="generar_agente.php?id=<?= $d['id'] ?>" class="action-link">descargar agente (.py)</a></td>
                 </tr>
                 <?php endforeach; ?>
                 <?php if (!$dispositivos): ?><tr><td colspan="6" class="vacio">Sin dispositivos registrados</td></tr><?php endif; ?>

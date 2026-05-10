@@ -9,6 +9,7 @@
         <a href="dispositivos.php" class="<?= $p==='dispositivos.php' ?'activo':'' ?>"><span class="nav-icon">◫</span> Dispositivos</a>
         <a href="usuarios.php"     class="<?= $p==='usuarios.php'     ?'activo':'' ?>"><span class="nav-icon">◯</span> Usuarios</a>
         <a href="eventos.php"      class="<?= $p==='eventos.php'      ?'activo':'' ?>"><span class="nav-icon">◈</span> Eventos</a>
+        <a href="restaurar.php"    class="<?= $p==='restaurar.php'    ?'activo':'' ?>"><span class="nav-icon">↓</span> Restaurar</a>
     </nav>
     <div class="sidebar-footer">
         <div class="sidebar-user">

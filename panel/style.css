@@ -332,6 +332,7 @@ tbody tr:hover td { background: var(--s2); color: var(--text); }
     transition: all .15s;
 }
 .action-link:hover { opacity: 1; }
+.action-link-active { opacity: 1; background: var(--accent-bg); }
 
 /* ================================================================
    FILTROS

@@ -2,7 +2,7 @@
 
 ## ¿Qué es Niddo?
 
-Niddo es un servidor de copias de seguridad autoalojado para usuarios domésticos. Corre en Linux (Debian/Ubuntu) y se gestiona desde un panel web sencillo. Los dispositivos Windows suben sus archivos automáticamente mediante un agente en Python.
+Niddo es un servidor de copias de seguridad autoalojado para usuarios domésticos. Corre en Linux (Debian/Ubuntu/Raspberry Pi OS) y se gestiona desde un panel web sencillo. Los dispositivos Windows suben sus archivos automáticamente mediante un agente en Python.
 
 ---
 
@@ -13,21 +13,47 @@ Niddo/
 ├── config/
 │   └── db.php              # Conexión a la base de datos
 ├── api/
+│   ├── .htaccess           # Aumenta límites de subida a 500 MB
 │   ├── auth.php            # Autenticación de usuarios y dispositivos
 │   ├── backup.php          # Recepción y registro de archivos de backup
 │   └── setup.php           # Creación del primer administrador
 ├── panel/
-│   ├── style.css           # Estilos del panel web
+│   ├── _head.php           # Partial compartido: meta tags, fuentes, CSS
+│   ├── _nav.php            # Partial compartido: sidebar con navegación
+│   ├── style.css           # Sistema de diseño dark completo
 │   ├── login.php           # Acceso (o setup inicial si no hay usuarios)
 │   ├── logout.php          # Cierre de sesión
 │   ├── dashboard.php       # Vista principal con estadísticas
 │   ├── dispositivos.php    # Gestión de dispositivos
 │   ├── usuarios.php        # Gestión de usuarios (solo Admin)
 │   ├── eventos.php         # Registro de eventos de seguridad
-│   └── generar_agente.php  # Genera y descarga el .exe del agente para cada dispositivo
+│   └── generar_agente.php  # Genera y descarga el agente .py para cada dispositivo
 ├── niddo_schema.sql        # Esquema completo de la base de datos
+├── install.sh              # Instalador automático para Debian/Ubuntu/Raspberry Pi
 └── Explicacion.md          # Este archivo
 ```
+
+---
+
+## Instalador (`install.sh`)
+
+Script de Bash para desplegar Niddo en cualquier sistema Debian/Ubuntu/Raspberry Pi OS con un solo comando:
+
+```bash
+sudo bash install.sh
+```
+
+El instalador realiza en orden:
+
+1. Instala Apache2, PHP, MariaDB y extensiones necesarias (`php-mysql`, `php-mbstring`).
+2. Arranca y habilita los servicios con `systemctl`.
+3. Crea la base de datos `niddo` y todas las tablas importando `niddo_schema.sql`.
+4. Crea el usuario MySQL `niddo` con permisos solo sobre esa base de datos.
+5. Copia los archivos del proyecto a `/var/www/html/niddo/`.
+6. Actualiza `config/db.php` con las credenciales reales mediante `sed`.
+7. Crea el directorio `/var/niddo/backups/` con permisos de `www-data`.
+8. Habilita `mod_rewrite` y configura Apache para que el `.htaccess` de la API funcione.
+9. Muestra la URL del panel con la IP del servidor.
 
 ---
 
@@ -52,10 +78,11 @@ La base de datos MySQL se llama `niddo` y contiene las siguientes tablas:
 
 ## Conexión a la base de datos (`config/db.php`)
 
-Establece la conexión con MySQL usando **PDO**, que es más seguro que `mysqli`.
+Establece la conexión con MySQL usando **PDO**, más seguro que `mysqli`.
 
 - Si la conexión falla, devuelve un error HTTP 500.
 - Todos los archivos de la API incluyen este fichero con `require_once`.
+- El instalador actualiza automáticamente las credenciales de `root/vacío` a `niddo/niddo`.
 
 ---
 
@@ -65,15 +92,15 @@ Maneja dos tipos de autenticación mediante `$_POST`:
 
 ### Login de usuario (panel web)
 - Recibe `email` y `password` por formulario HTML.
-- Busca el usuario en la base de datos y verifica la contraseña con `password_verify()`.
-- Si es correcto: guarda el usuario en la sesión (`$_SESSION`) y redirige al dashboard.
+- Verifica la contraseña con `password_verify()`.
+- Si es correcto: guarda el usuario en `$_SESSION` y redirige al dashboard.
 - Si falla: registra el intento en la tabla `events` con la IP del cliente.
 - Bloquea usuarios con estado distinto de `activo`.
 
 ### Validación de token (agente Python)
 - Recibe un `token` por POST.
 - Busca el dispositivo en la tabla `devices`.
-- Si es válido, devuelve `device_id` y `repositorio_id` en texto plano.
+- Si es válido, devuelve `device_id` en texto plano.
 
 ---
 
@@ -96,7 +123,7 @@ Recibe los archivos subidos por el agente Python.
 **El agente envía por POST:**
 - `token` — identifica el dispositivo
 - `archivo` — el fichero a guardar (`$_FILES`)
-- `hash` — hash SHA del archivo para verificar integridad
+- `hash` — hash SHA256 del archivo para verificar integridad
 
 **El servidor:**
 1. Valida el token del dispositivo.
@@ -106,44 +133,63 @@ Recibe los archivos subidos por el agente Python.
 5. Actualiza el tamaño del backup.
 6. Responde `ok` si todo fue bien.
 
+El `.htaccess` de la carpeta `api/` amplía los límites de PHP a 500 MB de subida y 300 segundos de tiempo de ejecución.
+
 ---
 
 ## Panel web (`panel/`)
 
-Interfaz de administración con estética dark/monospace. Todas las páginas comprueban que hay sesión activa; si no, redirigen al login.
+Interfaz de administración con diseño dark y sidebar fija. Usa dos partials compartidos:
+
+- **`_head.php`** — meta tags, carga de Inter (Google Fonts) y `style.css` con cache-busting automático.
+- **`_nav.php`** — sidebar con logo, navegación con estado activo por página, avatar con inicial del usuario y botón de logout.
+
+Todas las páginas comprueban sesión activa; si no, redirigen al login.
 
 ### `login.php`
 - Si no hay ningún usuario en la BD: muestra el formulario de creación del primer administrador.
 - Si ya hay usuarios: muestra el formulario de login normal.
 
 ### `dashboard.php`
-- Muestra 4 estadísticas: dispositivos, backups, usuarios y espacio total usado.
+- 4 tarjetas de estadísticas: dispositivos, backups, usuarios y espacio total.
 - Tabla con los 10 últimos backups (dispositivo, fecha, tamaño, estado).
 - Tabla con los 10 últimos eventos de seguridad.
 
 ### `dispositivos.php`
 - Formulario para registrar un nuevo dispositivo (nombre, SO, repositorio).
-- El token se genera automáticamente y se muestra al crearlo para copiarlo al agente.
-- Tabla con todos los dispositivos, sus tokens y un botón **"generar agente"** por cada uno.
+- El token se genera automáticamente con `bin2hex(random_bytes(32))`.
+- Tabla con todos los dispositivos y un enlace **"descargar agente (.py)"** por cada uno.
 
 ### `generar_agente.php`
-- Al hacer click en "generar agente", muestra una página de espera y ejecuta PyInstaller en el servidor.
-- Genera un `.exe` de Windows con el token y la URL del servidor ya incluidos dentro.
-- El ejecutable se descarga directamente — no requiere Python en el equipo destino.
-- Usa **nowdoc** de PHP para que el código Python pase sin ninguna interpolación, y luego inyecta los valores con `str_replace` sobre placeholders (`__TOKEN__`, `__SERVIDOR__`, `__NOMBRE__`).
-- El agente generado abre una ventana con **tkinter** (librería estándar de Python) donde el usuario selecciona las carpetas o discos a copiar y pulsa "Iniciar Backup".
+- Al hacer click en "descargar agente", genera al vuelo el script Python configurado y lo sirve como descarga directa.
+- Usa **nowdoc** de PHP (`<<<'PYTHON'`) para que el código Python no sufra interpolación, e inyecta el token y la URL del servidor con `str_replace` sobre placeholders (`__TOKEN__`, `__SERVIDOR__`, `__NOMBRE__`).
+- La URL del servidor se calcula dinámicamente con `$_SERVER['HTTP_HOST']` para que funcione en cualquier red.
+- El agente descargado abre una ventana con **tkinter** (librería estándar de Python) donde el usuario elige los discos o carpetas a copiar, configura el intervalo y activa el backup automático mediante **Task Scheduler de Windows** (`schtasks`).
+- Requiere Python 3 instalado en el equipo Windows.
 
 ### `usuarios.php` *(solo Admin)*
 - Comprueba que el usuario logueado tiene rol `Admin`; si no, muestra "Acceso denegado".
 - Formulario para añadir usuarios con nombre, email, contraseña y rol.
-- Tabla con todos los usuarios y sus roles.
+- Tabla con todos los usuarios, roles y estado.
 
 ### `eventos.php`
 - Muestra los últimos 200 eventos de seguridad.
 - Filtros por tipo de evento generados dinámicamente desde los tipos existentes en la BD.
+- Los eventos de tipo `*_fallido` se muestran en rojo; el resto en verde.
 
 ---
 
-## Pendiente
+## Agente Python (Windows)
 
-- [ ] Script de instalación Bash para Debian/Ubuntu
+El agente se descarga desde el panel (una vez por dispositivo) y se ejecuta con Python 3 en Windows.
+
+**Modos de ejecución:**
+- **Normal** (`python agente.py`) — abre la ventana tkinter con la interfaz gráfica.
+- **Automático** (`python agente.py --auto`) — ejecuta el backup en silencio, sin GUI. Es el modo que usa Task Scheduler.
+
+**Flujo del backup:**
+1. Recorre recursivamente las carpetas seleccionadas.
+2. Para cada archivo: calcula el hash SHA256 y lo sube mediante una petición `multipart/form-data` a `api/backup.php`.
+3. El servidor valida el token, guarda el archivo y registra el resultado en la BD.
+
+**Configuración persistente:** se guarda en `%APPDATA%\Niddo\{nombre_dispositivo}.json` (carpetas y intervalo).
