@@ -16,6 +16,7 @@ Niddo/
 │   ├── .htaccess           # Aumenta límites de subida a 500 MB
 │   ├── auth.php            # Autenticación de usuarios y dispositivos
 │   ├── backup.php          # Recepción y registro de archivos de backup
+│   ├── download.php        # Descarga segura de archivos (requiere sesión)
 │   └── setup.php           # Creación del primer administrador
 ├── panel/
 │   ├── _head.php           # Partial compartido: meta tags, fuentes, CSS
@@ -27,9 +28,11 @@ Niddo/
 │   ├── dispositivos.php    # Gestión de dispositivos
 │   ├── usuarios.php        # Gestión de usuarios (solo Admin)
 │   ├── eventos.php         # Registro de eventos de seguridad
+│   ├── restaurar.php       # Descarga de archivos desde backups
 │   └── generar_agente.php  # Genera y descarga el agente .py para cada dispositivo
 ├── niddo_schema.sql        # Esquema completo de la base de datos
 ├── install.sh              # Instalador automático para Debian/Ubuntu/Raspberry Pi
+├── uninstall.sh            # Desinstalador: elimina todos los paquetes y datos
 └── Explicacion.md          # Este archivo
 ```
 
@@ -54,6 +57,16 @@ El instalador realiza en orden:
 7. Crea el directorio `/var/niddo/backups/` con permisos de `www-data`.
 8. Habilita `mod_rewrite` y configura Apache para que el `.htaccess` de la API funcione.
 9. Muestra la URL del panel con la IP del servidor.
+
+## Desinstalador (`uninstall.sh`)
+
+Elimina completamente Niddo y deja el servidor limpio:
+
+```bash
+sudo bash uninstall.sh
+```
+
+Borra: archivos del panel, todos los backups, configuración de Apache, base de datos y usuario MySQL, y desinstala todos los paquetes instalados.
 
 ---
 
@@ -137,6 +150,17 @@ El `.htaccess` de la carpeta `api/` amplía los límites de PHP a 500 MB de subi
 
 ---
 
+## Descarga de archivos (`api/download.php`)
+
+Endpoint seguro para servir archivos del servidor al navegador.
+
+- Comprueba que hay sesión activa antes de servir cualquier archivo.
+- Recibe el ID del archivo (`?id=`) y busca su ruta física en la tabla `files`.
+- Devuelve el archivo con cabeceras `Content-Disposition: attachment`.
+- Si el archivo no existe en disco o el ID es inválido, responde 404.
+
+---
+
 ## Panel web (`panel/`)
 
 Interfaz de administración con diseño dark y sidebar fija. Usa dos partials compartidos:
@@ -177,6 +201,11 @@ Todas las páginas comprueban sesión activa; si no, redirigen al login.
 - Filtros por tipo de evento generados dinámicamente desde los tipos existentes en la BD.
 - Los eventos de tipo `*_fallido` se muestran en rojo; el resto en verde.
 
+### `restaurar.php`
+- Lista todos los dispositivos con el número de backups disponibles.
+- Al seleccionar un dispositivo, muestra todos sus archivos con fecha de backup y tamaño.
+- Cada archivo tiene un enlace de descarga que pasa por `api/download.php`.
+
 ---
 
 ## Agente Python (Windows)
@@ -193,3 +222,12 @@ El agente se descarga desde el panel (una vez por dispositivo) y se ejecuta con 
 3. El servidor valida el token, guarda el archivo y registra el resultado en la BD.
 
 **Configuración persistente:** se guarda en `%APPDATA%\Niddo\{nombre_dispositivo}.json` (carpetas y intervalo).
+
+---
+
+## Pendiente de implementar
+
+Los siguientes puntos son necesarios para cubrir los criterios de evaluación del módulo PASIR:
+
+- **Bloqueo de IP** tras varios intentos fallidos de login (RA.3.e — prevención de riesgos de seguridad).
+- **Indicadores de calidad en el dashboard**: tasa de éxito de backups, dispositivos activos vs inactivos, alertas de incidencias (RA.4.a/b/c).

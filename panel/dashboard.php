@@ -43,10 +43,10 @@ function fmt($b) {
         </div>
 
         <div class="stats">
-            <div class="stat"><div class="stat-accent-line"></div><div class="stat-num"><?= $total_devices ?></div><div class="stat-label">Dispositivos</div></div>
-            <div class="stat"><div class="stat-accent-line"></div><div class="stat-num"><?= $total_backups ?></div><div class="stat-label">Backups</div></div>
-            <div class="stat"><div class="stat-accent-line"></div><div class="stat-num"><?= $total_usuarios ?></div><div class="stat-label">Usuarios</div></div>
-            <div class="stat"><div class="stat-accent-line"></div><div class="stat-num"><?= fmt($espacio) ?></div><div class="stat-label">Almacenado</div></div>
+            <div class="stat"><div class="stat-num"><?= $total_devices ?></div><div class="stat-label">Dispositivos</div></div>
+            <div class="stat"><div class="stat-num"><?= $total_backups ?></div><div class="stat-label">Backups</div></div>
+            <div class="stat"><div class="stat-num"><?= $total_usuarios ?></div><div class="stat-label">Usuarios</div></div>
+            <div class="stat"><div class="stat-num"><?= fmt($espacio) ?></div><div class="stat-label">Almacenado</div></div>
         </div>
 
         <div class="seccion">

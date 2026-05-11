@@ -13,11 +13,7 @@ $error = $_GET['error'] ?? '';
 </head>
 <body class="login-body">
 <div class="login-box">
-    <div class="login-brand">
-        <div class="login-mark">N</div>
-        <div class="login-name">NIDDO</div>
-    </div>
-    <div class="login-divider"></div>
+    <div class="login-brand">NIDDO</div>
 
     <?php if ($sin_usuarios): ?>
         <div class="login-heading">Bienvenido</div>

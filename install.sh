@@ -14,10 +14,10 @@ echo "== Instalando paquetes =="
 apt-get update -qq
 apt-get install -y apache2 mariadb-server php php-mysql php-mbstring libapache2-mod-php
 
-echo "== Arrancando servicios =="
+echo "Arrancando servicios"
 systemctl enable --now apache2 mariadb
 
-echo "== Creando base de datos =="
+echo "Creando base de datos"
 mysql -u root < "$SCRIPT_DIR/niddo_schema.sql"
 mysql -u root -e "
     CREATE USER IF NOT EXISTS 'niddo'@'localhost' IDENTIFIED BY 'niddo';
@@ -25,21 +25,21 @@ mysql -u root -e "
     FLUSH PRIVILEGES;
 "
 
-echo "== Copiando archivos =="
+echo "Copiando archivos"
 rm -rf /var/www/html/niddo
 cp -r "$SCRIPT_DIR" /var/www/html/niddo
 chown -R www-data:www-data /var/www/html/niddo
 
-# Actualizar credenciales en db.php
+# pone las mismas credenciales que en el archivo db.php
 sed -i "s/\$user = 'root'/\$user = 'niddo'/" /var/www/html/niddo/config/db.php
 sed -i "s/\$pass = ''/\$pass = 'niddo'/"     /var/www/html/niddo/config/db.php
 
-echo "== Creando directorio de backups =="
+echo "Creando directorio de las copias de srguidad"
 mkdir -p /var/niddo/backups
 chown -R www-data:www-data /var/niddo
 chmod 750 /var/niddo
 
-echo "== Configurando Apache =="
+echo "Configurando Apache"
 a2enmod rewrite > /dev/null
 cat > /etc/apache2/conf-available/niddo.conf << 'EOF'
 <Directory /var/www/html/niddo>
@@ -52,5 +52,6 @@ systemctl restart apache2
 
 IP=$(hostname -I | awk '{print $1}')
 echo ""
-echo "Instalacion completada."
+echo "Instalacion completada! :)"
+echo "Disfruta!!!"
 echo "Panel: http://$IP/niddo/panel/login.php"
