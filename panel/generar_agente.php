@@ -44,7 +44,7 @@ def hash_archivo(ruta):
             h.update(chunk)
     return h.hexdigest()
 
-def subir_archivo(ruta):
+def subir_archivo(ruta, carpeta):
     nombre   = os.path.basename(ruta)
     hash_sha = hash_archivo(ruta)
     boundary = uuid.uuid4().hex
@@ -60,6 +60,9 @@ def subir_archivo(ruta):
         b'Content-Disposition: form-data; name="hash"' + nl + nl +
         hash_sha.encode() + nl +
         sep + nl +
+        b'Content-Disposition: form-data; name="carpeta"' + nl + nl +
+        carpeta.encode() + nl +
+        sep + nl +
         ('Content-Disposition: form-data; name="archivo"; filename="' + nombre + '"').encode() + nl +
         b'Content-Type: application/octet-stream' + nl + nl +
         contenido + nl +
@@ -70,17 +73,22 @@ def subir_archivo(ruta):
     with urllib.request.urlopen(req, timeout=30) as r:
         return r.read().decode()
 
+def nombre_carpeta(ruta):
+    base = os.path.basename(ruta.rstrip('/\\'))
+    return base if base else ruta.replace(':\\', '_drive').replace(':', '_')
+
 def hacer_backup(carpetas, log_fn=None):
     total = errores = 0
     for carpeta in carpetas:
         if not os.path.exists(carpeta):
             if log_fn: log_fn(f'[omitida] {carpeta}')
             continue
+        nombre_c = nombre_carpeta(carpeta)
         for raiz, dirs, archivos in os.walk(carpeta):
             for nombre in archivos:
                 ruta = os.path.join(raiz, nombre)
                 try:
-                    subir_archivo(ruta)
+                    subir_archivo(ruta, nombre_c)
                     if log_fn: log_fn(f'[ok] {ruta}')
                     total += 1
                 except Exception as e:

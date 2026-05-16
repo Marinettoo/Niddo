@@ -20,11 +20,11 @@ if ($device_id) {
     $device = $stmt->fetch(PDO::FETCH_ASSOC);
 
     $stmt = $pdo->prepare("
-        SELECT f.id, f.nombre, f.punto_fisico, b.fecha_inicio, b.id AS backup_id
+        SELECT f.id, f.nombre, f.carpeta, f.punto_fisico, b.fecha_inicio, b.id AS backup_id
         FROM files f
         JOIN backups b ON b.id = f.backup_id
         WHERE b.device_id = ?
-        ORDER BY b.fecha_inicio DESC, f.nombre
+        ORDER BY f.carpeta, b.fecha_inicio DESC, f.nombre
     ");
     $stmt->execute([$device_id]);
     $archivos = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -81,14 +81,21 @@ function fmt($b) {
                     <tr><td class="vacio">Sin archivos en este dispositivo</td></tr>
                 </tbody></table></div>
             <?php else:
-                $backup_actual = null;
-            ?>
-            <div class="table-wrap"><table>
-                <thead><tr><th>Archivo</th><th>Backup</th><th>Tamaño</th><th></th></tr></thead>
-                <tbody>
-                <?php foreach ($archivos as $f):
+                $carpeta_actual = null;
+                foreach ($archivos as $f):
                     $size = file_exists($f['punto_fisico']) ? filesize($f['punto_fisico']) : 0;
-                ?>
+                    if ($f['carpeta'] !== $carpeta_actual):
+                        if ($carpeta_actual !== null) echo '</tbody></table></div>';
+                        $carpeta_actual = $f['carpeta'];
+            ?>
+                <div style="margin-top:20px; margin-bottom:6px; display:flex; align-items:center; gap:16px;">
+                    <strong><?= htmlspecialchars($carpeta_actual) ?></strong>
+                    <a href="../api/download_carpeta.php?device=<?= $device_id ?>&carpeta=<?= urlencode($carpeta_actual) ?>" class="action-link">descargar carpeta (zip)</a>
+                </div>
+                <div class="table-wrap"><table>
+                    <thead><tr><th>Archivo</th><th>Backup</th><th>Tamaño</th><th></th></tr></thead>
+                    <tbody>
+            <?php endif; ?>
                 <tr>
                     <td class="td-name"><?= htmlspecialchars($f['nombre']) ?></td>
                     <td class="td-mono"><?= $f['fecha_inicio'] ?></td>
@@ -96,8 +103,7 @@ function fmt($b) {
                     <td><a href="../api/download.php?id=<?= $f['id'] ?>" class="action-link">descargar</a></td>
                 </tr>
                 <?php endforeach; ?>
-                </tbody>
-            </table></div>
+                </tbody></table></div>
             <?php endif; ?>
         </div>
         <?php endif; ?>

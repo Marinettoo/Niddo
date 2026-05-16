@@ -79,10 +79,11 @@ CREATE TABLE backups (
     FOREIGN KEY (device_id) REFERENCES devices(id) ON DELETE CASCADE
 );
 
--- 10. Tabla de archivos 
+-- 10. Tabla de archivos
 CREATE TABLE files (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,
+    carpeta VARCHAR(255) DEFAULT 'sin_carpeta',
     hash_sha VARCHAR(64),
     punto_fisico VARCHAR(500),
     backup_id INT,
