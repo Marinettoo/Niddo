@@ -5,7 +5,7 @@ require_once '../config/db.php';
 //guarda la ip del usuario en la variable $ip
 $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown'; //$_SERVER es una varianle superglobal como $_POST
 
-// --- Login de usuario (panel web) ---
+// inicios d sesión d usuario (panel web)
 if (isset($_POST['email'], $_POST['password'])) {
 
 

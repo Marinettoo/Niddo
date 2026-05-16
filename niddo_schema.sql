@@ -8,7 +8,7 @@ CREATE TABLE settings (
     valor VARCHAR(255) NOT NULL
 );
 
--- 2. Tabla de roles (Conectada a USERS mediante M:N)
+-- 2. Tabla de roles 
 CREATE TABLE roles (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL
@@ -19,11 +19,11 @@ CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     email VARCHAR(150) UNIQUE NOT NULL,
-    pwd_hash VARCHAR(255) NOT NULL, -- Aparece como Red_hash en el diagrama
+    pwd_hash VARCHAR(255) NOT NULL,
     estado VARCHAR(20) DEFAULT 'activo'
 );
 
--- 4. Tabla intermedia (M:N) entre ROLES y USERS
+-- 4. Tabla intermedia 
 CREATE TABLE user_roles (
     user_id INT,
     role_id INT,
@@ -33,7 +33,7 @@ CREATE TABLE user_roles (
     FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
 );
 
--- 5. Tabla de eventos de seguridad (1:N con USERS)
+-- 5. Tabla de eventos de seguridad
 CREATE TABLE events (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tipo VARCHAR(50) NOT NULL,
@@ -49,7 +49,7 @@ CREATE TABLE repositorios (
     nombre VARCHAR(100) NOT NULL
 );
 
--- 7. Tabla de dispositivos (Conectada a USERS y REPOSITORIOS)
+-- 7. Tabla de dispositivos
 CREATE TABLE devices (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
@@ -61,7 +61,7 @@ CREATE TABLE devices (
     FOREIGN KEY (repositorio_id) REFERENCES repositorios(id)
 );
 
--- 8. Tabla de carpetas por dispositivo (1:N con DEVICES)
+-- 8. Tabla de carpetas por dispositivo 
 CREATE TABLE device_folders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     ruta VARCHAR(255) NOT NULL,
@@ -69,7 +69,7 @@ CREATE TABLE device_folders (
     FOREIGN KEY (device_id) REFERENCES devices(id) ON DELETE CASCADE
 );
 
--- 9. Tabla de backups (1:N con DEVICES)
+-- 9. Tabla de backups 
 CREATE TABLE backups (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tamaño BIGINT DEFAULT 0,
@@ -79,7 +79,7 @@ CREATE TABLE backups (
     FOREIGN KEY (device_id) REFERENCES devices(id) ON DELETE CASCADE
 );
 
--- 10. Tabla de archivos (1:N con BACKUPS)
+-- 10. Tabla de archivos 
 CREATE TABLE files (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,

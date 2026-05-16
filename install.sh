@@ -1,6 +1,4 @@
 #!/bin/bash
-# Niddo Home Backup Server — Instalador (Debian/Ubuntu)
-
 set -e
 
 if [ "$EUID" -ne 0 ]; then
@@ -10,7 +8,7 @@ fi
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-echo "== Instalando paquetes =="
+echo "Instalando paquetes"
 apt-get update -qq
 apt-get install -y apache2 mariadb-server php php-mysql php-mbstring libapache2-mod-php
 
