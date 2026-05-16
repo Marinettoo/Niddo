@@ -28,9 +28,21 @@ rm -rf /var/www/html/niddo
 cp -r "$SCRIPT_DIR" /var/www/html/niddo
 chown -R www-data:www-data /var/www/html/niddo
 
-# pone las mismas credenciales que en el archivo db.php
-sed -i "s/\$user = 'root'/\$user = 'niddo'/" /var/www/html/niddo/config/db.php
-sed -i "s/\$pass = ''/\$pass = 'niddo'/"     /var/www/html/niddo/config/db.php
+echo "Configurando credenciales de base de datos"
+cat > /var/www/html/niddo/config/db.php << 'EOF'
+<?php
+$host = 'localhost';
+$db   = 'niddo';
+$user = 'niddo';
+$pass = 'niddo';
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    http_response_code(500);
+    die(json_encode(['error' => 'DB connection failed']));
+}
+EOF
 
 echo "Creando directorio de las copias de srguidad"
 mkdir -p /var/niddo/backups
