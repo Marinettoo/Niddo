@@ -231,3 +231,7 @@ Los siguientes puntos son necesarios para cubrir los criterios de evaluación de
 
 - **Bloqueo de IP** tras varios intentos fallidos de login (RA.3.e — prevención de riesgos de seguridad).
 - **Indicadores de calidad en el dashboard**: tasa de éxito de backups, dispositivos activos vs inactivos, alertas de incidencias (RA.4.a/b/c).
+- **Eliminar Usuarios**: Usuarios antiguos que se quieran eliminar
+- **Separar por carpetas**: restaurtar carpetas completas en .zip
+- **+ eventos en el visor de eventos**: copia hecha o copia restaurada
+- **Página web que venda el producto**: 
