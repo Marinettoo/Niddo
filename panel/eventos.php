@@ -31,7 +31,7 @@ $tipos   = $pdo->query("SELECT DISTINCT tipo FROM events ORDER BY tipo")->fetchA
         <div class="filtros">
             <a href="eventos.php" class="filtro <?= !$filtro?'activo':'' ?>">Todos</a>
             <?php foreach ($tipos as $t): ?>
-                <a href="?tipo=<?= urlencode($t) ?>" class="filtro <?= $filtro===$t?'activo':'' ?>"><?= htmlspecialchars($t) ?></a>
+                <a href="?tipo=<?= urlencode($t) ?>" class="filtro <?= $filtro===$t?'activo':'' ?>"><?= ucfirst(str_replace('_', ' ', $t)) ?></a>
             <?php endforeach; ?>
         </div>
 
@@ -40,9 +40,10 @@ $tipos   = $pdo->query("SELECT DISTINCT tipo FROM events ORDER BY tipo")->fetchA
                 <thead><tr><th>Tipo</th><th>IP</th><th>Usuario</th><th>Fecha</th></tr></thead>
                 <tbody>
                 <?php foreach ($eventos as $e):
-                    $c = str_contains($e['tipo'],'fallido') ? 'error' : 'ok'; ?>
+                    $c = str_contains($e['tipo'],'fallido') || str_contains($e['tipo'],'error') || str_contains($e['tipo'],'bloqueada') ? 'error' : 'ok';
+                    $label = ucfirst(str_replace('_', ' ', $e['tipo'])); ?>
                 <tr>
-                    <td><span class="badge badge-<?= $c ?>"><span class="badge-dot"></span><?= htmlspecialchars($e['tipo']) ?></span></td>
+                    <td><span class="badge badge-<?= $c ?>"><?= htmlspecialchars($label) ?></span></td>
                     <td class="td-mono"><?= htmlspecialchars($e['ip']) ?></td>
                     <td class="td-name"><?= htmlspecialchars($e['usuario'] ?? '—') ?></td>
                     <td class="td-mono"><?= $e['fecha'] ?></td>

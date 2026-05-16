@@ -3,6 +3,11 @@ session_start();
 if (!isset($_SESSION['user_id'])) { http_response_code(403); die('Acceso denegado'); }
 require_once '../config/db.php';
 
+if (!class_exists('ZipArchive')) {
+    http_response_code(500);
+    die('El servidor no tiene php-zip instalado. Ejecuta: sudo apt-get install php-zip && sudo systemctl restart apache2');
+}
+
 $device_id = (int)($_GET['device'] ?? 0);
 $carpeta   = $_GET['carpeta'] ?? '';
 

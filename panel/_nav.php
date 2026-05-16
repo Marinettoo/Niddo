@@ -2,7 +2,7 @@
 <aside class="sidebar">
     <div class="sidebar-logo">NIDD0</div>
     <nav class="sidebar-nav">
-        <a href="dashboard.php"    class="<?= $p==='dashboard.php'    ?'activo':'' ?>">Dashboard</a>
+        <a href="dashboard.php"    class="<?= $p==='dashboard.php'    ?'activo':'' ?>">Inicio</a>
         <a href="dispositivos.php" class="<?= $p==='dispositivos.php' ?'activo':'' ?>">Dispositivos</a>
         <a href="usuarios.php"     class="<?= $p==='usuarios.php'     ?'activo':'' ?>">Usuarios</a>
         <a href="eventos.php"      class="<?= $p==='eventos.php'      ?'activo':'' ?>">Eventos</a>

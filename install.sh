@@ -10,7 +10,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 echo "Instalando paquetes"
 apt-get update -qq
-apt-get install -y apache2 mariadb-server php php-mysql php-mbstring libapache2-mod-php
+apt-get install -y apache2 mariadb-server php php-mysql php-mbstring php-zip libapache2-mod-php
 
 echo "Arrancando servicios"
 systemctl enable --now apache2 mariadb
