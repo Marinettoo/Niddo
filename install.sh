@@ -13,6 +13,12 @@ echo "Instalando paquetes"
 apt-get update -qq
 apt-get install -y apache2 mariadb-server php php-mysql php-mbstring php-zip libapache2-mod-php
 
+echo "Inicializando base de datos si es necesario"
+if [ ! -d /var/lib/mariadb/mysql ]; then
+    chage -E -1 mysql
+    su - mysql -s /bin/bash -c 'mariadb-install-db --datadir=/var/lib/mariadb --auth-root-authentication-method=normal' > /dev/null 2>&1
+fi
+
 echo "Arrancando servicios"
 systemctl enable --now apache2 mariadb
 
