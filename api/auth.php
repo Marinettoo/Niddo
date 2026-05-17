@@ -40,6 +40,10 @@ if (isset($_POST['email'], $_POST['password'])) {
     $_SESSION['user_id'] = $user['id'];
     $_SESSION['nombre']  = $user['nombre'];
 
+    $roles_stmt = $pdo->prepare("SELECT r.nombre FROM roles r JOIN user_roles ur ON ur.role_id=r.id WHERE ur.user_id=?");
+    $roles_stmt->execute([$user['id']]);
+    $_SESSION['roles'] = array_column($roles_stmt->fetchAll(PDO::FETCH_ASSOC), 'nombre');
+
     $pdo->prepare("INSERT INTO events (tipo, ip, user_id) VALUES ('login_ok', ?, ?)")->execute([$ip, $user['id']]);
     header('Location: ../panel/dashboard.php');
     exit;

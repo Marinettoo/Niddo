@@ -8,19 +8,33 @@ if (!class_exists('ZipArchive')) {
     die('El servidor no tiene php-zip instalado. Ejecuta: sudo apt-get install php-zip && sudo systemctl restart apache2');
 }
 
+$es_admin = in_array('Admin', $_SESSION['roles'] ?? []);
+$uid = $_SESSION['user_id'];
+
 $device_id = (int)($_GET['device'] ?? 0);
 $carpeta   = $_GET['carpeta'] ?? '';
 
 if (!$device_id || $carpeta === '') { http_response_code(400); die('Parametros incorrectos'); }
 
-$stmt = $pdo->prepare("
-    SELECT f.nombre, f.punto_fisico
-    FROM files f
-    JOIN backups b ON b.id = f.backup_id
-    WHERE b.device_id = ? AND f.carpeta = ?
-    ORDER BY f.nombre
-");
-$stmt->execute([$device_id, $carpeta]);
+if ($es_admin) {
+    $stmt = $pdo->prepare("
+        SELECT f.nombre, f.punto_fisico
+        FROM files f JOIN backups b ON b.id = f.backup_id
+        WHERE b.device_id = ? AND f.carpeta = ?
+        ORDER BY f.nombre
+    ");
+    $stmt->execute([$device_id, $carpeta]);
+} else {
+    $stmt = $pdo->prepare("
+        SELECT f.nombre, f.punto_fisico
+        FROM files f
+        JOIN backups b ON b.id = f.backup_id
+        JOIN devices d ON d.id = b.device_id
+        WHERE b.device_id = ? AND f.carpeta = ? AND d.user_id = ?
+        ORDER BY f.nombre
+    ");
+    $stmt->execute([$device_id, $carpeta, $uid]);
+}
 $archivos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 if (!$archivos) { http_response_code(404); die('Sin archivos en esta carpeta'); }

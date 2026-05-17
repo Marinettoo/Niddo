@@ -3,21 +3,37 @@ session_start();
 if (!isset($_SESSION['user_id'])) { header('Location: login.php'); exit; }
 require_once '../config/db.php';
 
+$es_admin = in_array('Admin', $_SESSION['roles'] ?? []);
+$uid = $_SESSION['user_id'];
+
 $msg = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $token = bin2hex(random_bytes(32));
     $pdo->prepare("INSERT INTO devices (nombre, so, token, user_id, repositorio_id) VALUES (?, ?, ?, ?, ?)")
-        ->execute([trim($_POST['nombre']), $_POST['so'], $token, $_SESSION['user_id'], $_POST['repositorio_id'] ?: null]);
+        ->execute([trim($_POST['nombre']), $_POST['so'], $token, $uid, $_POST['repositorio_id'] ?: null]);
     $msg = "Dispositivo creado · token: $token";
 }
 
-$dispositivos = $pdo->query("
-    SELECT d.id, d.nombre, d.so, d.token, u.nombre AS usuario, r.nombre AS repo
-    FROM devices d
-    LEFT JOIN users u ON u.id = d.user_id
-    LEFT JOIN repositorios r ON r.id = d.repositorio_id
-    ORDER BY d.id DESC
-")->fetchAll(PDO::FETCH_ASSOC);
+if ($es_admin) {
+    $dispositivos = $pdo->query("
+        SELECT d.id, d.nombre, d.so, d.token, u.nombre AS usuario, r.nombre AS repo
+        FROM devices d
+        LEFT JOIN users u ON u.id = d.user_id
+        LEFT JOIN repositorios r ON r.id = d.repositorio_id
+        ORDER BY d.id DESC
+    ")->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    $s = $pdo->prepare("
+        SELECT d.id, d.nombre, d.so, d.token, u.nombre AS usuario, r.nombre AS repo
+        FROM devices d
+        LEFT JOIN users u ON u.id = d.user_id
+        LEFT JOIN repositorios r ON r.id = d.repositorio_id
+        WHERE d.user_id = ?
+        ORDER BY d.id DESC
+    ");
+    $s->execute([$uid]);
+    $dispositivos = $s->fetchAll(PDO::FETCH_ASSOC);
+}
 
 $repositorios = $pdo->query("SELECT * FROM repositorios")->fetchAll(PDO::FETCH_ASSOC);
 ?>

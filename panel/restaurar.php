@@ -3,31 +3,50 @@ session_start();
 if (!isset($_SESSION['user_id'])) { header('Location: login.php'); exit; }
 require_once '../config/db.php';
 
+$es_admin = in_array('Admin', $_SESSION['roles'] ?? []);
+$uid = $_SESSION['user_id'];
 $device_id = (int)($_GET['device'] ?? 0);
 
-$dispositivos = $pdo->query("
-    SELECT d.id, d.nombre, d.so, COUNT(DISTINCT b.id) AS total_backups
-    FROM devices d
-    LEFT JOIN backups b ON b.device_id = d.id
-    GROUP BY d.id ORDER BY d.nombre
-")->fetchAll(PDO::FETCH_ASSOC);
+if ($es_admin) {
+    $dispositivos = $pdo->query("
+        SELECT d.id, d.nombre, d.so, COUNT(DISTINCT b.id) AS total_backups
+        FROM devices d LEFT JOIN backups b ON b.device_id = d.id
+        GROUP BY d.id ORDER BY d.nombre
+    ")->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    $s = $pdo->prepare("
+        SELECT d.id, d.nombre, d.so, COUNT(DISTINCT b.id) AS total_backups
+        FROM devices d LEFT JOIN backups b ON b.device_id = d.id
+        WHERE d.user_id = ?
+        GROUP BY d.id ORDER BY d.nombre
+    ");
+    $s->execute([$uid]);
+    $dispositivos = $s->fetchAll(PDO::FETCH_ASSOC);
+}
 
 $archivos = [];
 $device   = null;
 if ($device_id) {
-    $stmt = $pdo->prepare("SELECT * FROM devices WHERE id = ?");
-    $stmt->execute([$device_id]);
+    if ($es_admin) {
+        $stmt = $pdo->prepare("SELECT * FROM devices WHERE id = ?");
+        $stmt->execute([$device_id]);
+    } else {
+        $stmt = $pdo->prepare("SELECT * FROM devices WHERE id = ? AND user_id = ?");
+        $stmt->execute([$device_id, $uid]);
+    }
     $device = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $stmt = $pdo->prepare("
-        SELECT f.id, f.nombre, f.carpeta, f.punto_fisico, b.fecha_inicio, b.id AS backup_id
-        FROM files f
-        JOIN backups b ON b.id = f.backup_id
-        WHERE b.device_id = ?
-        ORDER BY f.carpeta, b.fecha_inicio DESC, f.nombre
-    ");
-    $stmt->execute([$device_id]);
-    $archivos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if ($device) {
+        $stmt = $pdo->prepare("
+            SELECT f.id, f.nombre, f.carpeta, f.punto_fisico, b.fecha_inicio, b.id AS backup_id
+            FROM files f
+            JOIN backups b ON b.id = f.backup_id
+            WHERE b.device_id = ?
+            ORDER BY f.carpeta, b.fecha_inicio DESC, f.nombre
+        ");
+        $stmt->execute([$device_id]);
+        $archivos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 
 function fmt($b) {

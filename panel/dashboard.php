@@ -3,22 +3,40 @@ session_start();
 if (!isset($_SESSION['user_id'])) { header('Location: login.php'); exit; }
 require_once '../config/db.php';
 
-$total_devices  = $pdo->query("SELECT COUNT(*) FROM devices")->fetchColumn();
-$total_backups  = $pdo->query("SELECT COUNT(*) FROM backups")->fetchColumn();
-$total_usuarios = $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
-$espacio        = $pdo->query("SELECT COALESCE(SUM(tamaño),0) FROM backups")->fetchColumn();
+$es_admin = in_array('Admin', $_SESSION['roles'] ?? []);
+$uid = $_SESSION['user_id'];
 
-$backups = $pdo->query("
-    SELECT b.fecha_inicio, b.estado, b.tamaño, d.nombre AS dispositivo
-    FROM backups b JOIN devices d ON d.id = b.device_id
-    ORDER BY b.fecha_inicio DESC LIMIT 10
-")->fetchAll(PDO::FETCH_ASSOC);
-
-$eventos = $pdo->query("
-    SELECT e.tipo, e.ip, e.fecha, u.nombre AS usuario
-    FROM events e LEFT JOIN users u ON u.id = e.user_id
-    ORDER BY e.fecha DESC LIMIT 10
-")->fetchAll(PDO::FETCH_ASSOC);
+if ($es_admin) {
+    $total_devices  = $pdo->query("SELECT COUNT(*) FROM devices")->fetchColumn();
+    $total_backups  = $pdo->query("SELECT COUNT(*) FROM backups")->fetchColumn();
+    $total_usuarios = $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
+    $espacio        = $pdo->query("SELECT COALESCE(SUM(tamaño),0) FROM backups")->fetchColumn();
+    $backups = $pdo->query("
+        SELECT b.fecha_inicio, b.estado, b.tamaño, d.nombre AS dispositivo
+        FROM backups b JOIN devices d ON d.id = b.device_id
+        ORDER BY b.fecha_inicio DESC LIMIT 10
+    ")->fetchAll(PDO::FETCH_ASSOC);
+    $eventos = $pdo->query("
+        SELECT e.tipo, e.ip, e.fecha, u.nombre AS usuario
+        FROM events e LEFT JOIN users u ON u.id = e.user_id
+        ORDER BY e.fecha DESC LIMIT 10
+    ")->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    $s = $pdo->prepare("SELECT COUNT(*) FROM devices WHERE user_id=?"); $s->execute([$uid]);
+    $total_devices = $s->fetchColumn();
+    $s = $pdo->prepare("SELECT COUNT(*) FROM backups b JOIN devices d ON d.id=b.device_id WHERE d.user_id=?"); $s->execute([$uid]);
+    $total_backups = $s->fetchColumn();
+    $total_usuarios = null;
+    $s = $pdo->prepare("SELECT COALESCE(SUM(b.tamaño),0) FROM backups b JOIN devices d ON d.id=b.device_id WHERE d.user_id=?"); $s->execute([$uid]);
+    $espacio = $s->fetchColumn();
+    $s = $pdo->prepare("
+        SELECT b.fecha_inicio, b.estado, b.tamaño, d.nombre AS dispositivo
+        FROM backups b JOIN devices d ON d.id = b.device_id
+        WHERE d.user_id=? ORDER BY b.fecha_inicio DESC LIMIT 10
+    "); $s->execute([$uid]);
+    $backups = $s->fetchAll(PDO::FETCH_ASSOC);
+    $eventos = [];
+}
 
 function fmt($b) {
     if ($b >= 1073741824) return round($b/1073741824,1).' GB';
@@ -45,7 +63,9 @@ function fmt($b) {
         <div class="stats">
             <div class="stat"><div class="stat-num"><?= $total_devices ?></div><div class="stat-label">Dispositivos</div></div>
             <div class="stat"><div class="stat-num"><?= $total_backups ?></div><div class="stat-label">Backups</div></div>
+            <?php if ($es_admin): ?>
             <div class="stat"><div class="stat-num"><?= $total_usuarios ?></div><div class="stat-label">Usuarios</div></div>
+            <?php endif; ?>
             <div class="stat"><div class="stat-num"><?= fmt($espacio) ?></div><div class="stat-label">Almacenado</div></div>
         </div>
 
@@ -68,6 +88,7 @@ function fmt($b) {
             </table></div>
         </div>
 
+        <?php if ($es_admin): ?>
         <div class="seccion">
             <div class="seccion-header"><div class="seccion-title">Últimos eventos</div></div>
             <div class="table-wrap"><table>
@@ -86,6 +107,7 @@ function fmt($b) {
                 </tbody>
             </table></div>
         </div>
+        <?php endif; ?>
     </main>
 </div>
 </body>

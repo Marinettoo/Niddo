@@ -8,11 +8,12 @@ CREATE TABLE settings (
     valor VARCHAR(255) NOT NULL
 );
 
--- 2. Tabla de roles 
+-- 2. Tabla de roles
 CREATE TABLE roles (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL
 );
+INSERT INTO roles (id, nombre) VALUES (1, 'Admin'), (2, 'Usuario');
 
 -- 3. Tabla principal de usuarios
 CREATE TABLE users (
