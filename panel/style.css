@@ -315,6 +315,14 @@ table td {
     margin-bottom: 14px;
     background: #e6f5ee;
 }
+.msg-error {
+    font-size: 13px;
+    color: #cc0000;
+    border: 1px solid #cc8888;
+    padding: 8px 12px;
+    margin-bottom: 14px;
+    background: #fff0f0;
+}
 
 /* Login */
 body.login-body {

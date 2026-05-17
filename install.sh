@@ -51,10 +51,15 @@ try {
 }
 EOF
 
-echo "Creando directorio de las copias de srguidad"
+echo "Creando directorio de copias de seguridad"
 mkdir -p /var/niddo/backups
 chown -R www-data:www-data /var/niddo
 chmod 750 /var/niddo
+
+echo "Configurando permisos para gestion de discos"
+echo "www-data ALL=(root) NOPASSWD: /bin/mount, /bin/umount" > /etc/sudoers.d/niddo
+chmod 440 /etc/sudoers.d/niddo
+chown www-data:www-data /var/www/html/niddo/config/cuotas.php
 
 echo "Configurando Apache"
 a2enmod rewrite > /dev/null

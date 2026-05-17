@@ -7,6 +7,7 @@
         <?php if ($es_admin): ?>
         <a href="usuarios.php"     class="<?= $p==='usuarios.php'     ?'activo':'' ?>">Usuarios</a>
         <a href="eventos.php"      class="<?= $p==='eventos.php'      ?'activo':'' ?>">Eventos</a>
+        <a href="discos.php"       class="<?= $p==='discos.php'       ?'activo':'' ?>">Discos</a>
         <?php endif; ?>
         <a href="restaurar.php"    class="<?= $p==='restaurar.php'    ?'activo':'' ?>">Restaurar</a>
     </nav>
