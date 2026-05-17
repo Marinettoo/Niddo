@@ -295,6 +295,17 @@ table td {
     color: #009970;
 }
 
+/* Avisos informativos */
+.aviso-info {
+    font-size: 13px;
+    color: #555500;
+    border: 1px solid #cccc88;
+    padding: 8px 12px;
+    margin-bottom: 14px;
+    background: #fffff0;
+}
+.aviso-info a { color: #005599; }
+
 /* Mensajes */
 .msg-ok {
     font-size: 13px;

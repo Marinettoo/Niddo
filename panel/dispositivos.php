@@ -39,7 +39,7 @@ $repositorios = $pdo->query("SELECT * FROM repositorios")->fetchAll(PDO::FETCH_A
         <?php if ($msg): ?><div class="msg-ok"><?= htmlspecialchars($msg) ?></div><?php endif; ?>
 
         <form method="POST" class="form-card">
-            <div class="field"><label>Nombre</label><input type="text" name="nombre" required placeholder="PC de jesús"></div>
+            <div class="field"><label>Nombre</label><input type="text" name="nombre" required placeholder="Nombre del equipo"></div>
             <div class="field"><label>Sistema operativo</label>
                 <select name="so"><option>Windows</option><option>Linux</option><option>macOS</option></select>
             </div>
@@ -53,6 +53,11 @@ $repositorios = $pdo->query("SELECT * FROM repositorios")->fetchAll(PDO::FETCH_A
             </div>
             <button class="btn btn-primary" type="submit">Crear dispositivo</button>
         </form>
+
+        <div class="aviso-info">
+            <strong>Aviso:</strong> El agente necesita tener python 3 instalado en el equipo cliente.
+            Si no lo tienes, descargalo desde <a href="https://www.python.org/downloads/" target="_blank">aquí</a>. Y ejecuta el agente con él.
+        </div>
 
         <div class="seccion">
             <div class="seccion-header"><div class="seccion-title">Dispositivos registrados</div></div>

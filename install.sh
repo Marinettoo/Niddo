@@ -7,6 +7,7 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+sed -i 's/\r//' "$SCRIPT_DIR/install.sh"
 
 echo "Instalando paquetes"
 apt-get update -qq
