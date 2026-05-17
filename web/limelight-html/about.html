@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+      <title>Niddo — El Proyecto</title>
+      <link rel="stylesheet" href="css/bootstrap.min.css">
+      <link rel="stylesheet" href="css/style.css">
+      <link rel="stylesheet" href="css/responsive.css">
+      <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
+      <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+      <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+   </head>
+   <body class="main-layout in_page">
+      <div class="loader_bg">
+         <div class="loader"><img src="images/loading.gif" alt="#"/></div>
+      </div>
+      <header>
+         <div class="header">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-12 col-sm-3 col logo_section">
+                     <div class="full"><div class="center-desk"><div class="logo">
+                        <a href="index.html"><img src="images/logo.png" alt="Niddo"/></a>
+                     </div></div></div>
+                  </div>
+                  <div class="col-md-10 offset-md-1">
+                     <nav class="navigation navbar navbar-expand-md navbar-dark">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarsExample04">
+                           <ul class="navbar-nav mr-auto">
+                              <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                              <li class="nav-item active"><a class="nav-link" href="about.html">El Proyecto</a></li>
+                              <li class="nav-item"><a class="nav-link" href="service.html">Funcionalidades</a></li>
+                              <li class="nav-item"><a class="nav-link" href="gallery.html">Instalación</a></li>
+                              <li class="nav-item"><a class="nav-link" href="testimonial.html">Seguridad</a></li>
+                              <li class="nav-item"><a class="nav-link" href="contact.html">Contacto</a></li>
+                           </ul>
+                        </div>
+                     </nav>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </header>
+
+      <!-- RA.1 — Análisis del contexto -->
+      <div class="service">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="titlepage">
+                     <h2>Análisis del <span class="green">Sector</span></h2>
+                  </div>
+               </div>
+            </div>
+
+            <!-- Clasificación de empresas del sector -->
+            <div class="row" style="margin-bottom:40px;">
+               <div class="col-md-10 offset-md-1">
+                  <h3 style="color:#1f3f72; margin-bottom:15px;">Empresas del sector y tipo de producto</h3>
+                  <p>El mercado del almacenamiento y las copias de seguridad se divide principalmente en tres categorías:</p>
+                  <ul>
+                     <li><strong>Servicios en la nube (SaaS):</strong> Google Drive, Dropbox, iDrive, Backblaze. Ofrecen almacenamiento externo gestionado. Son cómodos pero implican pago mensual recurrente y cesión de datos a terceros.</li>
+                     <li><strong>Appliances NAS (Hardware):</strong> Synology, QNAP, Western Digital MyCloud. Dispositivos dedicados de alto rendimiento con software propio. Elevado coste de entrada (150–800€) y curva de aprendizaje técnica.</li>
+                     <li><strong>Software de backup autoalojado (Open Source):</strong> TrueNAS, UrBackup, Duplicati. Soluciones gratuitas muy potentes pero orientadas a usuarios técnicos, con instalación y configuración complejas.</li>
+                  </ul>
+                  <p>Niddo se posiciona en un nicho intermedio: <strong>software autoalojado de bajo coste, pensado para usuarios sin conocimientos avanzados</strong>, que buscan la privacidad del almacenamiento local sin la complejidad de las soluciones existentes.</p>
+               </div>
+            </div>
+
+            <!-- Necesidades más demandadas -->
+            <div class="row" style="margin-bottom:40px;">
+               <div class="col-md-10 offset-md-1">
+                  <h3 style="color:#1f3f72; margin-bottom:15px;">Necesidades identificadas en el mercado</h3>
+                  <p>Tras analizar el sector se identificaron las siguientes demandas sin cubrir adecuadamente:</p>
+                  <ul>
+                     <li>Usuarios domésticos y micropymes que quieren copias de seguridad locales sin pagar mensualidades de nube.</li>
+                     <li>Preocupación creciente por la privacidad de los datos (RGPD), especialmente tras escándalos de filtración en grandes proveedores.</li>
+                     <li>Necesidad de una solución "plug and play" que no requiera ser administrador de sistemas para configurarla.</li>
+                     <li>Deseo de tener visibilidad sobre qué datos se guardan, cuándo y desde qué dispositivo, sin depender de dashboards externos.</li>
+                  </ul>
+               </div>
+            </div>
+
+            <!-- Oportunidades de negocio -->
+            <div class="row" style="margin-bottom:40px;">
+               <div class="col-md-10 offset-md-1">
+                  <h3 style="color:#1f3f72; margin-bottom:15px;">Oportunidades de negocio</h3>
+                  <p>El sector del backup doméstico y para micropymes tiene una penetración de mercado baja respecto a la nube, pero la tendencia de soberanía digital y privacidad está generando una demanda creciente de alternativas locales. Las principales oportunidades son:</p>
+                  <ul>
+                     <li>Mercado de usuarios técnicos y entusiastas (homelab) que buscan alternativas a Synology/QNAP sin el precio del hardware.</li>
+                     <li>Micropymes y autónomos obligados por el RGPD a demostrar control sobre sus datos.</li>
+                     <li>Colegios, asociaciones y entidades sin ánimo de lucro con presupuesto TI muy limitado.</li>
+                  </ul>
+               </div>
+            </div>
+
+            <!-- Modelo de negocio -->
+            <div class="row" style="margin-bottom:40px;">
+               <div class="col-md-10 offset-md-1">
+                  <h3 style="color:#1f3f72; margin-bottom:15px;">Modelo de negocio</h3>
+                  <p>Niddo opera bajo un modelo <strong>freemium con licencias de pago</strong>:</p>
+                  <ul>
+                     <li><strong>Versión Community (gratuita / open source):</strong> funcionalidad completa del servidor, panel web y agente Windows. Código disponible públicamente. Sin soporte técnico ni actualizaciones prioritarias. Límite recomendado: 2 dispositivos cliente.</li>
+                     <li><strong>Licencia por dispositivo — 30€ (pago único):</strong> un equipo Windows vinculado, actualizaciones durante 2 años y soporte por email. Pensada para usuarios domésticos con un solo PC.</li>
+                     <li><strong>Licencia por usuario — 50€/año:</strong> hasta 4 dispositivos, gestión de múltiples usuarios con roles (Admin/Usuario), acceso completo al panel administrativo y soporte prioritario. Orientada a micropymes y familias con varios equipos.</li>
+                  </ul>
+                  <p>El código fuente open source actúa como herramienta de captación: el usuario instala gratis, comprueba que funciona y, si quiere soporte o más funciones, adquiere la licencia. Este modelo (similar al de Bitwarden o GitLab CE) reduce el coste de adquisición de clientes al mínimo.</p>
+               </div>
+            </div>
+
+            <!-- Ayudas y subvenciones -->
+            <div class="row" style="margin-bottom:40px;">
+               <div class="col-md-10 offset-md-1">
+                  <h3 style="color:#1f3f72; margin-bottom:15px;">Ayudas y subvenciones — Kit Digital</h3>
+                  <p>El programa <strong>Kit Digital</strong> del Gobierno de España, financiado con fondos europeos Next Generation EU, subvenciona la digitalización de pymes y autónomos. La categoría <em>Ciberseguridad</em> cubre herramientas que garanticen la seguridad del negocio digital, con ayudas de:</p>
+                  <ul>
+                     <li>Hasta <strong>2.000€</strong> para empresas de 0-2 empleados (autónomos).</li>
+                     <li>Hasta <strong>6.000€</strong> para empresas de 10-49 empleados.</li>
+                  </ul>
+                  <p>Niddo encaja en esta categoría al ofrecer copias de seguridad locales cifradas, registro de eventos de seguridad (mini-SOC) y gestión de accesos por roles. Para optar a esta ayuda sería necesario registrarse como <strong>Agente Digitalizador</strong> en la plataforma <em>acelerapyme.gob.es</em>.</p>
+               </div>
+            </div>
+
+            <!-- Obligaciones fiscales y laborales -->
+            <div class="row" style="margin-bottom:40px;">
+               <div class="col-md-10 offset-md-1">
+                  <h3 style="color:#1f3f72; margin-bottom:15px;">Obligaciones fiscales, laborales y de prevención de riesgos</h3>
+                  <ul>
+                     <li><strong>IAE:</strong> alta en el epígrafe 879 – Servicios informáticos n.c.o.p. (si se factura).</li>
+                     <li><strong>IVA:</strong> 21% en la venta de licencias software si la facturación supera los 22.000€/año.</li>
+                     <li><strong>RGPD:</strong> al ser una solución autoalojada, el propio cliente actúa como responsable de tratamiento. Niddo no gestiona datos de usuarios finales, por lo que no está sujeta a la obligación de registro de actividades de tratamiento como proveedor.</li>
+                     <li><strong>Prevención de riesgos laborales:</strong> aplicable la normativa PRL para trabajos en remoto (ergonomía, descansos, iluminación). No se requieren permisos especiales para la puesta en marcha del software.</li>
+                  </ul>
+               </div>
+            </div>
+
+            <!-- Guion de trabajo -->
+            <div class="row" style="margin-bottom:40px;">
+               <div class="col-md-10 offset-md-1">
+                  <h3 style="color:#1f3f72; margin-bottom:15px;">Guión de trabajo seguido</h3>
+                  <ol>
+                     <li>Análisis del mercado y detección de necesidades no cubiertas.</li>
+                     <li>Evaluación de prototipos alternativos (gestor de eventos, gestor de tráfico) hasta dar con la propuesta de backup local.</li>
+                     <li>Diseño del esquema de base de datos y arquitectura del sistema.</li>
+                     <li>Desarrollo del core: API REST, autenticación, roles y registro de eventos.</li>
+                     <li>Desarrollo del panel web de administración.</li>
+                     <li>Desarrollo del módulo de recepción de backups y agente Windows.</li>
+                     <li>Implementación del instalador automático bash.</li>
+                     <li>Pruebas en entorno real (VPS Ubuntu) y corrección de errores.</li>
+                     <li>Documentación y presentación del proyecto.</li>
+                  </ol>
+               </div>
+            </div>
+
+         </div>
+      </div>
+
+      <!-- footer -->
+      <footer>
+         <div class="footer">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-3 col-sm-6">
+                     <h3>Niddo</h3>
+                     <p class="variat pad_roght2">Servidor de copias de seguridad autoalojado. Proyecto de fin de ciclo ASIR — IES Zaidín-Vergeles, Granada.</p>
+                  </div>
+                  <div class="col-md-3 col-sm-6">
+                     <h3>Tecnologías</h3>
+                     <p class="variat pad_roght2">PHP · MariaDB · Apache · Python · Bash · Linux (Debian/Ubuntu)</p>
+                  </div>
+                  <div class="col-md-3 col-sm-6">
+                     <h3>NAVEGACIÓN</h3>
+                     <ul class="link_menu">
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="about.html">El Proyecto</a></li>
+                        <li><a href="service.html">Funcionalidades</a></li>
+                        <li><a href="gallery.html">Instalación</a></li>
+                        <li><a href="testimonial.html">Seguridad</a></li>
+                        <li><a href="contact.html">Contacto</a></li>
+                     </ul>
+                  </div>
+                  <div class="col-md-3 col-sm-6">
+                     <h3>Equipo</h3>
+                     <p class="variat">Jesus Perez Marinetto<br>Nicolas Baya-Casal Sansolini<br>Ismael Martin Ruiz<br>Ivan Lopez Garcia</p>
+                  </div>
+               </div>
+            </div>
+            <div class="copyright">
+               <div class="container">
+                  <div class="row">
+                     <div class="col-md-10 offset-md-1">
+                        <p>© 2025 Niddo — Proyecto ASIR · IES Zaidín-Vergeles</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </footer>
+      <script src="js/jquery.min.js"></script>
+      <script src="js/bootstrap.bundle.min.js"></script>
+      <script src="js/jquery-3.0.0.min.js"></script>
+      <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+      <script src="js/custom.js"></script>
+   </body>
+</html>

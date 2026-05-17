@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+      <title>Niddo — Servidor de copias de seguridad doméstico</title>
+      <meta name="keywords" content="backup, copias de seguridad, servidor local, RGPD, autoalojado">
+      <meta name="description" content="Niddo es un servidor de copias de seguridad autoalojado para usuarios domésticos y pequeñas empresas.">
+      <link rel="stylesheet" href="css/bootstrap.min.css">
+      <link rel="stylesheet" href="css/style.css">
+      <link rel="stylesheet" href="css/responsive.css">
+      <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
+      <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+      <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+   </head>
+   <body class="main-layout">
+      <div class="loader_bg">
+         <div class="loader"><img src="images/loading.gif" alt="#"/></div>
+      </div>
+      <!-- header -->
+      <header>
+         <div class="header">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-12 col-sm-3 col logo_section">
+                     <div class="full">
+                        <div class="center-desk">
+                           <div class="logo">
+                              <a href="index.html"><img src="images/logo.png" alt="Niddo" /></a>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-10 offset-md-1">
+                     <nav class="navigation navbar navbar-expand-md navbar-dark">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarsExample04">
+                           <ul class="navbar-nav mr-auto">
+                              <li class="nav-item active"><a class="nav-link" href="index.html">Inicio</a></li>
+                              <li class="nav-item"><a class="nav-link" href="about.html">El Proyecto</a></li>
+                              <li class="nav-item"><a class="nav-link" href="service.html">Funcionalidades</a></li>
+                              <li class="nav-item"><a class="nav-link" href="gallery.html">Instalación</a></li>
+                              <li class="nav-item"><a class="nav-link" href="testimonial.html">Seguridad</a></li>
+                              <li class="nav-item"><a class="nav-link" href="contact.html">Contacto</a></li>
+                           </ul>
+                        </div>
+                     </nav>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </header>
+      <!-- banner -->
+      <section class="banner_main">
+         <div id="myCarousel" class="carousel slide banner" data-ride="carousel">
+            <div class="carousel-inner">
+               <div class="carousel-item active">
+                  <div class="container">
+                     <div class="carousel-caption relative">
+                        <div class="row">
+                           <div class="col-md-5 col-sm-9 col-12">
+                              <div class="text-bg">
+                                 <h1>Tu backup,<br>en casa.</h1>
+                                 <span>Instala tu propio servidor de copias de seguridad en menos de 5 minutos. Sin cuotas mensuales, sin nube, sin depender de nadie.</span>
+                                 <a class="read_more" href="gallery.html">Descarga gratis</a>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="carousel-item">
+                  <div class="container">
+                     <div class="carousel-caption relative">
+                        <div class="row">
+                           <div class="col-md-5 col-sm-9 col-12">
+                              <div class="text-bg">
+                                 <h1>Privacidad<br>total.</h1>
+                                 <span>Tus archivos nunca salen de tu red. Niddo es 100% autoalojado: tú eres el único dueño de tus datos.</span>
+                                 <a class="read_more" href="testimonial.html">Ver seguridad</a>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="carousel-item">
+                  <div class="container">
+                     <div class="carousel-caption relative">
+                        <div class="row">
+                           <div class="col-md-5 col-sm-9 col-12">
+                              <div class="text-bg">
+                                 <h1>Open Source.<br>Para siempre.</h1>
+                                 <span>Código abierto bajo licencia MIT. Instala, modifica y comparte sin restricciones. El soporte premium es opcional.</span>
+                                 <a class="read_more" href="service.html">Ver funcionalidades</a>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <ol class="carousel-indicators">
+               <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+               <li data-target="#myCarousel" data-slide-to="1"></li>
+               <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>
+            <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+            <i class="fa fa-angle-left" aria-hidden="true"></i>
+            <span class="sr-only">Anterior</span>
+            </a>
+            <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="sr-only">Siguiente</span>
+            </a>
+         </div>
+      </section>
+      <!-- about -->
+      <div id="about" class="about">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-5">
+                  <div class="titlepage">
+                     <h2>¿Qué es <span class="green">Niddo?</span></h2>
+                     <p>Niddo es un servidor de copias de seguridad autoalojado para usuarios domésticos y pequeñas empresas. Se instala en cualquier servidor Linux y se gestiona desde un panel web sencillo, sin necesidad de conocimientos técnicos.</p>
+                     <p>Olvídate de pagar cuotas mensuales a Google Drive o Dropbox. Con Niddo, tus archivos permanecen siempre en tu red local, bajo tu control absoluto.</p>
+                     <a class="read_more" href="service.html">Ver todas las funcionalidades</a>
+                  </div>
+               </div>
+               <div class="col-md-7">
+                  <div class="about_img" style="text-align:center; padding:40px;">
+                     <figure><img src="images/about.png" alt="Niddo" style="max-width:280px; width:100%;"/></figure>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- features -->
+      <div id="service" class="service">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="titlepage">
+                     <h2>Todo lo que <span class="green">necesitas</span></h2>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-3 col-sm-6 col-xs-12" style="margin-bottom:40px;">
+                  <div class="service_box" style="text-align:center; padding:30px 20px;">
+                     <i class="fa fa-server" style="font-size:54px; color:#1a8fe8; display:block; margin-bottom:18px;"></i>
+                     <h3>100% Local</h3>
+                     <p>Tus archivos nunca salen de tu red. Sin servidores de terceros, sin cuotas mensuales, sin letra pequeña.</p>
+                  </div>
+               </div>
+               <div class="col-md-3 col-sm-6 col-xs-12" style="margin-bottom:40px;">
+                  <div class="service_box" style="text-align:center; padding:30px 20px;">
+                     <i class="fa fa-tachometer" style="font-size:54px; color:#1a8fe8; display:block; margin-bottom:18px;"></i>
+                     <h3>Panel Web</h3>
+                     <p>Gestión completa desde el navegador. Dashboard con estadísticas, roles de usuario y restauración de archivos con un clic.</p>
+                  </div>
+               </div>
+               <div class="col-md-3 col-sm-6 col-xs-12" style="margin-bottom:40px;">
+                  <div class="service_box" style="text-align:center; padding:30px 20px;">
+                     <i class="fa fa-windows" style="font-size:54px; color:#1a8fe8; display:block; margin-bottom:18px;"></i>
+                     <h3>Agente Windows</h3>
+                     <p>Descarga el agente desde el panel, ejecútalo en tu PC y las copias empezarán solas. Sin configuración técnica.</p>
+                  </div>
+               </div>
+               <div class="col-md-3 col-sm-6 col-xs-12" style="margin-bottom:40px;">
+                  <div class="service_box" style="text-align:center; padding:30px 20px;">
+                     <i class="fa fa-shield" style="font-size:54px; color:#1a8fe8; display:block; margin-bottom:18px;"></i>
+                     <h3>Seguridad integrada</h3>
+                     <p>Bloqueo por IP, tokens únicos por dispositivo, cifrado bcrypt y registro completo de eventos de seguridad.</p>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-12 text-center" style="margin-top:10px; margin-bottom:20px;">
+                  <a class="read_more" href="service.html" style="display:inline-block; margin:0 10px;">Ver funcionalidades</a>
+                  <a class="read_more" href="gallery.html" style="display:inline-block; margin:0 10px; background:#1f3f72;">Cómo instalar</a>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- pricing teaser -->
+      <div style="background:#f0f6ff; padding:80px 0; margin-top:80px;">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="titlepage">
+                     <h2>Gratis para <span class="green">siempre</span></h2>
+                     <p style="font-size:17px; color:#444; margin-top:10px;">La versión Community es completamente gratuita y open source. El soporte premium es opcional.</p>
+                  </div>
+               </div>
+            </div>
+            <div class="row justify-content-center" style="margin-top:20px;">
+               <div class="col-md-3 col-sm-6" style="margin-bottom:30px;">
+                  <div style="background:#fff; border-radius:10px; padding:35px 25px; text-align:center; box-shadow:0 2px 15px rgba(0,0,0,0.08); height:100%;">
+                     <h3 style="color:#1f3f72; font-size:22px; font-weight:bold;">Community</h3>
+                     <p style="font-size:36px; font-weight:bold; color:#1a8fe8; margin:15px 0;">0 €</p>
+                     <p style="color:#666; font-size:14px;">Para siempre</p>
+                     <ul style="list-style:none; padding:0; margin:20px 0; text-align:left; font-size:14px; color:#444;">
+                        <li style="padding:5px 0;"><i class="fa fa-check" style="color:#1a8fe8; margin-right:8px;"></i>Funcionalidad completa</li>
+                        <li style="padding:5px 0;"><i class="fa fa-check" style="color:#1a8fe8; margin-right:8px;"></i>Código abierto (MIT)</li>
+                        <li style="padding:5px 0;"><i class="fa fa-check" style="color:#1a8fe8; margin-right:8px;"></i>Hasta 2 dispositivos</li>
+                        <li style="padding:5px 0;"><i class="fa fa-times" style="color:#ccc; margin-right:8px;"></i>Sin soporte técnico</li>
+                     </ul>
+                     <a href="gallery.html" class="read_more" style="max-width:100%; display:block;">Descargar</a>
+                  </div>
+               </div>
+               <div class="col-md-3 col-sm-6" style="margin-bottom:30px;">
+                  <div style="background:#1f3f72; border-radius:10px; padding:35px 25px; text-align:center; box-shadow:0 4px 20px rgba(31,63,114,0.3); height:100%;">
+                     <h3 style="color:#fff; font-size:22px; font-weight:bold;">Dispositivo</h3>
+                     <p style="font-size:36px; font-weight:bold; color:#1a8fe8; margin:15px 0;">30 €</p>
+                     <p style="color:#aac4e8; font-size:14px;">Pago único</p>
+                     <ul style="list-style:none; padding:0; margin:20px 0; text-align:left; font-size:14px; color:#c8dff5;">
+                        <li style="padding:5px 0;"><i class="fa fa-check" style="color:#1a8fe8; margin-right:8px;"></i>1 dispositivo Windows</li>
+                        <li style="padding:5px 0;"><i class="fa fa-check" style="color:#1a8fe8; margin-right:8px;"></i>Actualizaciones 2 años</li>
+                        <li style="padding:5px 0;"><i class="fa fa-check" style="color:#1a8fe8; margin-right:8px;"></i>Soporte por email</li>
+                        <li style="padding:5px 0;"><i class="fa fa-times" style="color:#4a6a9a; margin-right:8px;"></i>Sin gestión multi-usuario</li>
+                     </ul>
+                     <a href="gallery.html" class="read_more" style="max-width:100%; display:block; background:#1a8fe8;">Comprar</a>
+                  </div>
+               </div>
+               <div class="col-md-3 col-sm-6" style="margin-bottom:30px;">
+                  <div style="background:#fff; border-radius:10px; padding:35px 25px; text-align:center; box-shadow:0 2px 15px rgba(0,0,0,0.08); height:100%;">
+                     <h3 style="color:#1f3f72; font-size:22px; font-weight:bold;">Usuario</h3>
+                     <p style="font-size:36px; font-weight:bold; color:#1a8fe8; margin:15px 0;">50 €</p>
+                     <p style="color:#666; font-size:14px;">por año</p>
+                     <ul style="list-style:none; padding:0; margin:20px 0; text-align:left; font-size:14px; color:#444;">
+                        <li style="padding:5px 0;"><i class="fa fa-check" style="color:#1a8fe8; margin-right:8px;"></i>Hasta 4 dispositivos</li>
+                        <li style="padding:5px 0;"><i class="fa fa-check" style="color:#1a8fe8; margin-right:8px;"></i>Multi-usuario con roles</li>
+                        <li style="padding:5px 0;"><i class="fa fa-check" style="color:#1a8fe8; margin-right:8px;"></i>Panel administrativo completo</li>
+                        <li style="padding:5px 0;"><i class="fa fa-check" style="color:#1a8fe8; margin-right:8px;"></i>Soporte prioritario</li>
+                     </ul>
+                     <a href="gallery.html" class="read_more" style="max-width:100%; display:block;">Comprar</a>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- footer -->
+      <footer>
+         <div class="footer">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-3 col-sm-6">
+                     <h3>Niddo</h3>
+                     <p class="variat pad_roght2">Servidor de copias de seguridad autoalojado. Proyecto de fin de ciclo ASIR — IES Zaidín-Vergeles, Granada.</p>
+                  </div>
+                  <div class="col-md-3 col-sm-6">
+                     <h3>Tecnologías</h3>
+                     <p class="variat pad_roght2">PHP · MariaDB · Apache · Python · Bash · Linux (Debian/Ubuntu)</p>
+                  </div>
+                  <div class="col-md-3 col-sm-6">
+                     <h3>NAVEGACIÓN</h3>
+                     <ul class="link_menu">
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="about.html">El Proyecto</a></li>
+                        <li><a href="service.html">Funcionalidades</a></li>
+                        <li><a href="gallery.html">Instalación</a></li>
+                        <li><a href="testimonial.html">Seguridad</a></li>
+                        <li><a href="contact.html">Contacto</a></li>
+                     </ul>
+                  </div>
+                  <div class="col-md-3 col-sm-6">
+                     <h3>Equipo</h3>
+                     <p class="variat">Jesus Perez Marinetto<br>Nicolas Baya-Casal Sansolini<br>Ismael Martin Ruiz<br>Ivan Lopez Garcia</p>
+                  </div>
+               </div>
+            </div>
+            <div class="copyright">
+               <div class="container">
+                  <div class="row">
+                     <div class="col-md-10 offset-md-1">
+                        <p>© 2025 Niddo — Proyecto ASIR · IES Zaidín-Vergeles</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </footer>
+      <script src="js/jquery.min.js"></script>
+      <script src="js/bootstrap.bundle.min.js"></script>
+      <script src="js/jquery-3.0.0.min.js"></script>
+      <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+      <script src="js/custom.js"></script>
+   </body>
+</html>

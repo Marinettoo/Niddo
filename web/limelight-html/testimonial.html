@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+      <title>Niddo — Seguridad y Privacidad</title>
+      <link rel="stylesheet" href="css/bootstrap.min.css">
+      <link rel="stylesheet" href="css/style.css">
+      <link rel="stylesheet" href="css/responsive.css">
+      <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
+      <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+      <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+   </head>
+   <body class="main-layout in_page">
+      <div class="loader_bg">
+         <div class="loader"><img src="images/loading.gif" alt="#"/></div>
+      </div>
+      <header>
+         <div class="header">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-12 col-sm-3 col logo_section">
+                     <div class="full"><div class="center-desk"><div class="logo">
+                        <a href="index.html"><img src="images/logo.png" alt="Niddo"/></a>
+                     </div></div></div>
+                  </div>
+                  <div class="col-md-10 offset-md-1">
+                     <nav class="navigation navbar navbar-expand-md navbar-dark">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarsExample04">
+                           <ul class="navbar-nav mr-auto">
+                              <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                              <li class="nav-item"><a class="nav-link" href="about.html">El Proyecto</a></li>
+                              <li class="nav-item"><a class="nav-link" href="service.html">Funcionalidades</a></li>
+                              <li class="nav-item"><a class="nav-link" href="gallery.html">Instalación</a></li>
+                              <li class="nav-item active"><a class="nav-link" href="testimonial.html">Seguridad</a></li>
+                              <li class="nav-item"><a class="nav-link" href="contact.html">Contacto</a></li>
+                           </ul>
+                        </div>
+                     </nav>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </header>
+
+      <div class="service">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="titlepage">
+                     <h2>Tus datos, <span class="green">solo tuyos</span></h2>
+                     <p style="font-size:17px; color:#555; margin-top:10px; max-width:680px; margin-left:auto; margin-right:auto;">Niddo no tiene acceso a tus archivos. Nadie lo tiene, excepto tú. Así de simple.</p>
+                  </div>
+               </div>
+            </div>
+
+            <!-- Privacy hero -->
+            <div class="row" style="margin-bottom:60px;">
+               <div class="col-md-10 offset-md-1">
+                  <div style="background:#1f3f72; border-radius:12px; padding:50px 40px; color:#fff; text-align:center;">
+                     <i class="fa fa-home" style="font-size:60px; color:#1a8fe8; display:block; margin-bottom:20px;"></i>
+                     <h3 style="color:#fff; font-size:28px; font-weight:bold; margin-bottom:15px;">100% autoalojado. Sin nube.</h3>
+                     <p style="font-size:17px; color:#c8dff5; max-width:600px; margin:0 auto;">Niddo se instala en tu propio servidor. Tus archivos nunca abandonan tu red local. No hay servidores intermedios, no hay empresa que almacene tus datos, no hay términos de servicio que leer. Eres el único responsable y el único con acceso.</p>
+                  </div>
+               </div>
+            </div>
+
+            <!-- Security features grid -->
+            <div class="row" style="margin-bottom:20px;">
+               <div class="col-md-12">
+                  <div class="titlepage">
+                     <h2>Capas de <span class="green">protección</span></h2>
+                  </div>
+               </div>
+            </div>
+
+            <div class="row" style="margin-bottom:50px;">
+               <div class="col-md-10 offset-md-1">
+                  <div class="row">
+
+                     <div class="col-md-6" style="margin-bottom:30px;">
+                        <div style="background:#f0f6ff; border-left:4px solid #1a8fe8; border-radius:0 8px 8px 0; padding:25px;">
+                           <h4 style="color:#1f3f72; font-weight:bold;"><i class="fa fa-key" style="color:#1a8fe8; margin-right:10px;"></i>Contraseñas con bcrypt</h4>
+                           <p style="color:#555; font-size:14px; margin-top:8px;">Las contraseñas nunca se almacenan en texto plano. Niddo usa <strong>bcrypt</strong> (PHP password_hash), el estándar actual de la industria para almacenamiento seguro de contraseñas. Ni el administrador puede ver tu contraseña.</p>
+                        </div>
+                     </div>
+
+                     <div class="col-md-6" style="margin-bottom:30px;">
+                        <div style="background:#f0f6ff; border-left:4px solid #1a8fe8; border-radius:0 8px 8px 0; padding:25px;">
+                           <h4 style="color:#1f3f72; font-weight:bold;"><i class="fa fa-id-card" style="color:#1a8fe8; margin-right:10px;"></i>Tokens únicos por dispositivo</h4>
+                           <p style="color:#555; font-size:14px; margin-top:8px;">Cada dispositivo recibe un token de autenticación de <strong>64 caracteres hexadecimales</strong> generado con random_bytes. El agente Windows usa este token para comunicarse con el servidor. Si un dispositivo se ve comprometido, puedes revocar solo ese token.</p>
+                        </div>
+                     </div>
+
+                     <div class="col-md-6" style="margin-bottom:30px;">
+                        <div style="background:#f0f6ff; border-left:4px solid #1a8fe8; border-radius:0 8px 8px 0; padding:25px;">
+                           <h4 style="color:#1f3f72; font-weight:bold;"><i class="fa fa-ban" style="color:#1a8fe8; margin-right:10px;"></i>Bloqueo automático de IP</h4>
+                           <p style="color:#555; font-size:14px; margin-top:8px;">Tras <strong>5 intentos de inicio de sesión fallidos</strong>, la IP queda bloqueada temporalmente y el evento se registra. Protección efectiva contra ataques de fuerza bruta, incluso en servidores expuestos a internet.</p>
+                        </div>
+                     </div>
+
+                     <div class="col-md-6" style="margin-bottom:30px;">
+                        <div style="background:#f0f6ff; border-left:4px solid #1a8fe8; border-radius:0 8px 8px 0; padding:25px;">
+                           <h4 style="color:#1f3f72; font-weight:bold;"><i class="fa fa-clock-o" style="color:#1a8fe8; margin-right:10px;"></i>Cierre de sesión automático</h4>
+                           <p style="color:#555; font-size:14px; margin-top:8px;">Si el panel web lleva <strong>5 minutos sin actividad</strong>, la sesión se cierra automáticamente y el usuario queda marcado como inactivo. Protección ante ordenadores dejados sin vigilancia.</p>
+                        </div>
+                     </div>
+
+                     <div class="col-md-6" style="margin-bottom:30px;">
+                        <div style="background:#f0f6ff; border-left:4px solid #1a8fe8; border-radius:0 8px 8px 0; padding:25px;">
+                           <h4 style="color:#1f3f72; font-weight:bold;"><i class="fa fa-check-circle" style="color:#1a8fe8; margin-right:10px;"></i>Verificación SHA-256</h4>
+                           <p style="color:#555; font-size:14px; margin-top:8px;">Cada archivo subido se verifica con un <strong>hash SHA-256</strong>. Si la huella no coincide al restaurar, el archivo se rechaza. Garantía de integridad total: lo que guardas es exactamente lo que recuperas.</p>
+                        </div>
+                     </div>
+
+                     <div class="col-md-6" style="margin-bottom:30px;">
+                        <div style="background:#f0f6ff; border-left:4px solid #1a8fe8; border-radius:0 8px 8px 0; padding:25px;">
+                           <h4 style="color:#1f3f72; font-weight:bold;"><i class="fa fa-list-alt" style="color:#1a8fe8; margin-right:10px;"></i>Registro de eventos (mini-SOC)</h4>
+                           <p style="color:#555; font-size:14px; margin-top:8px;">Todos los eventos relevantes quedan registrados: inicios de sesión, copias completadas, errores, IPs bloqueadas y cambios de configuración. El administrador puede revisar el historial completo desde el panel en cualquier momento.</p>
+                        </div>
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+
+            <!-- RGPD -->
+            <div class="row" style="margin-bottom:60px;">
+               <div class="col-md-10 offset-md-1">
+                  <div style="background:#e8f2fc; border-radius:10px; padding:40px;">
+                     <h3 style="color:#1f3f72; font-weight:bold; margin-bottom:15px;"><i class="fa fa-shield" style="color:#1a8fe8; margin-right:10px;"></i>Cumplimiento RGPD sin esfuerzo</h3>
+                     <p style="color:#444; font-size:15px;">Al ser una solución autoalojada, <strong>tú eres el responsable del tratamiento</strong> de los datos, no Niddo. No existe transferencia de datos a terceros, no hay subencargados de tratamiento y no necesitas actualizar tu política de privacidad para incluir a ningún proveedor externo. Perfecto para autónomos y pymes obligadas por el RGPD a demostrar control sobre sus datos.</p>
+                  </div>
+               </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="row" style="margin-bottom:40px;">
+               <div class="col-md-12 text-center">
+                  <a class="read_more" href="gallery.html" style="display:inline-block; margin:0 10px;">Empezar gratis</a>
+                  <a class="read_more" href="service.html" style="display:inline-block; margin:0 10px; background:#1f3f72;">Ver funcionalidades</a>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!-- footer -->
+      <footer>
+         <div class="footer">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-3 col-sm-6">
+                     <h3>Niddo</h3>
+                     <p class="variat pad_roght2">Servidor de copias de seguridad autoalojado. Proyecto de fin de ciclo ASIR — IES Zaidín-Vergeles, Granada.</p>
+                  </div>
+                  <div class="col-md-3 col-sm-6">
+                     <h3>Tecnologías</h3>
+                     <p class="variat pad_roght2">PHP · MariaDB · Apache · Python · Bash · Linux (Debian/Ubuntu)</p>
+                  </div>
+                  <div class="col-md-3 col-sm-6">
+                     <h3>NAVEGACIÓN</h3>
+                     <ul class="link_menu">
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="about.html">El Proyecto</a></li>
+                        <li><a href="service.html">Funcionalidades</a></li>
+                        <li><a href="gallery.html">Instalación</a></li>
+                        <li><a href="testimonial.html">Seguridad</a></li>
+                        <li><a href="contact.html">Contacto</a></li>
+                     </ul>
+                  </div>
+                  <div class="col-md-3 col-sm-6">
+                     <h3>Equipo</h3>
+                     <p class="variat">Jesus Perez Marinetto<br>Nicolas Baya-Casal Sansolini<br>Ismael Martin Ruiz<br>Ivan Lopez Garcia</p>
+                  </div>
+               </div>
+            </div>
+            <div class="copyright">
+               <div class="container">
+                  <div class="row">
+                     <div class="col-md-10 offset-md-1">
+                        <p>© 2025 Niddo — Proyecto ASIR · IES Zaidín-Vergeles</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </footer>
+      <script src="js/jquery.min.js"></script>
+      <script src="js/bootstrap.bundle.min.js"></script>
+      <script src="js/jquery-3.0.0.min.js"></script>
+      <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+      <script src="js/custom.js"></script>
+   </body>
+</html>
