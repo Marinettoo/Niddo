@@ -1,6 +1,5 @@
 <?php
-session_start();
-if (!isset($_SESSION['user_id'])) { header('Location: login.php'); exit; }
+require '_session.php';
 if (!in_array('Admin', $_SESSION['roles'] ?? [])) { header('Location: dashboard.php'); exit; }
 require_once '../config/db.php';
 

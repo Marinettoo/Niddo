@@ -1,6 +1,5 @@
 <?php
-session_start();
-if (!isset($_SESSION['user_id'])) { header('Location: login.php'); exit; }
+require '_session.php';
 require_once '../config/db.php';
 
 $es_admin = in_array('Admin', $_SESSION['roles'] ?? []);

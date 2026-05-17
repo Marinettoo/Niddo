@@ -37,8 +37,11 @@ if (isset($_POST['email'], $_POST['password'])) {
         exit;
     }
 
-    $_SESSION['user_id'] = $user['id'];
-    $_SESSION['nombre']  = $user['nombre'];
+    $pdo->prepare("UPDATE users SET estado='activo' WHERE id=?")->execute([$user['id']]);
+
+    $_SESSION['user_id']       = $user['id'];
+    $_SESSION['nombre']        = $user['nombre'];
+    $_SESSION['last_activity'] = time();
 
     $roles_stmt = $pdo->prepare("SELECT r.nombre FROM roles r JOIN user_roles ur ON ur.role_id=r.id WHERE ur.user_id=?");
     $roles_stmt->execute([$user['id']]);
