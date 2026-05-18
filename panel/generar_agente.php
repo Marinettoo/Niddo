@@ -22,6 +22,7 @@ from tkinter import filedialog, scrolledtext
 TOKEN    = "__TOKEN__"
 SERVIDOR = "__SERVIDOR__"
 NOMBRE   = "__NOMBRE__"
+CHECK    = SERVIDOR.rsplit('/', 1)[0] + '/check_hash.php'
 TAREA    = "NiddoBackup_" + NOMBRE.replace(" ", "_")
 CONFIG   = os.path.join(os.environ.get('APPDATA', ''), 'Niddo', NOMBRE + '.json')
 
@@ -43,9 +44,20 @@ def hash_archivo(ruta):
             h.update(chunk)
     return h.hexdigest()
 
-def subir_archivo(ruta, carpeta):
+def hash_existe(hash_sha, nombre, carpeta):
+    import urllib.parse
+    datos = urllib.parse.urlencode({
+        'token': TOKEN, 'hash': hash_sha, 'nombre': nombre, 'carpeta': carpeta
+    }).encode()
+    req = urllib.request.Request(CHECK, data=datos)
+    try:
+        with urllib.request.urlopen(req, timeout=15) as r:
+            return r.read().decode().strip() == 'existe'
+    except Exception:
+        return False
+
+def subir_archivo(ruta, carpeta, hash_sha):
     nombre   = os.path.basename(ruta)
-    hash_sha = hash_archivo(ruta)
     boundary = uuid.uuid4().hex
     with open(ruta, 'rb') as f:
         contenido = f.read()
@@ -77,7 +89,7 @@ def nombre_carpeta(ruta):
     return base if base else ruta.replace(':\\', '_drive').replace(':', '_')
 
 def hacer_backup(carpetas, log_fn=None):
-    total = errores = 0
+    total = errores = saltados = 0
     for carpeta in carpetas:
         if not os.path.exists(carpeta):
             if log_fn: log_fn(f'[omitida] {carpeta}')
@@ -87,13 +99,18 @@ def hacer_backup(carpetas, log_fn=None):
             for nombre in archivos:
                 ruta = os.path.join(raiz, nombre)
                 try:
-                    subir_archivo(ruta, nombre_c)
+                    hash_sha = hash_archivo(ruta)
+                    if hash_existe(hash_sha, nombre, nombre_c):
+                        if log_fn: log_fn(f'[saltado] {ruta}')
+                        saltados += 1
+                        continue
+                    subir_archivo(ruta, nombre_c, hash_sha)
                     if log_fn: log_fn(f'[ok] {ruta}')
                     total += 1
                 except Exception as e:
                     if log_fn: log_fn(f'[error] {ruta} — {e}')
                     errores += 1
-    return total, errores
+    return total, errores, saltados
 
 if '--auto' in sys.argv:
     cfg = cargar_config()
@@ -221,8 +238,8 @@ class Agente:
         threading.Thread(target=self.run_backup, args=(carpetas,), daemon=True).start()
 
     def run_backup(self, carpetas):
-        total, errores = hacer_backup(carpetas, self.log_write)
-        self.log_write(f'\n--- {total} subidos, {errores} errores ---')
+        total, errores, saltados = hacer_backup(carpetas, self.log_write)
+        self.log_write(f'\n--- {total} subidos, {saltados} ya existian, {errores} errores ---')
         self.btn.config(state='normal', text='INICIAR BACKUP AHORA')
 
 root = tk.Tk()
