@@ -22,30 +22,24 @@
       <header>
          <div class="header">
             <div class="container">
-               <div class="row">
-                  <div class="col-md-12 col-sm-3 col logo_section">
-                     <div class="full"><div class="center-desk"><div class="logo">
-                        <a href="index.html"><img src="images/logo.png" alt="Niddo"/></a>
-                     </div></div></div>
-                  </div>
-                  <div class="col-md-10 offset-md-1">
-                     <nav class="navigation navbar navbar-expand-md navbar-dark">
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarsExample04">
-                           <ul class="navbar-nav mr-auto">
-                              <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
-                              <li class="nav-item"><a class="nav-link" href="about.html">El Proyecto</a></li>
-                              <li class="nav-item"><a class="nav-link" href="service.html">Funcionalidades</a></li>
-                              <li class="nav-item"><a class="nav-link" href="gallery.html">Instalación</a></li>
-                              <li class="nav-item active"><a class="nav-link" href="testimonial.html">Seguridad</a></li>
-                              <li class="nav-item"><a class="nav-link" href="contact.html">Contacto</a></li>
-                           </ul>
-                        </div>
-                     </nav>
-                  </div>
+               <div class="logo">
+                  <a href="index.html"><img src="images/logo.png" alt="Niddo"/></a>
                </div>
+               <nav class="navigation navbar navbar-expand-md navbar-dark">
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse justify-content-center" id="navbarsExample04">
+                     <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.html">El Proyecto</a></li>
+                        <li class="nav-item"><a class="nav-link" href="service.html">Funcionalidades</a></li>
+                        <li class="nav-item"><a class="nav-link" href="gallery.html">Instalación</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="testimonial.html">Seguridad</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact.html">Contacto</a></li>
+                     </ul>
+                  </div>
+               </nav>
             </div>
          </div>
       </header>
@@ -81,53 +75,69 @@
                </div>
             </div>
 
-            <div class="row" style="margin-bottom:50px;">
+            <div class="row" style="margin-bottom:30px;">
                <div class="col-md-10 offset-md-1">
-                  <div class="row">
 
-                     <div class="col-md-6" style="margin-bottom:30px;">
-                        <div style="background:#f0f6ff; border-left:4px solid #1a8fe8; border-radius:0 8px 8px 0; padding:25px;">
-                           <h4 style="color:#1f3f72; font-weight:bold;"><i class="fa fa-key" style="color:#1a8fe8; margin-right:10px;"></i>Contraseñas con bcrypt</h4>
-                           <p style="color:#555; font-size:14px; margin-top:8px;">Las contraseñas nunca se almacenan en texto plano. Niddo usa <strong>bcrypt</strong> (PHP password_hash), el estándar actual de la industria para almacenamiento seguro de contraseñas. Ni el administrador puede ver tu contraseña.</p>
-                        </div>
+                  <div class="row" style="margin-bottom:35px; align-items:flex-start;">
+                     <div class="col-md-1 col-2 text-center" style="font-size:36px; color:#1a8fe8;">
+                        <i class="fa fa-key"></i>
                      </div>
-
-                     <div class="col-md-6" style="margin-bottom:30px;">
-                        <div style="background:#f0f6ff; border-left:4px solid #1a8fe8; border-radius:0 8px 8px 0; padding:25px;">
-                           <h4 style="color:#1f3f72; font-weight:bold;"><i class="fa fa-id-card" style="color:#1a8fe8; margin-right:10px;"></i>Tokens únicos por dispositivo</h4>
-                           <p style="color:#555; font-size:14px; margin-top:8px;">Cada dispositivo recibe un token de autenticación de <strong>64 caracteres hexadecimales</strong> generado con random_bytes. El agente Windows usa este token para comunicarse con el servidor. Si un dispositivo se ve comprometido, puedes revocar solo ese token.</p>
-                        </div>
+                     <div class="col-md-11 col-10">
+                        <h4 style="color:#1f3f72; font-weight:bold;">Contraseñas con bcrypt</h4>
+                        <p style="color:#555; font-size:15px; margin-top:5px;">Las contraseñas nunca se almacenan en texto plano. Niddo usa <strong>bcrypt</strong> (PHP password_hash), el estándar actual de la industria para almacenamiento seguro de contraseñas. Ni el administrador puede ver tu contraseña.</p>
                      </div>
-
-                     <div class="col-md-6" style="margin-bottom:30px;">
-                        <div style="background:#f0f6ff; border-left:4px solid #1a8fe8; border-radius:0 8px 8px 0; padding:25px;">
-                           <h4 style="color:#1f3f72; font-weight:bold;"><i class="fa fa-ban" style="color:#1a8fe8; margin-right:10px;"></i>Bloqueo automático de IP</h4>
-                           <p style="color:#555; font-size:14px; margin-top:8px;">Tras <strong>5 intentos de inicio de sesión fallidos</strong>, la IP queda bloqueada temporalmente y el evento se registra. Protección efectiva contra ataques de fuerza bruta, incluso en servidores expuestos a internet.</p>
-                        </div>
-                     </div>
-
-                     <div class="col-md-6" style="margin-bottom:30px;">
-                        <div style="background:#f0f6ff; border-left:4px solid #1a8fe8; border-radius:0 8px 8px 0; padding:25px;">
-                           <h4 style="color:#1f3f72; font-weight:bold;"><i class="fa fa-clock-o" style="color:#1a8fe8; margin-right:10px;"></i>Cierre de sesión automático</h4>
-                           <p style="color:#555; font-size:14px; margin-top:8px;">Si el panel web lleva <strong>5 minutos sin actividad</strong>, la sesión se cierra automáticamente y el usuario queda marcado como inactivo. Protección ante ordenadores dejados sin vigilancia.</p>
-                        </div>
-                     </div>
-
-                     <div class="col-md-6" style="margin-bottom:30px;">
-                        <div style="background:#f0f6ff; border-left:4px solid #1a8fe8; border-radius:0 8px 8px 0; padding:25px;">
-                           <h4 style="color:#1f3f72; font-weight:bold;"><i class="fa fa-check-circle" style="color:#1a8fe8; margin-right:10px;"></i>Verificación SHA-256</h4>
-                           <p style="color:#555; font-size:14px; margin-top:8px;">Cada archivo subido se verifica con un <strong>hash SHA-256</strong>. Si la huella no coincide al restaurar, el archivo se rechaza. Garantía de integridad total: lo que guardas es exactamente lo que recuperas.</p>
-                        </div>
-                     </div>
-
-                     <div class="col-md-6" style="margin-bottom:30px;">
-                        <div style="background:#f0f6ff; border-left:4px solid #1a8fe8; border-radius:0 8px 8px 0; padding:25px;">
-                           <h4 style="color:#1f3f72; font-weight:bold;"><i class="fa fa-list-alt" style="color:#1a8fe8; margin-right:10px;"></i>Registro de eventos (mini-SOC)</h4>
-                           <p style="color:#555; font-size:14px; margin-top:8px;">Todos los eventos relevantes quedan registrados: inicios de sesión, copias completadas, errores, IPs bloqueadas y cambios de configuración. El administrador puede revisar el historial completo desde el panel en cualquier momento.</p>
-                        </div>
-                     </div>
-
                   </div>
+
+                  <div class="row" style="margin-bottom:35px; align-items:flex-start;">
+                     <div class="col-md-1 col-2 text-center" style="font-size:36px; color:#1a8fe8;">
+                        <i class="fa fa-id-card"></i>
+                     </div>
+                     <div class="col-md-11 col-10">
+                        <h4 style="color:#1f3f72; font-weight:bold;">Tokens únicos por dispositivo</h4>
+                        <p style="color:#555; font-size:15px; margin-top:5px;">Cada dispositivo recibe un token de autenticación de <strong>64 caracteres hexadecimales</strong> generado con random_bytes. El agente Windows usa este token para comunicarse con el servidor. Si un dispositivo se ve comprometido, puedes revocar solo ese token.</p>
+                     </div>
+                  </div>
+
+                  <div class="row" style="margin-bottom:35px; align-items:flex-start;">
+                     <div class="col-md-1 col-2 text-center" style="font-size:36px; color:#1a8fe8;">
+                        <i class="fa fa-ban"></i>
+                     </div>
+                     <div class="col-md-11 col-10">
+                        <h4 style="color:#1f3f72; font-weight:bold;">Bloqueo automático de IP</h4>
+                        <p style="color:#555; font-size:15px; margin-top:5px;">Tras <strong>5 intentos de inicio de sesión fallidos</strong>, la IP queda bloqueada temporalmente y el evento se registra. Protección efectiva contra ataques de fuerza bruta, incluso en servidores expuestos a internet.</p>
+                     </div>
+                  </div>
+
+                  <div class="row" style="margin-bottom:35px; align-items:flex-start;">
+                     <div class="col-md-1 col-2 text-center" style="font-size:36px; color:#1a8fe8;">
+                        <i class="fa fa-clock-o"></i>
+                     </div>
+                     <div class="col-md-11 col-10">
+                        <h4 style="color:#1f3f72; font-weight:bold;">Cierre de sesión automático</h4>
+                        <p style="color:#555; font-size:15px; margin-top:5px;">Si el panel web lleva <strong>5 minutos sin actividad</strong>, la sesión se cierra automáticamente y el usuario queda marcado como inactivo. Protección ante ordenadores dejados sin vigilancia.</p>
+                     </div>
+                  </div>
+
+                  <div class="row" style="margin-bottom:35px; align-items:flex-start;">
+                     <div class="col-md-1 col-2 text-center" style="font-size:36px; color:#1a8fe8;">
+                        <i class="fa fa-check-circle"></i>
+                     </div>
+                     <div class="col-md-11 col-10">
+                        <h4 style="color:#1f3f72; font-weight:bold;">Verificación SHA-256</h4>
+                        <p style="color:#555; font-size:15px; margin-top:5px;">Cada archivo subido se verifica con un <strong>hash SHA-256</strong>. Si la huella no coincide al restaurar, el archivo se rechaza. Garantía de integridad total: lo que guardas es exactamente lo que recuperas.</p>
+                     </div>
+                  </div>
+
+                  <div class="row" style="margin-bottom:35px; align-items:flex-start;">
+                     <div class="col-md-1 col-2 text-center" style="font-size:36px; color:#1a8fe8;">
+                        <i class="fa fa-list-alt"></i>
+                     </div>
+                     <div class="col-md-11 col-10">
+                        <h4 style="color:#1f3f72; font-weight:bold;">Registro de eventos (mini-SOC)</h4>
+                        <p style="color:#555; font-size:15px; margin-top:5px;">Todos los eventos relevantes quedan registrados: inicios de sesión, copias completadas, errores, IPs bloqueadas y cambios de configuración. El administrador puede revisar el historial completo desde el panel en cualquier momento.</p>
+                     </div>
+                  </div>
+
                </div>
             </div>
 
@@ -144,7 +154,7 @@
             <!-- CTA -->
             <div class="row" style="margin-bottom:40px;">
                <div class="col-md-12 text-center">
-                  <a class="read_more" href="gallery.html" style="display:inline-block; margin:0 10px;">Empezar gratis</a>
+                  <a class="read_more" href="https://github.com/Marinettoo/Niddo" target="_blank" rel="noopener" style="display:inline-block; margin:0 10px;">Empezar gratis</a>
                   <a class="read_more" href="service.html" style="display:inline-block; margin:0 10px; background:#1f3f72;">Ver funcionalidades</a>
                </div>
             </div>
@@ -159,6 +169,7 @@
                   <div class="col-md-3 col-sm-6">
                      <h3>Niddo</h3>
                      <p class="variat pad_roght2">Servidor de copias de seguridad autoalojado. Proyecto de fin de ciclo ASIR — IES Zaidín-Vergeles, Granada.</p>
+                     <p class="variat" style="margin-top:10px;"><a href="https://github.com/Marinettoo/Niddo" target="_blank" rel="noopener" style="color:#1a8fe8;"><i class="fa fa-github" style="margin-right:6px;"></i>Ver en GitHub</a></p>
                   </div>
                   <div class="col-md-3 col-sm-6">
                      <h3>Tecnologías</h3>

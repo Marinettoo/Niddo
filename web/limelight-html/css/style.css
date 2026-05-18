@@ -258,19 +258,21 @@ button {
 
 .navigation.navbar {
      font-family: 'Open Sans', sans-serif;
-     float: right;
-     padding-top: 35px !important;
-     padding: 0;
+     padding: 0 !important;
+     justify-content: center;
 }
 
 .navigation.navbar-dark .navbar-nav .nav-link {
-     padding: 0;
-     margin: 0px 40px;
-     color: #333333;
-     font-size: 16px;
-     line-height: 20px;
-     font-weight: 500;
+     padding: 4px 0;
+     margin: 0 18px;
+     color: #1f3f72;
+     font-size: 13px;
+     line-height: 18px;
+     font-weight: 600;
      text-transform: uppercase;
+     white-space: nowrap;
+     letter-spacing: 0.3px;
+     transition: color 0.2s ease;
 }
 
 .navigation.navbar-dark .navbar-nav .nav-link:focus,
@@ -285,18 +287,15 @@ button {
      color: #1a8fe8;
 }
 
-.navbar-expand-md .navbar-nav {
-     padding-right: 10px;
-}
-
 .header {
      width: 100%;
-     padding: 35px 0px 35px 0px;
+     padding: 8px 0;
      background: #fff;
 }
 
 .logo {
      text-align: center;
+     line-height: 0;
 }
 
 
@@ -987,19 +986,20 @@ button {
 
 .footer {
      background: #202020;
-     padding-top: 80px;
+     padding-top: 40px;
      text-align: center;
 }
 
 .footer h3 {
-     font-weight: 400;
-     font-size: 30px;
-     line-height: 23px;
+     font-weight: 600;
+     font-size: 15px;
+     line-height: 20px;
      text-align: left;
      color: #fff;
-     padding-bottom: 20px;
+     padding-bottom: 10px;
      display: table;
      text-transform: uppercase;
+     letter-spacing: 0.5px;
 }
 
 ul.social_icon {
@@ -1036,11 +1036,11 @@ ul.social_icon li a:hover {
 }
 
 .variat {
-     color: #fff;
+     color: #bbb;
      text-align: left;
-     font-size: 17px;
+     font-size: 13px;
      font-weight: 400;
-     line-height: 28px;
+     line-height: 20px;
 }
 
 ul.conta li {
@@ -1066,9 +1066,9 @@ ul.link_menu li {
 }
 
 ul.link_menu li a {
-     color: #fff;
-     font-size: 17px;
-     line-height: 28px;
+     color: #bbb;
+     font-size: 13px;
+     line-height: 22px;
      display: block;
      width: -moz-max-content;
 }
@@ -1122,18 +1122,24 @@ ul.link_menu li a:hover {
 }
 
 .copyright {
-     margin-top: 60px;
-     padding-bottom: 20px;
-     background-color: #fff;
+     margin-top: 25px;
+     padding: 12px 0;
+     background-color: #181818;
+     border-top: 1px solid #2a2a2a;
 }
 
 .copyright p {
-     color: #000;
-     font-size: 18px;
-     line-height: 22px;
+     color: #888;
+     font-size: 12px;
+     line-height: 18px;
      text-align: center;
-     padding-top: 25px;
+     padding-top: 0;
+     margin: 0;
      font-weight: normal;
+}
+
+.copyright a {
+     color: #1a8fe8;
 }
 
 .copyright a {
@@ -1155,7 +1161,7 @@ ul.link_menu li a:hover {
 }
 
 .logo img {
-     max-height: 150px;
+     max-height: 55px;
      width: auto;
 }
 
