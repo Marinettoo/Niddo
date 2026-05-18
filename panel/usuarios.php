@@ -6,6 +6,7 @@ if (!in_array('Admin', $_SESSION['roles'] ?? [])) { header('Location: dashboard.
 
 $yo        = (int)$_SESSION['user_id'];
 $es_primer_admin = ($yo === 1);
+$ip        = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
 
 $msg      = '';
 $msg_tipo = 'ok';
@@ -20,6 +21,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pdo->prepare("INSERT INTO user_roles (user_id, role_id) VALUES (?, ?)")
             ->execute([$pdo->lastInsertId(), (int)$_POST['role_id']]);
         $msg = 'Usuario creado correctamente.';
+
+    } elseif ($accion === 'borrar') {
+        $target_id = (int)$_POST['target_id'];
+        if ($target_id === $yo) {
+            $msg = 'No puedes borrarte a ti mismo.';
+            $msg_tipo = 'error';
+        } elseif ($target_id === 1) {
+            $msg = 'El administrador principal no puede ser borrado.';
+            $msg_tipo = 'error';
+        } else {
+            // Borrar archivos fisicos de todos los dispositivos del usuario antes del CASCADE
+            $devs = $pdo->prepare("SELECT id FROM devices WHERE user_id = ?");
+            $devs->execute([$target_id]);
+            foreach ($devs->fetchAll(PDO::FETCH_COLUMN) as $dev_id) {
+                $dir = "/var/niddo/backups/" . (int)$dev_id;
+                if (is_dir($dir)) shell_exec('rm -rf ' . escapeshellarg($dir));
+            }
+            $pdo->prepare("DELETE FROM users WHERE id = ?")->execute([$target_id]);
+            $pdo->prepare("INSERT INTO events (tipo, ip, user_id) VALUES ('usuario_borrado', ?, ?)")->execute([$ip, $yo]);
+            $msg = 'Usuario borrado correctamente.';
+        }
 
     } elseif ($accion === 'cambiar_rol') {
         $target_id   = (int)$_POST['target_id'];
@@ -95,7 +117,7 @@ $todos_roles = $pdo->query("SELECT * FROM roles")->fetchAll(PDO::FETCH_ASSOC);
         <div class="seccion">
             <div class="seccion-header"><div class="seccion-title">Usuarios del sistema</div></div>
             <div class="table-wrap"><table>
-                <thead><tr><th>#</th><th>Nombre</th><th>Email</th><th>Rol actual</th><th>Estado</th><th>Cambiar rol</th></tr></thead>
+                <thead><tr><th>#</th><th>Nombre</th><th>Email</th><th>Rol actual</th><th>Estado</th><th>Cambiar rol</th><th></th></tr></thead>
                 <tbody>
                 <?php foreach ($usuarios as $u): ?>
                 <tr>
@@ -130,6 +152,15 @@ $todos_roles = $pdo->query("SELECT * FROM roles")->fetchAll(PDO::FETCH_ASSOC);
                             <?php else: ?>
                                 <span style="color:#aaa; font-size:12px;">solo el admin principal puede degradar</span>
                             <?php endif; ?>
+                        <?php endif; ?>
+                    </td>
+                    <td>
+                        <?php if ($u['id'] !== $yo && $u['id'] != 1): ?>
+                        <form method="POST" class="action-form" onsubmit="return confirm('¿Borrar al usuario «<?= htmlspecialchars($u['nombre'], ENT_QUOTES) ?>» y TODOS sus dispositivos y backups? Esta accion no se puede deshacer.');">
+                            <input type="hidden" name="accion" value="borrar">
+                            <input type="hidden" name="target_id" value="<?= $u['id'] ?>">
+                            <button type="submit" class="action-link-danger">borrar</button>
+                        </form>
                         <?php endif; ?>
                     </td>
                 </tr>

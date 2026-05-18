@@ -14,7 +14,7 @@
         <a href="restaurar.php"    class="<?= $p==='restaurar.php'    ?'activo':'' ?>">Restaurar</a>
     </nav>
     <div class="sidebar-footer">
-        <?= htmlspecialchars($_SESSION['nombre']) ?> &mdash;
+        <a href="perfil.php" class="sidebar-user"><?= htmlspecialchars($_SESSION['nombre']) ?></a> &mdash;
         <a href="logout.php" class="sidebar-logout">salir</a>
     </div>
 </aside>

@@ -91,6 +91,15 @@ a {
     color: #cc0000;
 }
 
+.sidebar-user {
+    color: #555;
+    text-decoration: underline;
+}
+
+.sidebar-user:hover {
+    color: #009970;
+}
+
 /* Titulos de pagina */
 .page-header {
     margin-bottom: 20px;
