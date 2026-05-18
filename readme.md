@@ -2,7 +2,6 @@
 
 Sistema de copias de seguridad **autoalojado** para usuarios domésticos y pequeñas empresas. Corre sobre Linux (Debian/Ubuntu/Raspberry Pi OS) y se gestiona desde un panel web sencillo. Los equipos Windows suben sus archivos automáticamente mediante un agente Python que se descarga desde el panel.
 
-Proyecto de fin de ciclo **ASIR** — IES Zaidín-Vergeles, Granada (2024-2025).
 
 Repositorio: <https://github.com/Marinettoo/Niddo>
 Web del proyecto: `web/limelight-html/`
@@ -38,13 +37,13 @@ Niddo/
 │   ├── discos.php            # Montaje/desmontaje + cuotas (solo Admin)
 │   └── generar_agente.php    # Genera el agente Python personalizado por dispositivo
 ├── web/
-│   ├── limelight-html/       # Web pública del proyecto (HTML/CSS, Bootstrap)
+│   ├── limelight-html/       # Web pública del proyecto (HTML/CSS)
 │   ├── niddo Logo completo.png
 │   ├── niddo Logotipo.png
 │   ├── niddo Isólogo.png
 │   ├── banner.png
 │   └── Dispositivos.png
-├── niddo_schema.sql          # Esquema completo de BD (con seeds de roles)
+├── niddo_schema.sql          # Esquema completo de BD
 ├── install.sh                # Instalador automático
 ├── uninstall.sh              # Desinstalador (deja el servidor limpio)
 └── readme.md                 # Este archivo
@@ -64,7 +63,7 @@ sudo bash install.sh
 
 ### Qué hace el instalador (`install.sh`)
 
-1. Instala Apache2, PHP 8.x, MariaDB y extensiones necesarias (`php-mysql`, `php-mbstring`, `php-zip`).
+1. Instala Apache2, PHP, MariaDB y extensiones necesarias (`php-mysql`, `php-mbstring`, `php-zip`).
 2. Arranca y habilita los servicios con `systemctl`.
 3. Crea la base de datos `niddo` e importa `niddo_schema.sql` (con los roles `Admin` y `Usuario` ya sembrados).
 4. Crea el usuario MySQL `niddo` con permisos solo sobre esa base.
@@ -113,14 +112,14 @@ Solo existen dos roles:
 | **Admin** | Todo: dispositivos, usuarios, eventos, discos. Ve datos de todos los usuarios.   |
 | **Usuario** | Solo sus propios dispositivos y sus propios archivos. Sin acceso a Usuarios/Eventos/Discos. |
 
-**Administrador principal** (`user_id = 1`, el primero creado): es el único que puede **degradar** a otro Admin a Usuario. Cualquier Admin puede promocionar usuarios a Admin.
+**Administrador principal** ( El que su user_id = 1, el primero creado): es el único que puede degradar a otro Admin a Usuario. Cualquier Admin puede promocionar usuarios a Admin.
 
 ---
 
 ## Seguridad
 
-- **Contraseñas con bcrypt** (`password_hash` / `password_verify`).
-- **Tokens de dispositivo** de 64 caracteres hex con `bin2hex(random_bytes(32))`.
+- **Contraseñas con bcrypt** (`password_hash` / `password_verify`). Es la manera estándar de manejar contraseñas en PHP.
+- **Tokens de dispositivo** de 64 caracteres hex con bin2hex. Permite generar una cadena aleatoria única y segura que actúa como una llave para recordar y autenticar un dispositivo autorizado, sin necesidad de exponer la contraseña real.
 - **Bloqueo automático de IP** tras 5 intentos fallidos consecutivos (consultando la tabla `events`).
 - **Sesión con timeout de 5 minutos** de inactividad — al expirar, el usuario queda marcado como `inactivo` en la BD y se redirige al login. Implementado en `panel/_session.php` (incluido por todas las páginas del panel).
 - **Estado de usuario**: `activo` al iniciar sesión, `inactivo` al cerrarla o al expirar.
@@ -156,20 +155,13 @@ El `.htaccess` de `api/` amplía `upload_max_filesize` y `post_max_size` a 500 M
 
 ### `download_carpeta.php` — Descarga de una carpeta como ZIP
 
-Recibe el `device_id` y la ruta relativa de la carpeta. Misma comprobación de propiedad que `download.php`. Genera el ZIP al vuelo con `ZipArchive` de PHP y lo manda como descarga.
+Recibe el `device_id` y la ruta relativa de la carpeta. Misma comprobación de propiedad que `download.php`. Genera el ZIP al vuelo con ZipArchive de PHP. Que es una clase nativa de php y lo manda como descarga.
 
 ---
 
 ## Panel web (`panel/`)
 
-Interfaz dark con sidebar. Todas las páginas empiezan con `require '_session.php'` que centraliza:
-
-```php
-session_start();
-if (!isset($_SESSION['user_id'])) → redirige a login
-if (time() - $_SESSION['last_activity'] > 300) → marca inactivo, destruye sesión, redirige
-$_SESSION['last_activity'] = time();
-```
+Interfaz con nav en el lado. Todas las páginas empiezan con `require '_session.php'`. Para mantener la sesión siempre activa.
 
 ### `dashboard.php`
 
@@ -199,10 +191,10 @@ Lista dispositivos (filtrados por usuario si no es Admin). Al seleccionar uno, m
 
 Gestión de discos del servidor sin tocar la base de datos:
 
-- Lista discos montados leyendo `df -B1` (filtra pseudo-filesystems).
-- Por cada disco: formulario inline para asignar cuota en GB y botón de desmontaje (`sudo umount`).
+- Lista discos montados leyendo `df -B1` (filtra los archivos de sistema).
+- Por cada disco: formulario para asignar cuota en GB y botón de desmontaje (`sudo umount`).
 - Al final: formulario para montar un disco nuevo (`sudo mount`).
-- Las cuotas se guardan en `config/cuotas.php` como un array PHP (`var_export` + `file_put_contents`).
+- Las cuotas se guardan en `config/cuotas.php` como un array PHP.
 - Funciona gracias a la regla de sudoers que añade el instalador (`www-data ALL=(root) NOPASSWD: /bin/mount, /bin/umount`).
 
 ### `generar_agente.php`
@@ -232,7 +224,7 @@ Solo usa librerías estándar de Python (`urllib`, `hashlib`, `tkinter`, `os`, `
 
 ## Web pública (`web/limelight-html/`)
 
-Sitio HTML/CSS con Bootstrap para presentar el proyecto:
+Sitio HTML/CSS. Es una plantilla de codigo abierto (<https://plantillashtmlgratis.com/todas-las-plantillas/plantilla/plantilla-web-gratis-limelight/>) rellenada. Para presentar el proyecto:
 
 - `index.html` — landing con hero, features, precios.
 - `about.html` — documentación PASIR completa (RA.1 a RA.4).
@@ -250,12 +242,12 @@ Paleta basada en el azul del logo (`#1a8fe8` / `#1f3f72`).
 | Capa            | Tecnología                                 |
 |-----------------|--------------------------------------------|
 | SO servidor     | Debian 12 / Ubuntu 24.04 LTS               |
-| Servidor web    | Apache 2.4 con `mod_rewrite`               |
-| Backend         | PHP 8.x con PDO                            |
+| Servidor web    | Apache 2.4                                 |
+| Backend         | PHP                                        |
 | Base de datos   | MariaDB 11.x                               |
 | Frontend panel  | HTML5 + CSS3 (sin frameworks)              |
-| Web pública     | HTML5 + Bootstrap 4                        |
-| Agente cliente  | Python 3.x (solo librería estándar)        |
+| Web pública     | HTML5 + CSS + JS                           |
+| Agente cliente  | Python3                                    |
 | Automatización  | Bash + `apt-get`                           |
 | Control de ver. | Git + GitHub                               |
 
@@ -269,7 +261,7 @@ MIT — uso, modificación y distribución libres, incluso comercial, manteniend
 
 ## Equipo
 
-- **Jesús Pérez Marinetto** — coordinación, backend PHP, API REST, instalador bash
-- **Nicolás Baya-Casal Sansolini** — base de datos, panel web, diseño de interfaz
-- **Ismael Martín Ruiz** — agente Python Windows, pruebas en entorno cliente
-- **Iván López García** — seguridad, registro de eventos, documentación
+- **Jesús Pérez Marinetto** — backend, frontend, base de datos, Página web, mantenimiento del repositorio, Documentación
+- **Nicolás Baya-Casal Sansolini** — Documentación
+- **Ismael Martín Ruiz** — Modelo Entidad-Relación de la base de datos
+- **Iván López García** — 
