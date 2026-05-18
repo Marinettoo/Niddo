@@ -101,6 +101,9 @@ Base MariaDB `niddo` con las siguientes tablas:
 | `events`         | Eventos de seguridad: logins, fallos, IPs bloqueadas, etc.                 |
 | `settings`       | Configuración global clave-valor                                           |
 
+**Modelo entidad-relacion de la base de datos**:
+![modelo entidad relacion de la base de datos](Docs/MER.png)
+
 ---
 
 ## Roles y permisos
