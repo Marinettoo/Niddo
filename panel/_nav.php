@@ -1,6 +1,8 @@
 <?php $p = basename($_SERVER['PHP_SELF']); $es_admin = in_array('Admin', $_SESSION['roles'] ?? []); ?>
 <aside class="sidebar">
-    <div class="sidebar-logo">NIDD0</div>
+    <div class="sidebar-logo">
+        <img src="../web/niddo%20Logo%20completo.png" alt="Niddo">
+    </div>
     <nav class="sidebar-nav">
         <a href="dashboard.php"    class="<?= $p==='dashboard.php'    ?'activo':'' ?>">Inicio</a>
         <a href="dispositivos.php" class="<?= $p==='dispositivos.php' ?'activo':'' ?>">Dispositivos</a>

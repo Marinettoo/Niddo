@@ -13,7 +13,9 @@ $error = $_GET['error'] ?? '';
 </head>
 <body class="login-body">
 <div class="login-box">
-    <div class="login-brand">NIDDO</div>
+    <div class="login-brand">
+        <img src="../web/niddo%20Logo%20completo.png" alt="Niddo">
+    </div>
 
     <?php if ($sin_usuarios): ?>
         <div class="login-heading">Bienvenido</div>
