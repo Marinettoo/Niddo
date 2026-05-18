@@ -25,7 +25,7 @@ $hash      = $_POST['hash'] ?? '';
 $carpeta   = preg_replace('/[^a-zA-Z0-9_\-. ]/', '_', $_POST['carpeta'] ?? 'sin_carpeta');
 $destino   = "/var/niddo/backups/$device_id/$carpeta/$nombre";
 
-// Backup diferencial: si ya existe el mismo archivo con el mismo hash, omitir
+// comparo los hashes y su ya existe se salta
 $stmt = $pdo->prepare("
     SELECT f.id FROM files f JOIN backups b ON b.id = f.backup_id
     WHERE b.device_id = ? AND f.carpeta = ? AND f.nombre = ? AND f.hash_sha = ?
@@ -37,7 +37,7 @@ if ($stmt->fetchColumn()) {
     exit;
 }
 
-// Comprobar cuotas configuradas en config/cuotas.php
+// compruebo las cuotas configuradas en config/cuotas.php
 $cuotas_file = __DIR__ . '/../config/cuotas.php';
 $cuotas      = file_exists($cuotas_file) ? (include $cuotas_file) : [];
 $tamano      = (int)$_FILES['archivo']['size'];

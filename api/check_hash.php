@@ -12,7 +12,7 @@ $device_id = $stmt->fetchColumn();
 
 if (!$device_id) {
     http_response_code(401);
-    die('Token invalido');
+    die('el token no es valido');
 }
 
 $carpeta = preg_replace('/[^a-zA-Z0-9_\-. ]/', '_', $_POST['carpeta']);

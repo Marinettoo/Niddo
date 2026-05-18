@@ -1,4 +1,3 @@
-```markdown
 # Niddo Home Backup Server
 
 **Self-hosted** backup system for home users and small businesses. It runs on Linux (Debian/Ubuntu/Raspberry Pi OS) and is managed from a simple web panel. Windows machines upload their files automatically using a Python agent downloaded from the panel.
@@ -68,7 +67,7 @@ Niddo/
 ### From the Repository
 
 ```bash
-git clone [https://github.com/Marinettoo/Niddo](https://github.com/Marinettoo/Niddo)
+git clone https://github.com/Marinettoo/Niddo
 cd Niddo
 sudo bash install.sh
 
@@ -116,7 +115,7 @@ MariaDB `niddo` database with the following tables:
 | `settings` | Key-value global configuration |
 
 **Database Entity-Relationship Model**:
-
+![entity-relationship diagram of the database](docs/MER.png)
 
 ---
 
@@ -243,7 +242,7 @@ It exclusively uses Python's standard libraries (`urllib`, `hashlib`, `tkinter`,
 
 ## Public Website (`docs/`)
 
-HTML/CSS static site published through **GitHub Pages** from the `/docs` folder of the main branch. It utilizes a filled-out open-source template ([https://plantillashtmlgratis.com/todas-las-plantillas/plantilla/plantilla-web-gratis-limelight/](https://plantillashtmlgratis.com/todas-las-plantillas/plantilla/plantilla-web-gratis-limelight/)) to introduce the project:
+HTML/CSS static site published through **GitHub Pages** from the `/docs` folder of the main branch. It utilizes a filled-out open-source template (<https://plantillashtmlgratis.com/todas-las-plantillas/plantilla/plantilla-web-gratis-limelight/>) to introduce the project:
 
 * `index.html` — landing page featuring a hero section, features, and pricing details.
 * `about.html` — comprehensive PASIR documentation (RA.1 through RA.4).
@@ -284,7 +283,3 @@ MIT — free to use, modify, and distribute, including for commercial purposes, 
 * **Nicolás Baya-Casal Sansolini** — Documentation
 * **Ismael Martín Ruiz** — Database Entity-Relationship Model
 * **Iván López García** —
-
-```
-
-```
