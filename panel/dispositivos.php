@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $msg = "No tienes permisos para borrar ese dispositivo.";
             $msg_tipo = 'error';
         } else {
-            // Borrar archivos fisicos. ON DELETE CASCADE limpia backups, files y device_folders.
+            // borrar archvos
             $dir = "/var/niddo/backups/" . $target;
             if (is_dir($dir)) shell_exec('rm -rf ' . escapeshellarg($dir));
             $pdo->prepare("DELETE FROM devices WHERE id = ?")->execute([$target]);
