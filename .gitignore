@@ -1,0 +1,17 @@
+# Asistente Claude — instrucciones locales del proyecto
+claude.md
+CLAUDE.md
+.claude/
+
+# Configuración generada por el instalador
+config/db.php
+config/cuotas.php
+
+# Sistema (macOS/Windows)
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/
+.idea/
+*.swp

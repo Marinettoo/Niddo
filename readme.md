@@ -4,7 +4,7 @@ Sistema de copias de seguridad **autoalojado** para usuarios domésticos y peque
 
 
 Repositorio: <https://github.com/Marinettoo/Niddo>
-Web del proyecto: `web/limelight-html/`
+Web del proyecto: `docs/` (publicada con GitHub Pages)
 
 ---
 
@@ -36,8 +36,17 @@ Niddo/
 │   ├── restaurar.php         # Descarga de archivos / carpetas
 │   ├── discos.php            # Montaje/desmontaje + cuotas (solo Admin)
 │   └── generar_agente.php    # Genera el agente Python personalizado por dispositivo
-├── web/
-│   ├── limelight-html/       # Web pública del proyecto (HTML/CSS)
+├── docs/                     # Web pública (HTML/CSS) — servida por GitHub Pages
+│   ├── index.html
+│   ├── about.html
+│   ├── service.html
+│   ├── gallery.html
+│   ├── testimonial.html
+│   ├── contact.html
+│   ├── css/  js/  fonts/  images/
+│   ├── MER.png               # Diagrama entidad-relación referenciado por este readme
+│   └── .nojekyll             # Desactiva el procesamiento Jekyll de GitHub Pages
+├── web/                      # Imágenes usadas por el panel PHP
 │   ├── niddo Logo completo.png
 │   ├── niddo Logotipo.png
 │   ├── niddo Isólogo.png
@@ -102,7 +111,7 @@ Base MariaDB `niddo` con las siguientes tablas:
 | `settings`       | Configuración global clave-valor                                           |
 
 **Modelo entidad-relacion de la base de datos**:
-![modelo entidad relacion de la base de datos](Docs/MER.png)
+![modelo entidad relacion de la base de datos](docs/MER.png)
 
 ---
 
@@ -225,9 +234,9 @@ Solo usa librerías estándar de Python (`urllib`, `hashlib`, `tkinter`, `os`, `
 
 ---
 
-## Web pública (`web/limelight-html/`)
+## Web pública (`docs/`)
 
-Sitio HTML/CSS. Es una plantilla de codigo abierto (<https://plantillashtmlgratis.com/todas-las-plantillas/plantilla/plantilla-web-gratis-limelight/>) rellenada. Para presentar el proyecto:
+Sitio HTML/CSS publicado mediante **GitHub Pages** desde la carpeta `/docs` de la rama principal. Es una plantilla de codigo abierto (<https://plantillashtmlgratis.com/todas-las-plantillas/plantilla/plantilla-web-gratis-limelight/>) rellenada. Para presentar el proyecto:
 
 - `index.html` — landing con hero, features, precios.
 - `about.html` — documentación PASIR completa (RA.1 a RA.4).
