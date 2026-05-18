@@ -32,11 +32,6 @@ if (isset($_POST['email'], $_POST['password'])) {
         exit;
     }
 
-    if ($user['estado'] !== 'activo') {
-        header('Location: ../panel/login.php?error=' . urlencode('Usuario inactivo'));
-        exit;
-    }
-
     $pdo->prepare("UPDATE users SET estado='activo' WHERE id=?")->execute([$user['id']]);
 
     $_SESSION['user_id']       = $user['id'];

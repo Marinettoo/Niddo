@@ -40,7 +40,7 @@ $tipos   = $pdo->query("SELECT DISTINCT tipo FROM events ORDER BY tipo")->fetchA
                 <thead><tr><th>Tipo</th><th>IP</th><th>Usuario</th><th>Fecha</th></tr></thead>
                 <tbody>
                 <?php foreach ($eventos as $e):
-                    $c = str_contains($e['tipo'],'fallido') || str_contains($e['tipo'],'error') || str_contains($e['tipo'],'bloqueada') ? 'error' : 'ok';
+                    $c = str_contains($e['tipo'],'fallido') || str_contains($e['tipo'],'error') || str_contains($e['tipo'],'bloqueada') || str_contains($e['tipo'],'denegado') ? 'error' : 'ok';
                     $label = ucfirst(str_replace('_', ' ', $e['tipo'])); ?>
                 <tr>
                     <td><span class="badge badge-<?= $c ?>"><?= htmlspecialchars($label) ?></span></td>

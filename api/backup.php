@@ -25,6 +25,24 @@ $hash      = $_POST['hash'] ?? '';
 $carpeta   = preg_replace('/[^a-zA-Z0-9_\-. ]/', '_', $_POST['carpeta'] ?? 'sin_carpeta');
 $destino   = "/var/niddo/backups/$device_id/$carpeta/$nombre";
 
+// Comprobar cuotas configuradas en config/cuotas.php
+$cuotas_file = __DIR__ . '/../config/cuotas.php';
+$cuotas      = file_exists($cuotas_file) ? (include $cuotas_file) : [];
+$tamano      = (int)$_FILES['archivo']['size'];
+
+foreach ($cuotas as $punto => $bytes_cuota) {
+    $punto_norm = rtrim($punto, '/');
+    if ($punto_norm !== '' && $destino !== $punto_norm && strpos($destino, $punto_norm . '/') !== 0) continue;
+    $total = @disk_total_space($punto);
+    $libre = @disk_free_space($punto);
+    if ($total === false || $libre === false) continue;
+    if (($total - $libre) + $tamano > $bytes_cuota) {
+        $pdo->prepare("INSERT INTO events (tipo, ip) VALUES ('copia_error_cuota', ?)")->execute([$ip]);
+        http_response_code(507);
+        die('Cuota excedida (' . round($bytes_cuota / 1073741824, 1) . ' GB) en ' . $punto);
+    }
+}
+
 if (!is_dir("/var/niddo/backups/$device_id/$carpeta")) {
     mkdir("/var/niddo/backups/$device_id/$carpeta", 0750, true);
 }

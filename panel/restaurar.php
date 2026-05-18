@@ -109,6 +109,11 @@ function fmt($b) {
                 <div style="margin-top:20px; margin-bottom:6px; display:flex; align-items:center; gap:16px;">
                     <strong><?= htmlspecialchars($carpeta_actual) ?></strong>
                     <a href="../api/download_carpeta.php?device=<?= $device_id ?>&carpeta=<?= urlencode($carpeta_actual) ?>" class="action-link">descargar carpeta (zip)</a>
+                    <form method="POST" action="../api/delete.php" class="action-form" onsubmit="return confirm('¿Borrar TODA la carpeta «<?= htmlspecialchars($carpeta_actual, ENT_QUOTES) ?>» y sus archivos? Esta accion no se puede deshacer.');">
+                        <input type="hidden" name="device" value="<?= $device_id ?>">
+                        <input type="hidden" name="carpeta" value="<?= htmlspecialchars($carpeta_actual, ENT_QUOTES) ?>">
+                        <button type="submit" class="action-link-danger">borrar carpeta</button>
+                    </form>
                 </div>
                 <div class="table-wrap"><table>
                     <thead><tr><th>Archivo</th><th>Backup</th><th>Tamaño</th><th></th></tr></thead>
@@ -118,7 +123,13 @@ function fmt($b) {
                     <td class="td-name"><?= htmlspecialchars($f['nombre']) ?></td>
                     <td class="td-mono"><?= $f['fecha_inicio'] ?></td>
                     <td class="td-mono"><?= fmt($size) ?></td>
-                    <td><a href="../api/download.php?id=<?= $f['id'] ?>" class="action-link">descargar</a></td>
+                    <td style="display:flex; gap:12px;">
+                        <a href="../api/download.php?id=<?= $f['id'] ?>" class="action-link">descargar</a>
+                        <form method="POST" action="../api/delete.php" class="action-form" onsubmit="return confirm('¿Borrar «<?= htmlspecialchars($f['nombre'], ENT_QUOTES) ?>»? Esta accion no se puede deshacer.');">
+                            <input type="hidden" name="id" value="<?= $f['id'] ?>">
+                            <button type="submit" class="action-link-danger">borrar</button>
+                        </form>
+                    </td>
                 </tr>
                 <?php endforeach; ?>
                 </tbody></table></div>
