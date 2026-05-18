@@ -1,237 +1,275 @@
-# Niddo Home Backup Server - Explicación del Proyecto
+# Niddo Home Backup Server
 
-## ¿Qué es Niddo?
+Sistema de copias de seguridad **autoalojado** para usuarios domésticos y pequeñas empresas. Corre sobre Linux (Debian/Ubuntu/Raspberry Pi OS) y se gestiona desde un panel web sencillo. Los equipos Windows suben sus archivos automáticamente mediante un agente Python que se descarga desde el panel.
 
-Niddo es un servidor de copias de seguridad autoalojado para usuarios domésticos. Corre en Linux (Debian/Ubuntu/Raspberry Pi OS) y se gestiona desde un panel web sencillo. Los dispositivos Windows suben sus archivos automáticamente mediante un agente en Python.
+Proyecto de fin de ciclo **ASIR** — IES Zaidín-Vergeles, Granada (2024-2025).
+
+Repositorio: <https://github.com/Marinettoo/Niddo>
+Web del proyecto: `web/limelight-html/`
 
 ---
 
-## Estructura de archivos
+## Estructura del proyecto
 
 ```
 Niddo/
 ├── config/
-│   └── db.php              # Conexión a la base de datos
+│   ├── db.php                # Conexión PDO a MariaDB
+│   └── cuotas.php            # Cuotas de espacio por disco (gestionado desde el panel)
 ├── api/
-│   ├── .htaccess           # Aumenta límites de subida a 500 MB
-│   ├── auth.php            # Autenticación de usuarios y dispositivos
-│   ├── backup.php          # Recepción y registro de archivos de backup
-│   ├── download.php        # Descarga segura de archivos (requiere sesión)
-│   └── setup.php           # Creación del primer administrador
+│   ├── .htaccess             # Eleva límites de subida a 500 MB
+│   ├── auth.php              # Login con bloqueo por IP + marca usuario activo
+│   ├── backup.php            # Recepción de archivos del agente (multipart)
+│   ├── download.php          # Descarga segura de archivos (con control de acceso)
+│   ├── download_carpeta.php  # Descarga de carpetas enteras como ZIP
+│   └── setup.php             # Creación del primer administrador
 ├── panel/
-│   ├── _head.php           # Partial compartido: meta tags, fuentes, CSS
-│   ├── _nav.php            # Partial compartido: sidebar con navegación
-│   ├── style.css           # Sistema de diseño dark completo
-│   ├── login.php           # Acceso (o setup inicial si no hay usuarios)
-│   ├── logout.php          # Cierre de sesión
-│   ├── dashboard.php       # Vista principal con estadísticas
-│   ├── dispositivos.php    # Gestión de dispositivos
-│   ├── usuarios.php        # Gestión de usuarios (solo Admin)
-│   ├── eventos.php         # Registro de eventos de seguridad
-│   ├── restaurar.php       # Descarga de archivos desde backups
-│   └── generar_agente.php  # Genera y descarga el agente .py para cada dispositivo
-├── niddo_schema.sql        # Esquema completo de la base de datos
-├── install.sh              # Instalador automático para Debian/Ubuntu/Raspberry Pi
-├── uninstall.sh            # Desinstalador: elimina todos los paquetes y datos
-└── Explicacion.md          # Este archivo
+│   ├── _head.php             # Partial: meta, fuentes, CSS
+│   ├── _nav.php              # Partial: sidebar con visibilidad por rol
+│   ├── _session.php          # Partial: control de sesión + timeout de 5 min
+│   ├── style.css             # Sistema de diseño del panel
+│   ├── login.php             # Login (o setup si no hay usuarios)
+│   ├── logout.php            # Cierre de sesión
+│   ├── dashboard.php         # Estadísticas (filtradas por rol)
+│   ├── dispositivos.php      # Gestión de dispositivos
+│   ├── usuarios.php          # Gestión de usuarios y roles (solo Admin)
+│   ├── eventos.php           # Visor de eventos de seguridad (solo Admin)
+│   ├── restaurar.php         # Descarga de archivos / carpetas
+│   ├── discos.php            # Montaje/desmontaje + cuotas (solo Admin)
+│   └── generar_agente.php    # Genera el agente Python personalizado por dispositivo
+├── web/
+│   ├── limelight-html/       # Web pública del proyecto (HTML/CSS, Bootstrap)
+│   ├── niddo Logo completo.png
+│   ├── niddo Logotipo.png
+│   ├── niddo Isólogo.png
+│   ├── banner.png
+│   └── Dispositivos.png
+├── niddo_schema.sql          # Esquema completo de BD (con seeds de roles)
+├── install.sh                # Instalador automático
+├── uninstall.sh              # Desinstalador (deja el servidor limpio)
+└── readme.md                 # Este archivo
 ```
 
 ---
 
-## Instalador (`install.sh`)
+## Instalación
 
-Script de Bash para desplegar Niddo en cualquier sistema Debian/Ubuntu/Raspberry Pi OS con un solo comando:
+### Desde el repositorio
 
 ```bash
+git clone https://github.com/Marinettoo/Niddo
+cd Niddo
 sudo bash install.sh
 ```
 
-El instalador realiza en orden:
+### Qué hace el instalador (`install.sh`)
 
-1. Instala Apache2, PHP, MariaDB y extensiones necesarias (`php-mysql`, `php-mbstring`).
+1. Instala Apache2, PHP 8.x, MariaDB y extensiones necesarias (`php-mysql`, `php-mbstring`, `php-zip`).
 2. Arranca y habilita los servicios con `systemctl`.
-3. Crea la base de datos `niddo` y todas las tablas importando `niddo_schema.sql`.
-4. Crea el usuario MySQL `niddo` con permisos solo sobre esa base de datos.
-5. Copia los archivos del proyecto a `/var/www/html/niddo/`.
+3. Crea la base de datos `niddo` e importa `niddo_schema.sql` (con los roles `Admin` y `Usuario` ya sembrados).
+4. Crea el usuario MySQL `niddo` con permisos solo sobre esa base.
+5. Copia los archivos a `/var/www/html/niddo/`.
 6. Actualiza `config/db.php` con las credenciales reales mediante `sed`.
-7. Crea el directorio `/var/niddo/backups/` con permisos de `www-data`.
-8. Habilita `mod_rewrite` y configura Apache para que el `.htaccess` de la API funcione.
-9. Muestra la URL del panel con la IP del servidor.
+7. Crea `/var/niddo/backups/` con permisos de `www-data`.
+8. Habilita `mod_rewrite` y configura Apache para que los `.htaccess` funcionen.
+9. **Configura sudoers**: añade `/etc/sudoers.d/niddo` para que `www-data` pueda ejecutar `mount` y `umount` sin contraseña (necesario para la gestión de discos desde el panel).
+10. Muestra la URL del panel con la IP del servidor.
 
-## Desinstalador (`uninstall.sh`)
-
-Elimina completamente Niddo y deja el servidor limpio:
+### Desinstalación
 
 ```bash
 sudo bash uninstall.sh
 ```
 
-Borra: archivos del panel, todos los backups, configuración de Apache, base de datos y usuario MySQL, y desinstala todos los paquetes instalados.
+Borra todo: panel, backups, configuración de Apache, base de datos y usuario MySQL, paquetes instalados y la regla de sudoers.
 
 ---
 
 ## Base de datos (`niddo_schema.sql`)
 
-La base de datos MySQL se llama `niddo` y contiene las siguientes tablas:
+Base MariaDB `niddo` con las siguientes tablas:
 
-| Tabla | Descripción |
-|---|---|
-| `users` | Usuarios del sistema (nombre, email, contraseña hasheada, estado) |
-| `roles` | Roles disponibles (Admin, Gestor, Lectura) |
-| `user_roles` | Relación M:N entre usuarios y roles |
-| `devices` | Dispositivos registrados, cada uno con un token único |
-| `device_folders` | Carpetas configuradas por dispositivo para hacer backup |
-| `repositorios` | Repositorios donde se almacenan los backups |
-| `backups` | Registro de cada operación de backup (tamaño, fecha, estado) |
-| `files` | Archivos individuales dentro de cada backup (con hash SHA) |
-| `events` | Eventos de seguridad: logins, fallos, IPs |
-| `settings` | Configuración global del sistema (clave-valor) |
-
----
-
-## Conexión a la base de datos (`config/db.php`)
-
-Establece la conexión con MySQL usando **PDO**, más seguro que `mysqli`.
-
-- Si la conexión falla, devuelve un error HTTP 500.
-- Todos los archivos de la API incluyen este fichero con `require_once`.
-- El instalador actualiza automáticamente las credenciales de `root/vacío` a `niddo/niddo`.
+| Tabla            | Descripción                                                                |
+|------------------|----------------------------------------------------------------------------|
+| `users`          | Usuarios (nombre, email, contraseña bcrypt, estado activo/inactivo)        |
+| `roles`          | Roles del sistema. **Solo dos**: `Admin` y `Usuario` (sembrados al instalar)|
+| `user_roles`     |                                   |
+| `devices`        | Dispositivos registrados; cada uno con token único y `user_id` propietario |
+| `device_folders` | Carpetas configuradas por dispositivo para hacer backup                    |
+| `repositorios`   | Repositorios donde se almacenan los backups                                |
+| `backups`        | Cada operación de backup (tamaño, fecha, estado)                           |
+| `files`          | Archivos individuales del backup (con hash SHA-256)                        |
+| `events`         | Eventos de seguridad: logins, fallos, IPs bloqueadas, etc.                 |
+| `settings`       | Configuración global clave-valor                                           |
 
 ---
 
-## Autenticación (`api/auth.php`)
+## Roles y permisos
 
-Maneja dos tipos de autenticación mediante `$_POST`:
+Solo existen dos roles:
 
-### Login de usuario (panel web)
-- Recibe `email` y `password` por formulario HTML.
-- Verifica la contraseña con `password_verify()`.
-- Si es correcto: guarda el usuario en `$_SESSION` y redirige al dashboard.
-- Si falla: registra el intento en la tabla `events` con la IP del cliente.
-- Bloquea usuarios con estado distinto de `activo`.
+| Rol       | Qué ve y qué puede hacer                                                         |
+|-----------|----------------------------------------------------------------------------------|
+| **Admin** | Todo: dispositivos, usuarios, eventos, discos. Ve datos de todos los usuarios.   |
+| **Usuario** | Solo sus propios dispositivos y sus propios archivos. Sin acceso a Usuarios/Eventos/Discos. |
 
-### Validación de token (agente Python)
-- Recibe un `token` por POST.
-- Busca el dispositivo en la tabla `devices`.
-- Si es válido, devuelve `device_id` en texto plano.
+**Administrador principal** (`user_id = 1`, el primero creado): es el único que puede **degradar** a otro Admin a Usuario. Cualquier Admin puede promocionar usuarios a Admin.
 
 ---
 
-## Setup inicial (`api/setup.php`)
+## Seguridad
 
-Se ejecuta solo cuando no existe ningún usuario en la base de datos.
-
-- Crea el rol `Admin` si no existe.
-- Inserta el primer usuario con los datos del formulario.
-- Le asigna el rol Admin automáticamente.
-- Inicia sesión directamente y redirige al dashboard.
-- Si ya hay usuarios, redirige al login sin hacer nada.
-
----
-
-## Recepción de backups (`api/backup.php`)
-
-Recibe los archivos subidos por el agente Python.
-
-**El agente envía por POST:**
-- `token` — identifica el dispositivo
-- `archivo` — el fichero a guardar (`$_FILES`)
-- `hash` — hash SHA256 del archivo para verificar integridad
-
-**El servidor:**
-1. Valida el token del dispositivo.
-2. Guarda el archivo en `/var/niddo/backups/{device_id}/`.
-3. Crea un registro en la tabla `backups`.
-4. Registra el archivo en la tabla `files` con su hash y ruta física.
-5. Actualiza el tamaño del backup.
-6. Responde `ok` si todo fue bien.
-
-El `.htaccess` de la carpeta `api/` amplía los límites de PHP a 500 MB de subida y 300 segundos de tiempo de ejecución.
+- **Contraseñas con bcrypt** (`password_hash` / `password_verify`).
+- **Tokens de dispositivo** de 64 caracteres hex con `bin2hex(random_bytes(32))`.
+- **Bloqueo automático de IP** tras 5 intentos fallidos consecutivos (consultando la tabla `events`).
+- **Sesión con timeout de 5 minutos** de inactividad — al expirar, el usuario queda marcado como `inactivo` en la BD y se redirige al login. Implementado en `panel/_session.php` (incluido por todas las páginas del panel).
+- **Estado de usuario**: `activo` al iniciar sesión, `inactivo` al cerrarla o al expirar.
+- **Verificación SHA-256** de cada archivo subido.
+- **Mini-SOC**: la tabla `events` registra logins, fallos, bloqueos, copias completadas/erróneas, cambios de configuración…
 
 ---
 
-## Descarga de archivos (`api/download.php`)
+## API (`api/`)
 
-Endpoint seguro para servir archivos del servidor al navegador.
+### `auth.php` — Login y validación de token
 
-- Comprueba que hay sesión activa antes de servir cualquier archivo.
-- Recibe el ID del archivo (`?id=`) y busca su ruta física en la tabla `files`.
-- Devuelve el archivo con cabeceras `Content-Disposition: attachment`.
-- Si el archivo no existe en disco o el ID es inválido, responde 404.
+Maneja dos modos según el `$_POST`:
+
+- **Login de panel**: recibe `email` + `password`. Verifica con `password_verify`, comprueba que la IP no esté bloqueada (5 fallos en `events`), carga los roles del usuario en `$_SESSION['roles']`, marca al usuario como `activo`, e inicializa `$_SESSION['last_activity']`.
+- **Token del agente**: recibe `token`, busca en `devices` y devuelve `device_id` en texto plano.
+
+### `setup.php` — Primer administrador
+
+Solo se ejecuta cuando no hay ningún usuario. Crea al primer admin y le asigna automáticamente el rol `Admin`.
+
+### `backup.php` — Recepción de archivos
+
+Recibe del agente: `token`, `archivo` (`$_FILES`) y `hash` SHA-256. Valida el token, guarda el fichero en `/var/niddo/backups/{device_id}/{ruta_relativa}/`, registra en `backups` y `files`, y responde `ok`.
+
+El `.htaccess` de `api/` amplía `upload_max_filesize` y `post_max_size` a 500 MB y `max_execution_time` a 300 s.
+
+### `download.php` — Descarga de un archivo
+
+- Comprueba sesión activa.
+- Si el usuario es `Usuario` (no Admin), solo puede descargar archivos que pertenezcan a sus propios dispositivos (JOIN `files → backups → devices` filtrando por `user_id`).
+- Devuelve el archivo con `Content-Disposition: attachment`.
+
+### `download_carpeta.php` — Descarga de una carpeta como ZIP
+
+Recibe el `device_id` y la ruta relativa de la carpeta. Misma comprobación de propiedad que `download.php`. Genera el ZIP al vuelo con `ZipArchive` de PHP y lo manda como descarga.
 
 ---
 
 ## Panel web (`panel/`)
 
-Interfaz de administración con diseño dark y sidebar fija. Usa dos partials compartidos:
+Interfaz dark con sidebar. Todas las páginas empiezan con `require '_session.php'` que centraliza:
 
-- **`_head.php`** — meta tags, carga de Inter (Google Fonts) y `style.css` con cache-busting automático.
-- **`_nav.php`** — sidebar con logo, navegación con estado activo por página, avatar con inicial del usuario y botón de logout.
-
-Todas las páginas comprueban sesión activa; si no, redirigen al login.
-
-### `login.php`
-- Si no hay ningún usuario en la BD: muestra el formulario de creación del primer administrador.
-- Si ya hay usuarios: muestra el formulario de login normal.
+```php
+session_start();
+if (!isset($_SESSION['user_id'])) → redirige a login
+if (time() - $_SESSION['last_activity'] > 300) → marca inactivo, destruye sesión, redirige
+$_SESSION['last_activity'] = time();
+```
 
 ### `dashboard.php`
-- 4 tarjetas de estadísticas: dispositivos, backups, usuarios y espacio total.
-- Tabla con los 10 últimos backups (dispositivo, fecha, tamaño, estado).
-- Tabla con los 10 últimos eventos de seguridad.
+
+- **Admin**: 4 tarjetas (dispositivos, backups, usuarios, espacio total), tabla de últimos backups y de últimos eventos.
+- **Usuario**: solo sus propios dispositivos y backups, sin tarjeta de usuarios ni tabla de eventos.
 
 ### `dispositivos.php`
-- Formulario para registrar un nuevo dispositivo (nombre, SO, repositorio).
-- El token se genera automáticamente con `bin2hex(random_bytes(32))`.
-- Tabla con todos los dispositivos y un enlace **"descargar agente (.py)"** por cada uno.
 
-### `generar_agente.php`
-- Al hacer click en "descargar agente", genera al vuelo el script Python configurado y lo sirve como descarga directa.
-- Usa **nowdoc** de PHP (`<<<'PYTHON'`) para que el código Python no sufra interpolación, e inyecta el token y la URL del servidor con `str_replace` sobre placeholders (`__TOKEN__`, `__SERVIDOR__`, `__NOMBRE__`).
-- La URL del servidor se calcula dinámicamente con `$_SERVER['HTTP_HOST']` para que funcione en cualquier red.
-- El agente descargado abre una ventana con **tkinter** (librería estándar de Python) donde el usuario elige los discos o carpetas a copiar, configura el intervalo y activa el backup automático mediante **Task Scheduler de Windows** (`schtasks`).
-- Requiere Python 3 instalado en el equipo Windows.
+Formulario para registrar un nuevo dispositivo (nombre, SO, repositorio). El token se genera automáticamente. Avisa de que se necesita Python 3 en el cliente con enlace a python.org. **Los usuarios no-Admin solo ven sus propios dispositivos**.
 
 ### `usuarios.php` *(solo Admin)*
-- Comprueba que el usuario logueado tiene rol `Admin`; si no, muestra "Acceso denegado".
-- Formulario para añadir usuarios con nombre, email, contraseña y rol.
-- Tabla con todos los usuarios, roles y estado.
 
-### `eventos.php`
-- Muestra los últimos 200 eventos de seguridad.
-- Filtros por tipo de evento generados dinámicamente desde los tipos existentes en la BD.
-- Los eventos de tipo `*_fallido` se muestran en rojo; el resto en verde.
+- Crear usuarios nuevos con email, contraseña y rol.
+- Cambiar el rol de cualquier usuario (`Usuario` ↔ `Admin`).
+- Solo el **administrador principal** (`user_id = 1`) puede degradar a otro Admin. Cualquier Admin puede promocionar.
+- El admin principal aparece marcado con `*` en la tabla.
+
+### `eventos.php` *(solo Admin)*
+
+Últimos 200 eventos con filtro por tipo. Los eventos `*_fallido` se muestran en rojo, el resto en verde.
 
 ### `restaurar.php`
-- Lista todos los dispositivos con el número de backups disponibles.
-- Al seleccionar un dispositivo, muestra todos sus archivos con fecha de backup y tamaño.
-- Cada archivo tiene un enlace de descarga que pasa por `api/download.php`.
+
+Lista dispositivos (filtrados por usuario si no es Admin). Al seleccionar uno, muestra todos los archivos con opción de descarga individual o descarga de la carpeta completa como ZIP.
+
+### `discos.php` *(solo Admin)*
+
+Gestión de discos del servidor sin tocar la base de datos:
+
+- Lista discos montados leyendo `df -B1` (filtra pseudo-filesystems).
+- Por cada disco: formulario inline para asignar cuota en GB y botón de desmontaje (`sudo umount`).
+- Al final: formulario para montar un disco nuevo (`sudo mount`).
+- Las cuotas se guardan en `config/cuotas.php` como un array PHP (`var_export` + `file_put_contents`).
+- Funciona gracias a la regla de sudoers que añade el instalador (`www-data ALL=(root) NOPASSWD: /bin/mount, /bin/umount`).
+
+### `generar_agente.php`
+
+Genera al vuelo el script Python configurado para un dispositivo concreto y lo sirve como descarga directa. Usa **nowdoc** (`<<<'PYTHON'`) para que el código Python no sufra interpolación, e inyecta `__TOKEN__`, `__SERVIDOR__` y `__NOMBRE__` con `str_replace`. La URL del servidor se calcula con `$_SERVER['HTTP_HOST']` para que funcione en cualquier red.
 
 ---
 
 ## Agente Python (Windows)
 
-El agente se descarga desde el panel (una vez por dispositivo) y se ejecuta con Python 3 en Windows.
+Se descarga desde el panel (una vez por dispositivo) y se ejecuta con **Python 3** en Windows.
 
-**Modos de ejecución:**
-- **Normal** (`python agente.py`) — abre la ventana tkinter con la interfaz gráfica.
-- **Automático** (`python agente.py --auto`) — ejecuta el backup en silencio, sin GUI. Es el modo que usa Task Scheduler.
+**Modos:**
+- `python agente.py` — abre la ventana **tkinter** donde el usuario elige carpetas, configura el intervalo y activa el backup automático mediante **Task Scheduler** (`schtasks`).
+- `python agente.py --auto` — modo silencioso usado por Task Scheduler.
 
 **Flujo del backup:**
 1. Recorre recursivamente las carpetas seleccionadas.
-2. Para cada archivo: calcula el hash SHA256 y lo sube mediante una petición `multipart/form-data` a `api/backup.php`.
-3. El servidor valida el token, guarda el archivo y registra el resultado en la BD.
+2. Para cada archivo calcula el hash SHA-256 y lo sube por `multipart/form-data` a `api/backup.php`.
+3. El servidor valida token, guarda el archivo y registra el resultado.
 
-**Configuración persistente:** se guarda en `%APPDATA%\Niddo\{nombre_dispositivo}.json` (carpetas y intervalo).
+**Configuración persistente:** `%APPDATA%\Niddo\{nombre_dispositivo}.json`.
+
+Solo usa librerías estándar de Python (`urllib`, `hashlib`, `tkinter`, `os`, `json`) — sin dependencias externas que instalar.
 
 ---
 
-## Pendiente de implementar
+## Web pública (`web/limelight-html/`)
 
-Los siguientes puntos son necesarios para cubrir los criterios de evaluación del módulo PASIR:
+Sitio HTML/CSS con Bootstrap para presentar el proyecto:
 
-- **Bloqueo de IP** tras varios intentos fallidos de login (RA.3.e — prevención de riesgos de seguridad).
-- **Indicadores de calidad en el dashboard**: tasa de éxito de backups, dispositivos activos vs inactivos, alertas de incidencias (RA.4.a/b/c).
-- **Eliminar Usuarios**: Usuarios antiguos que se quieran eliminar
-- **Separar por carpetas**: restaurtar carpetas completas en .zip
-- **+ eventos en el visor de eventos**: copia hecha o copia restaurada
-- **Página web que venda el producto**: 
+- `index.html` — landing con hero, features, precios.
+- `about.html` — documentación PASIR completa (RA.1 a RA.4).
+- `service.html` — funcionalidades del producto.
+- `gallery.html` — guía de instalación y planes de precios.
+- `testimonial.html` — capas de seguridad y RGPD.
+- `contact.html` — créditos del equipo y stack técnico.
+
+Paleta basada en el azul del logo (`#1a8fe8` / `#1f3f72`).
+
+---
+
+## Stack técnico
+
+| Capa            | Tecnología                                 |
+|-----------------|--------------------------------------------|
+| SO servidor     | Debian 12 / Ubuntu 24.04 LTS               |
+| Servidor web    | Apache 2.4 con `mod_rewrite`               |
+| Backend         | PHP 8.x con PDO                            |
+| Base de datos   | MariaDB 11.x                               |
+| Frontend panel  | HTML5 + CSS3 (sin frameworks)              |
+| Web pública     | HTML5 + Bootstrap 4                        |
+| Agente cliente  | Python 3.x (solo librería estándar)        |
+| Automatización  | Bash + `apt-get`                           |
+| Control de ver. | Git + GitHub                               |
+
+---
+
+## Licencia
+
+MIT — uso, modificación y distribución libres, incluso comercial, manteniendo el aviso de copyright.
+
+---
+
+## Equipo
+
+- **Jesús Pérez Marinetto** — coordinación, backend PHP, API REST, instalador bash
+- **Nicolás Baya-Casal Sansolini** — base de datos, panel web, diseño de interfaz
+- **Ismael Martín Ruiz** — agente Python Windows, pruebas en entorno cliente
+- **Iván López García** — seguridad, registro de eventos, documentación
