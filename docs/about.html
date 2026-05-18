@@ -44,41 +44,41 @@
          </div>
       </header>
 
-      <!-- RA.1 — Análisis del contexto -->
+      <!-- RA.1 — Análisis de mercado y viabilidad -->
       <div class="service">
          <div class="container">
             <div class="row">
                <div class="col-md-12">
                   <div class="titlepage">
-                     <h2>Análisis del <span class="green">Sector</span></h2>
+                     <h2>Análisis de Mercado y <span class="green">Viabilidad</span></h2>
                   </div>
                </div>
             </div>
 
-            <!-- Clasificación de empresas del sector -->
+            <!-- Empresas del sector y tipo de producto -->
             <div class="row" style="margin-bottom:40px;">
                <div class="col-md-10 offset-md-1">
                   <h3 style="color:#1f3f72; margin-bottom:15px;">Empresas del sector y tipo de producto</h3>
-                  <p>El mercado del almacenamiento y las copias de seguridad se divide principalmente en tres categorías:</p>
+                  <p>El mercado actual de almacenamiento y copias de seguridad se divide en tres grandes ramas comerciales:</p>
                   <ul>
-                     <li><strong>Servicios en la nube (SaaS):</strong> Google Drive, Dropbox, iDrive, Backblaze. Ofrecen almacenamiento externo gestionado. Son cómodos pero implican pago mensual recurrente y cesión de datos a terceros.</li>
-                     <li><strong>Appliances NAS (Hardware):</strong> Synology, QNAP, Western Digital MyCloud. Dispositivos dedicados de alto rendimiento con software propio. Elevado coste de entrada (150–800€) y curva de aprendizaje técnica.</li>
-                     <li><strong>Software de backup autoalojado (Open Source):</strong> TrueNAS, UrBackup, Duplicati. Soluciones gratuitas muy potentes pero orientadas a usuarios técnicos, con instalación y configuración complejas.</li>
+                     <li><strong>Servicios en la nube (SaaS):</strong> Soluciones como Google Drive, OneDrive o Dropbox. Ofrecen comodidad a cambio de una suscripción mensual recurrente, pero obligan al usuario a ceder la privacidad de sus datos a servidores de terceros.</li>
+                     <li><strong>Appliances NAS (Hardware):</strong> Equipos físicos dedicados como Synology o QNAP. Tienen un rendimiento excelente pero con un coste de entrada muy elevado (entre 150€ y 800€) y requieren conocimientos técnicos avanzados para su configuración.</li>
+                     <li><strong>Software de backup avanzado:</strong> Herramientas como TrueNAS o UrBackup. Son muy potentes pero están orientadas exclusivamente a administradores de sistemas debido a su compleja interfaz y despliegue.</li>
                   </ul>
-                  <p>Niddo se posiciona en un nicho intermedio: <strong>software autoalojado de bajo coste, pensado para usuarios sin conocimientos avanzados</strong>, que buscan la privacidad del almacenamiento local sin la complejidad de las soluciones existentes.</p>
+                  <p>Niddo se posiciona justo en el nicho intermedio: un software de bajo coste instalado con un solo comando (install.sh), diseñado para usuarios domésticos y profesionales que exigen la privacidad de un entorno local sin pagar cuotas mensuales ni sufrir complicaciones técnicas.</p>
                </div>
             </div>
 
-            <!-- Necesidades más demandadas -->
+            <!-- Necesidades identificadas en el mercado -->
             <div class="row" style="margin-bottom:40px;">
                <div class="col-md-10 offset-md-1">
                   <h3 style="color:#1f3f72; margin-bottom:15px;">Necesidades identificadas en el mercado</h3>
-                  <p>Tras analizar el sector se identificaron las siguientes demandas sin cubrir adecuadamente:</p>
+                  <p>Tras estudiar la situación actual del sector, detectamos las siguientes demandas sin cubrir de forma eficiente:</p>
                   <ul>
-                     <li>Usuarios domésticos y micropymes que quieren copias de seguridad locales sin pagar mensualidades de nube.</li>
-                     <li>Preocupación creciente por la privacidad de los datos (RGPD), especialmente tras escándalos de filtración en grandes proveedores.</li>
-                     <li>Necesidad de una solución "plug and play" que no requiera ser administrador de sistemas para configurarla.</li>
-                     <li>Deseo de tener visibilidad sobre qué datos se guardan, cuándo y desde qué dispositivo, sin depender de dashboards externos.</li>
+                     <li><strong>Soberanía de datos:</strong> Usuarios y micropymes que necesitan respaldar su información de manera local sin depender de la conectividad o las políticas de almacenamiento de las grandes tecnológicas.</li>
+                     <li><strong>Privacidad estricta:</strong> Necesidad de cumplir con normativas de protección de datos (RGPD) en entornos profesionales, evitando filtraciones en servidores externos.</li>
+                     <li><strong>Simplicidad operativa:</strong> Demanda de un sistema "plug and play" que automatice el proceso (mediante el Agente de Windows) sin obligar al usuario a gestionar configuraciones de red complejas.</li>
+                     <li><strong>Auditoría local:</strong> Interés por monitorizar qué se guarda y desde dónde, centralizado en un panel de control propio y visual.</li>
                   </ul>
                </div>
             </div>
@@ -87,19 +87,21 @@
             <div class="row" style="margin-bottom:40px;">
                <div class="col-md-10 offset-md-1">
                   <h3 style="color:#1f3f72; margin-bottom:15px;">Oportunidades de negocio</h3>
-                  <p>El sector del backup doméstico y para micropymes tiene una penetración de mercado baja respecto a la nube, pero la tendencia de soberanía digital y privacidad está generando una demanda creciente de alternativas locales. Las principales oportunidades son:</p>
+                  <p>La tendencia actual hacia el self-hosting abre tres vías claras de implantación para nuestro software:</p>
                   <ul>
-                     <li>Mercado de usuarios técnicos y entusiastas (homelab) que buscan alternativas a Synology/QNAP sin el precio del hardware.</li>
-                     <li>Micropymes y autónomos obligados por el RGPD a demostrar control sobre sus datos.</li>
-                     <li>Colegios, asociaciones y entidades sin ánimo de lucro con presupuesto TI muy limitado.</li>
+                     <li><strong>Entorno doméstico:</strong> Familias o usuarios con varios ordenadores en casa que quieren centralizar sus copias de seguridad aprovechando un hardware económico (como una Raspberry Pi).</li>
+                     <li><strong>Micropymes y autónomos:</strong> Negocios locales que manejan documentación confidencial de clientes y están obligados por ley a demostrar un control directo sobre sus datos.</li>
+                     <li><strong>Entidades locales y asociaciones:</strong> Organizaciones con presupuestos muy ajustados en informática que no pueden asumir costes por gigabyte en la nube.</li>
                   </ul>
                </div>
             </div>
 
-            <!-- Modelo de negocio -->
+            <!-- Estrategia comercial y marco legal -->
             <div class="row" style="margin-bottom:40px;">
                <div class="col-md-10 offset-md-1">
-                  <h3 style="color:#1f3f72; margin-bottom:15px;">Modelo de negocio</h3>
+                  <h3 style="color:#1f3f72; margin-bottom:15px;">Estrategia comercial y marco legal</h3>
+                  
+                  <h4 style="color:#1f3f72; margin-top:25px; margin-bottom:10px;">Modelo de negocio y financiación</h4>
                   <p>Niddo opera bajo un modelo <strong>freemium con licencias de pago</strong>:</p>
                   <ul>
                      <li><strong>Versión Community (gratuita / open source):</strong> funcionalidad completa del servidor, panel web y agente Windows. Código disponible públicamente. Sin soporte técnico ni actualizaciones prioritarias. Límite recomendado: 2 dispositivos cliente.</li>
@@ -107,57 +109,25 @@
                      <li><strong>Licencia por usuario — 50€/año:</strong> hasta 4 dispositivos, gestión de múltiples usuarios con roles (Admin/Usuario), acceso completo al panel administrativo y soporte prioritario. Orientada a micropymes y familias con varios equipos.</li>
                   </ul>
                   <p>El código fuente open source actúa como herramienta de captación: el usuario instala gratis, comprueba que funciona y, si quiere soporte o más funciones, adquiere la licencia. Este modelo (similar al de Bitwarden o GitLab CE) reduce el coste de adquisición de clientes al mínimo.</p>
-               </div>
-            </div>
 
-            <!-- Ayudas y subvenciones -->
-            <div class="row" style="margin-bottom:40px;">
-               <div class="col-md-10 offset-md-1">
-                  <h3 style="color:#1f3f72; margin-bottom:15px;">Ayudas y subvenciones — Kit Digital</h3>
-                  <p>El programa <strong>Kit Digital</strong> del Gobierno de España, financiado con fondos europeos Next Generation EU, subvenciona la digitalización de pymes y autónomos. La categoría <em>Ciberseguridad</em> cubre herramientas que garanticen la seguridad del negocio digital, con ayudas de:</p>
-                  <ul>
-                     <li>Hasta <strong>2.000€</strong> para empresas de 0-2 empleados (autónomos).</li>
-                     <li>Hasta <strong>6.000€</strong> para empresas de 10-49 empleados.</li>
-                  </ul>
-                  <p>Niddo encaja en esta categoría al ofrecer copias de seguridad locales cifradas, registro de eventos de seguridad (mini-SOC) y gestión de accesos por roles. Para optar a esta ayuda sería necesario registrarse como <strong>Agente Digitalizador</strong> en la plataforma <em>acelerapyme.gob.es</em>.</p>
-               </div>
-            </div>
+                  <h4 style="color:#1f3f72; margin-top:25px; margin-bottom:10px;">Ayudas y subvenciones — Kit Digital</h4>
+                  <p>Para la comercialización en el sector profesional, Niddo se presentará como una solución homologada dentro del programa Kit Digital (financiado por los fondos de la Unión Europea Next Generation EU).</p>
+                  <p>Al ofrecer copias de seguridad locales y un registro de auditoría visual (Mini SOC) en la pestaña eventos.php, el proyecto encaja de forma directa en la categoría de Ciberseguridad. Esto permite a autónomos y micropymes (de 0 a 49 empleados) adquirir nuestras licencias a coste cero, estando la implantación completamente subvencionada por las ayudas del Gobierno (de 2.000€ a 6.000€ según el segmento). Para ello, el equipo de desarrollo se registrará como Agente Digitalizador en la plataforma oficial acelerapyme.gob.es.</p>
 
-            <!-- Obligaciones fiscales y laborales -->
-            <div class="row" style="margin-bottom:40px;">
-               <div class="col-md-10 offset-md-1">
-                  <h3 style="color:#1f3f72; margin-bottom:15px;">Obligaciones fiscales, laborales y de prevención de riesgos</h3>
+                  <h4 style="color:#1f3f72; margin-top:25px; margin-bottom:10px;">Obligaciones fiscales, laborales y de prevención</h4>
+                  <p>Para poder vender las licencias de nuestra aplicación y trabajar de forma legal, tenemos que cumplir con los siguientes puntos:</p>
                   <ul>
-                     <li><strong>IAE:</strong> alta en el epígrafe 879 – Servicios informáticos n.c.o.p. (si se factura).</li>
-                     <li><strong>IVA:</strong> 21% en la venta de licencias software si la facturación supera los 22.000€/año.</li>
-                     <li><strong>RGPD:</strong> al ser una solución autoalojada, el propio cliente actúa como responsable de tratamiento. Niddo no gestiona datos de usuarios finales, por lo que no está sujeta a la obligación de registro de actividades de tratamiento como proveedor.</li>
-                     <li><strong>Prevención de riesgos laborales:</strong> aplicable la normativa PRL para trabajos en remoto (ergonomía, descansos, iluminación). No se requieren permisos especiales para la puesta en marcha del software.</li>
+                     <li><strong>Parte fiscal:</strong> Nos tenemos que dar de alta en la Agencia Tributaria para poder hacer facturas legales de las licencias que vendamos. A cada licencia se le aplicará el 21% de IVA correspondiente a la venta de software.</li>
+                     <li><strong>Parte laboral y prevención de riesgos:</strong> Como nuestro proyecto es puramente informático por lo que no hay ningun tipo de riesgo ademas de ser un opcion rapida y por lo tanto no hay que estar demasiado atento a la tarea.</li>
                   </ul>
                </div>
             </div>
 
-            <!-- Guion de trabajo -->
-            <div class="row" style="margin-bottom:40px;">
-               <div class="col-md-10 offset-md-1">
-                  <h3 style="color:#1f3f72; margin-bottom:15px;">Guión de trabajo seguido</h3>
-                  <ol>
-                     <li>Análisis del mercado y detección de necesidades no cubiertas.</li>
-                     <li>Evaluación de prototipos alternativos (gestor de eventos, gestor de tráfico) hasta dar con la propuesta de backup local.</li>
-                     <li>Diseño del esquema de base de datos y arquitectura del sistema.</li>
-                     <li>Desarrollo del core: API REST, autenticación, roles y registro de eventos.</li>
-                     <li>Desarrollo del panel web de administración.</li>
-                     <li>Desarrollo del módulo de recepción de backups y agente Windows.</li>
-                     <li>Implementación del instalador automático bash.</li>
-                     <li>Pruebas en entorno real (VPS Ubuntu) y corrección de errores.</li>
-                     <li>Documentación y presentación del proyecto.</li>
-                  </ol>
-               </div>
-            </div>
 
          </div>
       </div>
 
-      <!-- footer -->
+
       <footer>
          <div class="footer">
             <div class="container">
