@@ -32,7 +32,6 @@
                   <div class="collapse navbar-collapse justify-content-center" id="navbarsExample04">
                      <ul class="navbar-nav">
                         <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" href="about.html">El Proyecto</a></li>
                         <li class="nav-item"><a class="nav-link" href="service.html">Funcionalidades</a></li>
                         <li class="nav-item active"><a class="nav-link" href="gallery.html">Instalación</a></li>
                         <li class="nav-item"><a class="nav-link" href="testimonial.html">Seguridad</a></li>
@@ -56,74 +55,76 @@
             </div>
 
             <!-- Requisitos -->
+            <div class="row" style="margin-bottom:20px;">
+               <div class="col-md-12">
+                  <div class="titlepage">
+                     <h2>Requisitos <span class="green">mínimos</span></h2>
+                  </div>
+               </div>
+            </div>
             <div class="row" style="margin-bottom:50px;">
-               <div class="col-md-10 offset-md-1">
-                  <h3 style="color:#1f3f72; margin-bottom:20px; font-weight:bold;">Requisitos mínimos</h3>
-                  <div class="row">
-                     <div class="col-md-6">
-                        <div style="background:#f0f6ff; border-radius:8px; padding:25px; margin-bottom:20px;">
-                           <h4 style="color:#1a8fe8; font-weight:bold;"><i class="fa fa-server" style="margin-right:8px;"></i>Servidor</h4>
-                           <ul style="padding-left:20px; color:#444; margin-top:10px; font-size:15px;">
-                              <li>Linux: Debian 12 o Ubuntu 24.04 LTS</li>
-                              <li>2 GB de RAM · 20 GB de disco mínimo</li>
-                              <li>Acceso root (VPS, Raspberry Pi 4, mini-PC…)</li>
-                              <li>Apache, PHP y MariaDB — el instalador los gestiona</li>
-                           </ul>
-                        </div>
-                     </div>
-                     <div class="col-md-6">
-                        <div style="background:#f0f6ff; border-radius:8px; padding:25px; margin-bottom:20px;">
-                           <h4 style="color:#1a8fe8; font-weight:bold;"><i class="fa fa-windows" style="margin-right:8px;"></i>Clientes Windows</h4>
-                           <ul style="padding-left:20px; color:#444; margin-top:10px; font-size:15px;">
-                              <li>Windows 10 o Windows 11</li>
-                              <li>Python 3.x instalado</li>
-                              <li>Conexión a la misma red que el servidor</li>
-                              <li>El agente se descarga directamente desde el panel</li>
-                           </ul>
-                        </div>
-                     </div>
+               <div class="col-md-6 col-sm-12" style="margin-bottom:30px;">
+                  <div class="service_box" style="background:#f2f7fd; padding:35px 30px;">
+                     <i class="fa fa-server" style="font-size:48px; color:#1a8fe8; display:block; margin-bottom:18px;"></i>
+                     <h3>Servidor</h3>
+                     <ul style="padding-left:18px; margin-top:12px; color:#444; font-size:15px; line-height:2;">
+                        <li>Linux: Debian 12 o Ubuntu 24.04 LTS</li>
+                        <li>2 GB de RAM · 20 GB de disco mínimo</li>
+                        <li>Acceso root (VPS, Raspberry Pi 4, mini-PC…)</li>
+                        <li>Apache, PHP y MariaDB — el instalador los gestiona</li>
+                     </ul>
+                  </div>
+               </div>
+               <div class="col-md-6 col-sm-12" style="margin-bottom:30px;">
+                  <div class="service_box" style="background:#f2f7fd; padding:35px 30px;">
+                     <i class="fa fa-windows" style="font-size:48px; color:#1a8fe8; display:block; margin-bottom:18px;"></i>
+                     <h3>Clientes Windows</h3>
+                     <ul style="padding-left:18px; margin-top:12px; color:#444; font-size:15px; line-height:2;">
+                        <li>Windows 10 o Windows 11</li>
+                        <li>Python 3.x instalado</li>
+                        <li>Conexión a la misma red que el servidor</li>
+                        <li>El agente se descarga directamente desde el panel</li>
+                     </ul>
                   </div>
                </div>
             </div>
 
             <!-- Pasos -->
-            <div class="row" style="margin-bottom:60px;">
+            <div class="row" style="margin-bottom:20px;">
                <div class="col-md-12">
                   <div class="titlepage">
                      <h2>Cómo <span class="green">empezar</span></h2>
                   </div>
                </div>
-               <div class="col-md-10 offset-md-1">
-                  <div class="row">
-                     <div class="col-md-3 col-sm-6" style="margin-bottom:30px;">
-                        <div style="text-align:center; padding:30px 20px; background:#fff; border-radius:10px; box-shadow:0 2px 15px rgba(0,0,0,0.07); height:100%;">
-                           <div style="background:#1a8fe8; color:#fff; width:50px; height:50px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:bold; margin:0 auto 20px;">1</div>
-                           <h4 style="color:#1f3f72; font-weight:bold;">Clona el repositorio</h4>
-                           <p style="color:#555; font-size:14px; margin-top:10px;">Clona el repo de Niddo desde <a href="https://github.com/ieszaidinvergeles/2-asir-bil-pasir-6" target="_blank" rel="noopener" style="color:#1a8fe8;">GitHub</a> y ejecuta el instalador como root. El script configura Apache, PHP, MariaDB y Niddo automáticamente.</p>
-                           <code style="display:block; background:#f5f5f5; padding:10px; border-radius:5px; margin-top:15px; font-size:12px; text-align:left;">git clone https://github.com/ieszaidinvergeles/2-asir-bil-pasir-6<br>cd Niddo && sudo bash install.sh</code>
-                        </div>
-                     </div>
-                     <div class="col-md-3 col-sm-6" style="margin-bottom:30px;">
-                        <div style="text-align:center; padding:30px 20px; background:#fff; border-radius:10px; box-shadow:0 2px 15px rgba(0,0,0,0.07); height:100%;">
-                           <div style="background:#1a8fe8; color:#fff; width:50px; height:50px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:bold; margin:0 auto 20px;">2</div>
-                           <h4 style="color:#1f3f72; font-weight:bold;">Crea tu cuenta</h4>
-                           <p style="color:#555; font-size:14px; margin-top:10px;">Accede al panel web desde el navegador e introduce la dirección IP del servidor. Crea la cuenta de administrador principal. Solo se hace una vez.</p>
-                        </div>
-                     </div>
-                     <div class="col-md-3 col-sm-6" style="margin-bottom:30px;">
-                        <div style="text-align:center; padding:30px 20px; background:#fff; border-radius:10px; box-shadow:0 2px 15px rgba(0,0,0,0.07); height:100%;">
-                           <div style="background:#1a8fe8; color:#fff; width:50px; height:50px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:bold; margin:0 auto 20px;">3</div>
-                           <h4 style="color:#1f3f72; font-weight:bold;">Añade dispositivos</h4>
-                           <p style="color:#555; font-size:14px; margin-top:10px;">Desde el panel, crea un dispositivo para cada PC Windows que quieras proteger. El panel genera automáticamente el agente Python listo para ese dispositivo.</p>
-                        </div>
-                     </div>
-                     <div class="col-md-3 col-sm-6" style="margin-bottom:30px;">
-                        <div style="text-align:center; padding:30px 20px; background:#fff; border-radius:10px; box-shadow:0 2px 15px rgba(0,0,0,0.07); height:100%;">
-                           <div style="background:#1a8fe8; color:#fff; width:50px; height:50px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:bold; margin:0 auto 20px;">4</div>
-                           <h4 style="color:#1f3f72; font-weight:bold;">Ejecuta el agente</h4>
-                           <p style="color:#555; font-size:14px; margin-top:10px;">Descarga el agente en tu PC Windows y ejecútalo. Selecciona las carpetas que quieres copiar y las copias empezarán automáticamente. Puedes programarlo con el Programador de tareas de Windows.</p>
-                        </div>
-                     </div>
+            </div>
+            <div class="row" style="margin-bottom:60px;">
+               <div class="col-md-3 col-sm-6" style="margin-bottom:30px;">
+                  <div class="service_box" style="background:#f2f7fd; text-align:center; padding:30px 20px;">
+                     <span style="display:inline-block; background:#1a8fe8; color:#fff; width:48px; height:48px; border-radius:50%; line-height:48px; font-size:22px; font-weight:bold; margin-bottom:18px;">1</span>
+                     <h3>Clona el repo</h3>
+                     <p>Descarga Niddo desde <a href="https://github.com/ieszaidinvergeles/2-asir-bil-pasir-6" target="_blank" rel="noopener">GitHub</a> y ejecuta el instalador como root. Configura Apache, PHP y MariaDB solo.</p>
+                     <code style="display:block; background:#dde8f5; padding:8px; margin-top:12px; font-size:11px; text-align:left;">git clone https://github.com/Marinettoo/Niddo<br>cd Niddo && sudo bash install.sh</code>
+                  </div>
+               </div>
+               <div class="col-md-3 col-sm-6" style="margin-bottom:30px;">
+                  <div class="service_box" style="background:#f2f7fd; text-align:center; padding:30px 20px;">
+                     <span style="display:inline-block; background:#1a8fe8; color:#fff; width:48px; height:48px; border-radius:50%; line-height:48px; font-size:22px; font-weight:bold; margin-bottom:18px;">2</span>
+                     <h3>Crea tu cuenta</h3>
+                     <p>Accede al panel web con la IP del servidor y crea la cuenta de administrador principal. Solo se hace una vez.</p>
+                  </div>
+               </div>
+               <div class="col-md-3 col-sm-6" style="margin-bottom:30px;">
+                  <div class="service_box" style="background:#f2f7fd; text-align:center; padding:30px 20px;">
+                     <span style="display:inline-block; background:#1a8fe8; color:#fff; width:48px; height:48px; border-radius:50%; line-height:48px; font-size:22px; font-weight:bold; margin-bottom:18px;">3</span>
+                     <h3>Añade dispositivos</h3>
+                     <p>Crea un dispositivo por cada PC Windows desde el panel. Se genera automáticamente el agente Python listo para ese equipo.</p>
+                  </div>
+               </div>
+               <div class="col-md-3 col-sm-6" style="margin-bottom:30px;">
+                  <div class="service_box" style="background:#f2f7fd; text-align:center; padding:30px 20px;">
+                     <span style="display:inline-block; background:#1a8fe8; color:#fff; width:48px; height:48px; border-radius:50%; line-height:48px; font-size:22px; font-weight:bold; margin-bottom:18px;">4</span>
+                     <h3>Ejecuta el agente</h3>
+                     <p>Descarga el agente en tu PC Windows y ejecútalo. Selecciona las carpetas a proteger y las copias arrancan solas.</p>
                   </div>
                </div>
             </div>
@@ -132,21 +133,21 @@
             <div class="row" style="margin-bottom:20px;">
                <div class="col-md-12">
                   <div class="titlepage">
-                     <h2>Precios <span class="green">transparentes</span></h2>
-                     <p style="font-size:17px; color:#555; margin-top:10px; max-width:600px; margin-left:auto; margin-right:auto;">Empieza gratis. Paga solo si necesitas soporte o más dispositivos.</p>
+                     <h2>Modelo de <span class="green">negocio</span></h2>
+                     <p style="font-size:17px; color:#555; margin-top:10px; max-width:600px; margin-left:auto; margin-right:auto;">Gratis para uso personal. Paga solo si necesitas más administradores o soporte para tu empresa.</p>
                   </div>
                </div>
             </div>
             <div class="row justify-content-center" style="margin-bottom:60px;">
                <div class="col-md-4 col-sm-6" style="margin-bottom:30px;">
                   <div style="background:#fff; border:2px solid #e8f2fc; border-radius:10px; padding:40px 30px; text-align:center; height:100%;">
-                     <h3 style="color:#1f3f72; font-size:24px; font-weight:bold;">Community</h3>
+                     <h3 style="color:#1f3f72; font-size:24px; font-weight:bold;">Gratuito</h3>
                      <p style="font-size:48px; font-weight:bold; color:#1a8fe8; margin:20px 0 5px;">0 €</p>
                      <p style="color:#888; margin-bottom:25px;">Para siempre · Open Source (MIT)</p>
                      <ul style="list-style:none; padding:0; text-align:left; font-size:15px; color:#444; margin-bottom:30px;">
+                        <li style="padding:8px 0; border-bottom:1px solid #f0f0f0;"><i class="fa fa-check" style="color:#1a8fe8; width:20px;"></i> 1 administrador único</li>
                         <li style="padding:8px 0; border-bottom:1px solid #f0f0f0;"><i class="fa fa-check" style="color:#1a8fe8; width:20px;"></i> Funcionalidad completa</li>
                         <li style="padding:8px 0; border-bottom:1px solid #f0f0f0;"><i class="fa fa-check" style="color:#1a8fe8; width:20px;"></i> Panel web y agente incluidos</li>
-                        <li style="padding:8px 0; border-bottom:1px solid #f0f0f0;"><i class="fa fa-check" style="color:#1a8fe8; width:20px;"></i> Hasta 2 dispositivos</li>
                         <li style="padding:8px 0;"><i class="fa fa-times" style="color:#ccc; width:20px;"></i> Sin soporte técnico</li>
                      </ul>
                      <a href="https://github.com/ieszaidinvergeles/2-asir-bil-pasir-6" target="_blank" rel="noopener" class="read_more" style="max-width:100%; display:block;">Descargar gratis</a>
@@ -155,28 +156,28 @@
                <div class="col-md-4 col-sm-6" style="margin-bottom:30px;">
                   <div style="background:#1f3f72; border-radius:10px; padding:40px 30px; text-align:center; height:100%; position:relative;">
                      <div style="position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:#1a8fe8; color:#fff; padding:4px 18px; border-radius:20px; font-size:13px; font-weight:bold;">MÁS POPULAR</div>
-                     <h3 style="color:#fff; font-size:24px; font-weight:bold;">Dispositivo</h3>
-                     <p style="font-size:48px; font-weight:bold; color:#1a8fe8; margin:20px 0 5px;">30 €</p>
-                     <p style="color:#aac4e8; margin-bottom:25px;">Pago único · por dispositivo</p>
+                     <h3 style="color:#fff; font-size:24px; font-weight:bold;">De pago</h3>
+                     <p style="font-size:48px; font-weight:bold; color:#1a8fe8; margin:20px 0 5px;">8 €</p>
+                     <p style="color:#aac4e8; margin-bottom:25px;">al mes · por servidor</p>
                      <ul style="list-style:none; padding:0; text-align:left; font-size:15px; color:#c8dff5; margin-bottom:30px;">
-                        <li style="padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.1);"><i class="fa fa-check" style="color:#1a8fe8; width:20px;"></i> 1 dispositivo Windows</li>
-                        <li style="padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.1);"><i class="fa fa-check" style="color:#1a8fe8; width:20px;"></i> Actualizaciones durante 2 años</li>
+                        <li style="padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.1);"><i class="fa fa-check" style="color:#1a8fe8; width:20px;"></i> Múltiples administradores</li>
+                        <li style="padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.1);"><i class="fa fa-check" style="color:#1a8fe8; width:20px;"></i> Compartir archivos entre usuarios</li>
                         <li style="padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.1);"><i class="fa fa-check" style="color:#1a8fe8; width:20px;"></i> Soporte por email</li>
-                        <li style="padding:8px 0;"><i class="fa fa-times" style="color:#4a6a9a; width:20px;"></i> Sin multi-usuario</li>
+                        <li style="padding:8px 0;"><i class="fa fa-check" style="color:#1a8fe8; width:20px;"></i> Actualizaciones continuas</li>
                      </ul>
                      <a href="contact.html" class="read_more" style="max-width:100%; display:block; background:#1a8fe8;">Contactar</a>
                   </div>
                </div>
                <div class="col-md-4 col-sm-6" style="margin-bottom:30px;">
                   <div style="background:#fff; border:2px solid #e8f2fc; border-radius:10px; padding:40px 30px; text-align:center; height:100%;">
-                     <h3 style="color:#1f3f72; font-size:24px; font-weight:bold;">Usuario</h3>
-                     <p style="font-size:48px; font-weight:bold; color:#1a8fe8; margin:20px 0 5px;">50 €</p>
-                     <p style="color:#888; margin-bottom:25px;">por año · hasta 4 dispositivos</p>
+                     <h3 style="color:#1f3f72; font-size:24px; font-weight:bold;">Empresas</h3>
+                     <p style="font-size:48px; font-weight:bold; color:#1a8fe8; margin:20px 0 5px;">25 €</p>
+                     <p style="color:#888; margin-bottom:25px;">al mes · cuota negociable según alcance</p>
                      <ul style="list-style:none; padding:0; text-align:left; font-size:15px; color:#444; margin-bottom:30px;">
-                        <li style="padding:8px 0; border-bottom:1px solid #f0f0f0;"><i class="fa fa-check" style="color:#1a8fe8; width:20px;"></i> Hasta 4 dispositivos</li>
-                        <li style="padding:8px 0; border-bottom:1px solid #f0f0f0;"><i class="fa fa-check" style="color:#1a8fe8; width:20px;"></i> Multi-usuario con roles Admin/Usuario</li>
-                        <li style="padding:8px 0; border-bottom:1px solid #f0f0f0;"><i class="fa fa-check" style="color:#1a8fe8; width:20px;"></i> Panel administrativo completo</li>
-                        <li style="padding:8px 0;"><i class="fa fa-check" style="color:#1a8fe8; width:20px;"></i> Soporte prioritario</li>
+                        <li style="padding:8px 0; border-bottom:1px solid #f0f0f0;"><i class="fa fa-check" style="color:#1a8fe8; width:20px;"></i> Todo lo del plan gratuito</li>
+                        <li style="padding:8px 0; border-bottom:1px solid #f0f0f0;"><i class="fa fa-check" style="color:#1a8fe8; width:20px;"></i> Todo lo del plan de pago</li>
+                        <li style="padding:8px 0; border-bottom:1px solid #f0f0f0;"><i class="fa fa-check" style="color:#1a8fe8; width:20px;"></i> Soporte presencial o remoto</li>
+                        <li style="padding:8px 0;"><i class="fa fa-check" style="color:#1a8fe8; width:20px;"></i> Despliegue asistido</li>
                      </ul>
                      <a href="contact.html" class="read_more" style="max-width:100%; display:block;">Contactar</a>
                   </div>
@@ -204,7 +205,6 @@
                      <h3>NAVEGACIÓN</h3>
                      <ul class="link_menu">
                         <li><a href="index.html">Inicio</a></li>
-                        <li><a href="about.html">El Proyecto</a></li>
                         <li><a href="service.html">Funcionalidades</a></li>
                         <li><a href="gallery.html">Instalación</a></li>
                         <li><a href="testimonial.html">Seguridad</a></li>

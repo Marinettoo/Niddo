@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Niddo — Presentación ASIR</title>
+<link rel="stylesheet" href="docs/css/bootstrap.min.css">
+<link rel="stylesheet" href="docs/css/style.css">
+<link rel="stylesheet" href="docs/css/responsive.css">
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+<style>
+html, body { height: 100%; overflow: hidden; margin: 0; padding: 0; }
+
+.slide {
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+  display: none;
+  padding-bottom: 56px;
+}
+.slide.active { display: block; }
+
+/* Barra de navegación inferior */
+.pres-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 48px;
+  background: #111;
+  border-top: 2px solid #009970;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 9999;
+}
+.pres-nav button {
+  background: none;
+  border: 1px solid #444;
+  color: #aaa;
+  padding: 4px 16px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  cursor: pointer;
+}
+.pres-nav button:hover { border-color: #009970; color: #009970; }
+.pres-dots { display: flex; gap: 6px; align-items: center; }
+.pres-dot { width: 8px; height: 8px; border-radius: 50%; background: #444; cursor: pointer; }
+.pres-dot.active { background: #009970; }
+.pres-counter { font-size: 11px; color: #555; font-family: 'Poppins', sans-serif; min-width: 44px; text-align: center; }
+
+/* Barra de progreso */
+#pres-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  background: #009970;
+  z-index: 9999;
+  transition: width .3s;
+}
+
+/* Ajustes para que el banner no ocupe viewport entero */
+.banner_main { min-height: auto !important; }
+.banner_main .carousel-item { min-height: 340px; }
+.banner_main .text-bg { padding: 60px 0 40px; }
+.banner_main .text-bg h1 { font-size: 42px; }
+
+/* El servicio y about no necesitan margen extra */
+.about, .service { padding: 50px 0; }
+
+/* Mini-header de slide (logo + título sección) */
+.slide-header {
+  background: #1f3f72;
+  border-bottom: 3px solid #009970;
+  padding: 10px 30px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.slide-header img { height: 36px; filter: brightness(0) invert(1); }
+.slide-header span {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #aac4e8;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Dos columnas simples */
+.two-col { display: flex; gap: 40px; align-items: flex-start; }
+.two-col .col { flex: 1; }
+
+/* Lista de checks */
+.check-list { list-style: none; padding: 0; margin: 0; }
+.check-list li {
+  padding: 7px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 13px;
+  color: #555;
+  display: flex;
+  gap: 10px;
+}
+.check-list li:last-child { border: none; }
+.check-list li i { color: #009970; margin-top: 2px; flex-shrink: 0; }
+
+/* Timeline sencilla */
+.tl-item {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 12px;
+  align-items: flex-start;
+}
+.tl-num {
+  background: #009970;
+  color: #fff;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+.tl-text h4 { font-size: 13px; color: #111; margin: 0; font-weight: 600; }
+.tl-text p  { font-size: 12px; color: #888; margin: 2px 0 0; }
+
+/* Tabla de riesgos */
+.risk-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.risk-table th { background: #111; color: #fff; padding: 8px 12px; text-align: left; }
+.risk-table td { padding: 7px 12px; border-bottom: 1px solid #eee; color: #555; }
+
+/* Arch flow */
+.arch-flow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; margin: 20px 0; }
+.arch-box {
+  border: 1px solid #cccccc;
+  padding: 16px 20px;
+  text-align: center;
+  background: #fff;
+  min-width: 140px;
+}
+.arch-box i { font-size: 28px; color: #009970; display: block; margin-bottom: 6px; }
+.arch-box h4 { font-size: 13px; color: #111; margin: 0 0 4px; font-weight: 600; }
+.arch-box p  { font-size: 11px; color: #888; margin: 0; }
+.arch-box.featured { border-color: #009970; background: #f0fff8; }
+.arch-arrow { color: #ccc; font-size: 20px; }
+.arch-label { font-size: 10px; color: #aaa; text-align: center; line-height: 1.4; }
+</style>
+</head>
+<body>
+
+<div id="pres-bar"></div>
+
+<!-- ═══════════════════════════════════════════════════════ SLIDE 1 — PORTADA -->
+<div class="slide active">
+  <div style="
+    position: relative;
+    min-height: calc(100vh - 48px);
+    background: url('web/banner%20presentacion.png') center center / cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  ">
+    <!-- Overlay semitransparente izquierda -->
+    <div style="
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(255,255,255,.82) 45%, transparent 75%);
+      pointer-events: none;
+    "></div>
+
+    <!-- Contenido principal -->
+    <div class="container" style="position:relative; flex:1; display:flex; align-items:center; padding-top:50px; padding-bottom:30px;">
+      <div style="max-width:520px;">
+        <img src="web/niddo%20Logo%20completo.png" alt="Niddo"
+             style="max-width:400px; width:100%; margin-bottom:24px; display:block;">
+        <p style="color:#1f3f72; font-size:16px; line-height:1.8; margin-bottom:26px; font-weight:500;">
+          Servidor de copias de seguridad autoalojado para usuarios domésticos y pequeñas empresas.<br>Sin nube, sin cuotas, sin dependencias.
+        </p>
+        <a class="read_more" href="#" onclick="go(1);return false;">Ver el proyecto</a>
+      </div>
+    </div>
+
+    <!-- Equipo abajo -->
+    <div style="position:relative; border-top: 1px solid rgba(0,0,0,.08); padding: 16px 0; background: rgba(255,255,255,.6);">
+      <div class="container">
+        <p style="font-size:11px; color:#999; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:5px; font-family:'Poppins',sans-serif;">Equipo</p>
+        <p style="font-size:13px; color:#333; font-family:'Poppins',sans-serif;">
+          Jesús Pérez Marinetto &nbsp;·&nbsp; Nicolás Baya-Casal Sansolini &nbsp;·&nbsp; Ismael Martín Ruiz &nbsp;·&nbsp; Iván López García
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ SLIDE 2 — EL PROBLEMA -->
+<div class="slide">
+  <div class="slide-header">
+    <img src="docs/images/logo.png" alt="Niddo">
+    <span>El problema</span>
+  </div>
+  <div class="service">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="titlepage">
+            <h2>¿Por qué <span class="green">Niddo</span>?</h2>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 col-sm-6" style="margin-bottom:30px;">
+          <div class="service_box" style="text-align:center; padding:30px 20px;">
+            <i class="fa fa-eur" style="font-size:48px; color:#1a8fe8; display:block; margin-bottom:14px;"></i>
+            <h3>Coste mensual</h3>
+            <p>Google Drive, Dropbox y OneDrive cobran cuotas que se acumulan indefinidamente.</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6" style="margin-bottom:30px;">
+          <div class="service_box" style="text-align:center; padding:30px 20px;">
+            <i class="fa fa-eye" style="font-size:48px; color:#1a8fe8; display:block; margin-bottom:14px;"></i>
+            <h3>Sin privacidad</h3>
+            <p>Los archivos residen en servidores de terceros. Imposible controlar quién accede.</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6" style="margin-bottom:30px;">
+          <div class="service_box" style="text-align:center; padding:30px 20px;">
+            <i class="fa fa-chain-broken" style="font-size:48px; color:#1a8fe8; display:block; margin-bottom:14px;"></i>
+            <h3>Dependencia</h3>
+            <p>Si el servicio cierra o cambia condiciones, los datos quedan en riesgo.</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6" style="margin-bottom:30px;">
+          <div class="service_box" style="text-align:center; padding:30px 20px;">
+            <i class="fa fa-home" style="font-size:48px; color:#1a8fe8; display:block; margin-bottom:14px;"></i>
+            <h3>La solución</h3>
+            <p>Niddo se instala en tu red. Tus archivos nunca salen de casa. Gratis.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ SLIDE 3 — QUÉ ES NIDDO -->
+<div class="slide">
+  <div class="slide-header">
+    <img src="docs/images/logo.png" alt="Niddo">
+    <span>El proyecto</span>
+  </div>
+  <div id="about" class="about">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <div class="titlepage" style="text-align:left; margin-top:0;">
+            <h2>¿Qué es <span class="green">Niddo</span>?</h2>
+            <ul class="check-list" style="margin-top:16px;">
+              <li><i class="fa fa-check-circle"></i><span>Sistema de backup <strong>autoalojado</strong> para usuarios domésticos y pymes</span></li>
+              <li><i class="fa fa-check-circle"></i><span>Se instala en cualquier servidor <strong>Debian / Ubuntu</strong></span></li>
+              <li><i class="fa fa-check-circle"></i><span>Panel web para gestión completa, sin conocimientos técnicos</span></li>
+              <li><i class="fa fa-check-circle"></i><span>Agente <strong>Python</strong> en Windows — backup automático con Task Scheduler</span></li>
+              <li><i class="fa fa-check-circle"></i><span>Backup diferencial — solo sube lo nuevo o modificado</span></li>
+              <li><i class="fa fa-check-circle"></i><span>Open source · Licencia MIT · <strong>0 € de coste</strong></span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6 text-center">
+          <img src="docs/images/dispositivos.png" alt="Dispositivos" style="max-width:100%; height:auto;">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ SLIDE 4 — DEMO -->
+<div class="slide">
+  <div class="slide-header">
+    <img src="docs/images/logo.png" alt="Niddo">
+    <span>Demo del panel</span>
+  </div>
+  <div class="service">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="titlepage">
+            <h2>Demo de <span class="green">uso</span></h2>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-sm-6" style="margin-bottom:24px;">
+          <div class="service_box" style="padding:24px 20px;">
+            <i class="fa fa-tachometer" style="font-size:36px; color:#1a8fe8; display:block; margin-bottom:10px;"></i>
+            <h3>Dashboard</h3>
+            <p>Estadísticas en tiempo real: dispositivos, backups, espacio usado y últimos eventos. Vista diferente según el rol.</p>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6" style="margin-bottom:24px;">
+          <div class="service_box" style="padding:24px 20px;">
+            <i class="fa fa-laptop" style="font-size:36px; color:#1a8fe8; display:block; margin-bottom:10px;"></i>
+            <h3>Dispositivos</h3>
+            <p>Registro de equipos Windows con token único. Descarga del agente Python preconfigurado desde el propio panel.</p>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6" style="margin-bottom:24px;">
+          <div class="service_box" style="padding:24px 20px;">
+            <i class="fa fa-download" style="font-size:36px; color:#1a8fe8; display:block; margin-bottom:10px;"></i>
+            <h3>Restaurar</h3>
+            <p>Descarga de archivos individuales o carpetas enteras como ZIP. Cada usuario solo ve sus propios backups.</p>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6" style="margin-bottom:24px;">
+          <div class="service_box" style="padding:24px 20px;">
+            <i class="fa fa-list-alt" style="font-size:36px; color:#1a8fe8; display:block; margin-bottom:10px;"></i>
+            <h3>Eventos</h3>
+            <p>Registro de seguridad con filtros por tipo. Logins, errores, IPs bloqueadas y copias completadas — solo Admin.</p>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6" style="margin-bottom:24px;">
+          <div class="service_box" style="padding:24px 20px;">
+            <i class="fa fa-users" style="font-size:36px; color:#1a8fe8; display:block; margin-bottom:10px;"></i>
+            <h3>Usuarios</h3>
+            <p>Gestión de cuentas con roles Admin / Usuario. Cambio de contraseña propio. Solo el admin primario puede degradar admins.</p>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6" style="margin-bottom:24px;">
+          <div class="service_box" style="padding:24px 20px;">
+            <i class="fa fa-hdd-o" style="font-size:36px; color:#1a8fe8; display:block; margin-bottom:10px;"></i>
+            <h3>Discos</h3>
+            <p>Montaje y desmontaje de discos externos desde el panel. Asignación de cuotas por partición — solo Admin.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ SLIDE 5 — SEGURIDAD -->
+<div class="slide">
+  <div class="slide-header">
+    <img src="docs/images/logo.png" alt="Niddo">
+    <span>Seguridad</span>
+  </div>
+  <div class="service">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="titlepage">
+            <h2>Capas de <span class="green">protección</span></h2>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-sm-6" style="margin-bottom:24px;">
+          <div class="service_box" style="text-align:center; padding:24px 18px;">
+            <i class="fa fa-key" style="font-size:42px; color:#1a8fe8; display:block; margin-bottom:12px;"></i>
+            <h3>bcrypt</h3>
+            <p>Contraseñas nunca en texto plano. Estándar de la industria.</p>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6" style="margin-bottom:24px;">
+          <div class="service_box" style="text-align:center; padding:24px 18px;">
+            <i class="fa fa-id-card" style="font-size:42px; color:#1a8fe8; display:block; margin-bottom:12px;"></i>
+            <h3>Tokens únicos</h3>
+            <p>64 caracteres hex por dispositivo, revocables individualmente.</p>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6" style="margin-bottom:24px;">
+          <div class="service_box" style="text-align:center; padding:24px 18px;">
+            <i class="fa fa-ban" style="font-size:42px; color:#1a8fe8; display:block; margin-bottom:12px;"></i>
+            <h3>Bloqueo de IP</h3>
+            <p>Tras 5 intentos fallidos la IP queda bloqueada y registrada.</p>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6" style="margin-bottom:24px;">
+          <div class="service_box" style="text-align:center; padding:24px 18px;">
+            <i class="fa fa-clock-o" style="font-size:42px; color:#1a8fe8; display:block; margin-bottom:12px;"></i>
+            <h3>Timeout sesión</h3>
+            <p>5 minutos de inactividad cierran la sesión del panel.</p>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6" style="margin-bottom:24px;">
+          <div class="service_box" style="text-align:center; padding:24px 18px;">
+            <i class="fa fa-check-circle" style="font-size:42px; color:#1a8fe8; display:block; margin-bottom:12px;"></i>
+            <h3>SHA-256</h3>
+            <p>Huella de cada archivo. Integridad garantizada al restaurar.</p>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6" style="margin-bottom:24px;">
+          <div class="service_box" style="text-align:center; padding:24px 18px;">
+            <i class="fa fa-list-alt" style="font-size:42px; color:#1a8fe8; display:block; margin-bottom:12px;"></i>
+            <h3>Mini-SOC</h3>
+            <p>Registro completo de eventos consultable desde el panel.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ SLIDE 6 — BACKEND -->
+<div class="slide">
+  <div class="slide-header">
+    <img src="docs/images/logo.png" alt="Niddo">
+    <span>¿Cómo funciona el backend?</span>
+  </div>
+  <div class="service">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="titlepage">
+            <h2>¿Cómo funciona el <span class="green">backend?</span></h2>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:20px;">
+        <div class="col-md-3 col-sm-6" style="margin-bottom:24px;">
+          <div class="service_box" style="padding:22px 14px; text-align:center;">
+            <i class="fa fa-server" style="font-size:36px; color:#1a8fe8; display:block; margin-bottom:10px;"></i>
+            <h3 style="font-size:15px;">Apache 2.4</h3>
+            <p style="font-size:13px;">Servidor web · Debian/Ubuntu</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6" style="margin-bottom:24px;">
+          <div class="service_box" style="padding:22px 14px; text-align:center;">
+            <i class="fa fa-code" style="font-size:36px; color:#1a8fe8; display:block; margin-bottom:10px;"></i>
+            <h3 style="font-size:15px;">PHP 8</h3>
+            <p style="font-size:13px;">API REST · Panel web · Lógica del servidor</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6" style="margin-bottom:24px;">
+          <div class="service_box" style="padding:22px 14px; text-align:center;">
+            <i class="fa fa-database" style="font-size:36px; color:#1a8fe8; display:block; margin-bottom:10px;"></i>
+            <h3 style="font-size:15px;">MariaDB 11</h3>
+            <p style="font-size:13px;">Base de datos relacional</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6" style="margin-bottom:24px;">
+          <div class="service_box" style="padding:22px 14px; text-align:center;">
+            <i class="fa fa-desktop" style="font-size:36px; color:#1a8fe8; display:block; margin-bottom:10px;"></i>
+            <h3 style="font-size:15px;">HTML5 · CSS3</h3>
+            <p style="font-size:13px;">Interfaz del panel · sin frameworks</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6" style="margin-bottom:24px;">
+          <div class="service_box" style="padding:22px 14px; text-align:center;">
+            <i class="fa fa-laptop" style="font-size:36px; color:#1a8fe8; display:block; margin-bottom:10px;"></i>
+            <h3 style="font-size:15px;">Python 3</h3>
+            <p style="font-size:13px;">Agente Windows · solo librería estándar</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6" style="margin-bottom:24px;">
+          <div class="service_box" style="padding:22px 14px; text-align:center;">
+            <i class="fa fa-terminal" style="font-size:36px; color:#1a8fe8; display:block; margin-bottom:10px;"></i>
+            <h3 style="font-size:15px;">Bash</h3>
+            <p style="font-size:13px;">Instalador automático · apt-get</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6" style="margin-bottom:24px;">
+          <div class="service_box" style="padding:22px 14px; text-align:center;">
+            <i class="fa fa-github" style="font-size:36px; color:#1a8fe8; display:block; margin-bottom:10px;"></i>
+            <h3 style="font-size:15px;">Git · GitHub</h3>
+            <p style="font-size:13px;">Control de versiones · GitHub Pages</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6" style="margin-bottom:24px;">
+          <div class="service_box" style="padding:22px 14px; text-align:center;">
+            <i class="fa fa-linux" style="font-size:36px; color:#1a8fe8; display:block; margin-bottom:10px;"></i>
+            <h3 style="font-size:15px;">Debian / Ubuntu</h3>
+            <p style="font-size:13px;">Sistema operativo del servidor</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ SLIDE 6 — MODELO ER -->
+<div class="slide">
+  <div class="slide-header">
+    <img src="docs/images/logo.png" alt="Niddo">
+    <span>Modelo Entidad-Relación</span>
+  </div>
+  <div class="service">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="titlepage" style="margin-bottom:20px;">
+            <h2>Modelo <span class="green">Entidad-Relación</span></h2>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <img src="docs/MER.png" alt="Modelo Entidad-Relación de Niddo" style="max-width:100%; max-height:480px; object-fit:contain;">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ SLIDE 8 — ESCALABILIDAD -->
+<div class="slide">
+  <div class="slide-header">
+    <img src="docs/images/logo.png" alt="Niddo">
+    <span>Escalabilidad del proyecto</span>
+  </div>
+  <div class="service">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="titlepage">
+            <h2>Escalabilidad del <span class="green">proyecto</span></h2>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:16px;">
+
+        <div class="col-md-3 col-sm-6" style="margin-bottom:20px;">
+          <div class="service_box" style="padding:22px 18px;">
+            <i class="fa fa-money" style="font-size:32px; color:#1a8fe8; display:block; margin-bottom:12px;"></i>
+            <h3 style="font-size:16px;">Financiación futura</h3>
+            <p style="font-size:13px;">Inversión inicial baja. Crecemos con ingresos de suscriptores y clientes de empresas. Reinversión en infraestructura según demanda.</p>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6" style="margin-bottom:20px;">
+          <div class="service_box" style="padding:22px 18px;">
+            <i class="fa fa-hand-o-up" style="font-size:32px; color:#1a8fe8; display:block; margin-bottom:12px;"></i>
+            <h3 style="font-size:16px;">Subvenciones y ayudas</h3>
+            <p style="font-size:13px;">Kit Digital para digitalización de pymes. Ayudas a startups tecnológicas. Fondos europeos para software open source.</p>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6" style="margin-bottom:20px;">
+          <div class="service_box" style="padding:22px 18px;">
+            <i class="fa fa-gavel" style="font-size:32px; color:#1a8fe8; display:block; margin-bottom:12px;"></i>
+            <h3 style="font-size:16px;">Legalización</h3>
+            <p style="font-size:13px;">Constitución como SL o autónomo. Registro de marca. Gestión fiscal y laboral desde el primer cliente de pago.</p>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6" style="margin-bottom:20px;">
+          <div class="service_box" style="padding:22px 18px;">
+            <i class="fa fa-tasks" style="font-size:32px; color:#1a8fe8; display:block; margin-bottom:12px;"></i>
+            <h3 style="font-size:16px;">Gestión del proyecto</h3>
+            <p style="font-size:13px;">Metodología Kanban en GitHub Projects. Commits descriptivos, issues y revisiones de código como flujo de trabajo.</p>
+          </div>
+        </div>
+
+        <div class="col-md-12" style="margin-top:8px;">
+          <div class="service_box" style="padding:20px 24px; background:#f2f7fd;">
+            <i class="fa fa-exclamation-triangle" style="color:#1a8fe8; margin-right:10px;"></i>
+            <strong>Disclaimer:</strong>
+            <span style="font-size:14px; color:#444;"> Somos propietarios del programa, pero no del uso que hagan los usuarios. No nos responsabilizamos de un uso indebido ni de daños causados a hardware o software de terceros.</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ SLIDE 6 — MODELO DE NEGOCIO -->
+<div class="slide">
+  <div class="slide-header">
+    <img src="docs/images/logo.png" alt="Niddo">
+    <span>Modelo de negocio</span>
+  </div>
+  <div class="service">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="titlepage">
+            <h2>Modelo de <span class="green">negocio</span></h2>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:10px;">
+
+        <div class="col-md-4" style="margin-bottom:24px;">
+          <div class="service_box" style="padding:28px 22px;">
+            <i class="fa fa-unlock-alt" style="font-size:40px; color:#1a8fe8; display:block; margin-bottom:14px;"></i>
+            <h3>Gratuito</h3>
+            <p style="color:#888; font-size:13px; margin-bottom:12px;">0 € · para siempre</p>
+            <ul style="padding-left:16px; font-size:14px; line-height:1.9; color:#444;">
+              <li>1 administrador único</li>
+              <li>Todas las funciones incluidas</li>
+              <li>Código abierto (MIT)</li>
+              <li>Autoinstalación mediante script</li>
+              <li>Sin soporte técnico</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-md-4" style="margin-bottom:24px;">
+          <div class="service_box" style="padding:28px 22px; background:#1f3f72;">
+            <i class="fa fa-envelope-o" style="font-size:40px; color:#1a8fe8; display:block; margin-bottom:14px;"></i>
+            <h3 style="color:#fff;">De pago</h3>
+            <p style="color:#aac4e8; font-size:13px; margin-bottom:12px;">8 €/mes · por servidor</p>
+            <ul style="padding-left:16px; font-size:14px; line-height:1.9; color:#c8dff5;">
+              <li>Múltiples administradores</li>
+              <li>Compartir archivos entre usuarios</li>
+              <li>Soporte de instalación por email</li>
+              <li>Mantenimiento y consultas por email</li>
+              <li>Actualizaciones continuas</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-md-4" style="margin-bottom:24px;">
+          <div class="service_box" style="padding:28px 22px;">
+            <i class="fa fa-building" style="font-size:40px; color:#1a8fe8; display:block; margin-bottom:14px;"></i>
+            <h3>Empresas</h3>
+            <p style="color:#888; font-size:13px; margin-bottom:12px;">25 €/mes + cuota negociable</p>
+            <ul style="padding-left:16px; font-size:14px; line-height:1.9; color:#444;">
+              <li>Todo lo del plan gratuito y de pago</li>
+              <li>Soporte presencial o remoto</li>
+              <li>Cuota según alcance del trabajo:<br>
+                <span style="color:#888; font-size:13px;">solo instalar Niddo · servidor desde 0 · despliegue completo</span>
+              </li>
+              <li>Servicio de montaje del servidor</li>
+              <li>Despliegue e integración en la empresa</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ SLIDE 9 — EQUIPO -->
+<div class="slide">
+  <div class="slide-header">
+    <img src="docs/images/logo.png" alt="Niddo">
+    <span>Equipo</span>
+  </div>
+  <div class="service">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="titlepage">
+            <h2>El <span class="green">equipo</span></h2>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 col-sm-6" style="margin-bottom:30px;">
+          <div class="service_box" style="text-align:center; padding:30px 20px;">
+            <i class="fa fa-user-circle" style="font-size:48px; color:#1a8fe8; display:block; margin-bottom:14px;"></i>
+            <h3>Jesús Pérez<br>Marinetto</h3>
+            <p>Backend · Frontend · Base de datos · Web pública · Repositorio · Documentación · Presentación</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6" style="margin-bottom:30px;">
+          <div class="service_box" style="text-align:center; padding:30px 20px;">
+            <i class="fa fa-user-circle" style="font-size:48px; color:#1a8fe8; display:block; margin-bottom:14px;"></i>
+            <h3>Nicolás Baya-Casal<br>Sansolini</h3>
+            <p>Documentación del proyecto</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6" style="margin-bottom:30px;">
+          <div class="service_box" style="text-align:center; padding:30px 20px;">
+            <i class="fa fa-user-circle" style="font-size:48px; color:#1a8fe8; display:block; margin-bottom:14px;"></i>
+            <h3>Ismael Martín<br>Ruiz</h3>
+            <p>Modelo Entidad-Relación de la base de datos</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6" style="margin-bottom:30px;">
+          <div class="service_box" style="text-align:center; padding:30px 20px;">
+            <i class="fa fa-user-circle" style="font-size:48px; color:#1a8fe8; display:block; margin-bottom:14px;"></i>
+            <h3>Iván López<br>García</h3>
+            <p>Participación en el proyecto</p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-center" style="margin-top:10px;">
+          <p style="font-size:13px; color:#888;">CFGS ASIR · IES Zaidín-Vergeles, Granada · 2025–2026</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ SLIDE 11 — CIERRE -->
+<div class="slide">
+  <div style="background:#1f3f72; width:100%; height:100%; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding:60px 40px;">
+    <img src="web/niddo%20Logo%20completo.png" alt="Niddo" style="height:70px; filter:brightness(0) invert(1); margin-bottom:40px;">
+    <h1 style="color:#fff; font-size:52px; font-weight:bold; margin-bottom:16px;">Gracias por<br>su atención.</h1>
+    <p style="color:#aac4e8; font-size:20px; margin-bottom:36px;">¿Preguntas?</p>
+    <div style="display:flex; gap:16px; flex-wrap:wrap; justify-content:center;">
+      <a class="read_more" href="https://github.com/ieszaidinvergeles/2-asir-bil-pasir-6" target="_blank" style="background:#1a8fe8;">
+        <i class="fa fa-github" style="margin-right:8px;"></i>GitHub
+      </a>
+      <a class="read_more" href="docs/index.html" style="background:#fff; color:#1f3f72;">
+        <i class="fa fa-globe" style="margin-right:8px;"></i>Web del proyecto
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ NAVEGACIÓN -->
+<div class="pres-nav">
+  <button id="btnPrev">← anterior</button>
+  <div class="pres-dots" id="dots"></div>
+  <span class="pres-counter" id="counter">1 / 11</span>
+  <button id="btnNext">siguiente →</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const dotsEl = document.getElementById('dots');
+const counter = document.getElementById('counter');
+const bar = document.getElementById('pres-bar');
+const total = slides.length;
+let cur = 0;
+
+slides.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.className = 'pres-dot' + (i === 0 ? ' active' : '');
+  d.onclick = () => go(i);
+  dotsEl.appendChild(d);
+});
+
+function go(n) {
+  slides[cur].classList.remove('active');
+  dotsEl.children[cur].classList.remove('active');
+  cur = (n + total) % total;
+  slides[cur].classList.add('active');
+  slides[cur].scrollTop = 0;
+  dotsEl.children[cur].classList.add('active');
+  counter.textContent = (cur + 1) + ' / ' + total;
+  bar.style.width = ((cur + 1) / total * 100) + '%';
+}
+
+document.getElementById('btnNext').onclick = () => go(cur + 1);
+document.getElementById('btnPrev').onclick = () => go(cur - 1);
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') go(cur + 1);
+  if (e.key === 'ArrowLeft') go(cur - 1);
+});
+
+bar.style.width = (1 / total * 100) + '%';
+</script>
+</body>
+</html>
